@@ -11,7 +11,7 @@ matplotlib.use('Qt5Agg')
 import numpy as np
 from PyQt5 import QtCore, QtWidgets, QtGui, Qt
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QSplitter, QApplication, \
-    QStyleFactory, QTextEdit, QWidget
+    QStyleFactory, QTextEdit, QWidget, QPushButton
 
 
 class MplCanvas3D2D(FigureCanvasQTAgg):
@@ -64,8 +64,33 @@ class MainFrame(QMainWindow):
         left.setFrameShape(QFrame.StyledPanel)
 
         left_label = QLabel('Options:', left)
+
+        plot_button = QPushButton("Plot")
+        plot_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+
+        load_data = QPushButton("Load from file")
+        load_data.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+
+        init_rk_button = QPushButton("R-K plot")
+        init_rk_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+
+        init_l_button = QPushButton("L plot")
+        init_l_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+
+        info_label = QLabel("Equation info:", left)
+        info_edit = QTextEdit()
+        info_edit.setReadOnly(True)
+
         left_layout = QVBoxLayout(left)
+        left_layout.setSpacing(5)
         left_layout.addWidget(left_label)
+        left_layout.addWidget(init_rk_button)
+        left_layout.addWidget(init_l_button)
+        left_layout.addWidget(plot_button)
+        left_layout.addWidget(load_data)
+        left_layout.addWidget(info_label)
+        left_layout.addWidget(info_edit)
+
         left.setLayout(left_layout)
 
         right = QFrame()
@@ -74,8 +99,11 @@ class MainFrame(QMainWindow):
         right_label = QLabel('Plot Panel:', right)
         right_layout = QVBoxLayout(right)
         right_layout.addWidget(right_label)
+        toolbar = NavigationToolbar(self.sc, self)
+        right_layout.addWidget(toolbar)
         right_layout.addWidget(self.sc)
         right.setLayout(right_layout)
+
 
         splitter = QSplitter()
         splitter.addWidget(left)
@@ -93,7 +121,7 @@ class MainFrame(QMainWindow):
         vbox.addLayout(hbox_bottom)
 
         QApplication.setStyle(QStyleFactory.create('Cleanlooks'))
-        self.setGeometry(300, 300, 600, 400)
+        self.setGeometry(0, 0, 1200, 800)
         self.setWindowTitle('Chaos Simulator')
 
         #Just for testing #D plotting:
