@@ -12,6 +12,8 @@ import numpy as np
 from PyQt5 import QtCore, QtWidgets, QtGui, Qt
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QSplitter, QApplication, \
     QStyleFactory, QTextEdit, QWidget, QPushButton
+import terminal_handler as th
+from terminal_handler import Term_handler
 
 
 class MplCanvas3D2D(FigureCanvasQTAgg):
@@ -48,7 +50,8 @@ class MainFrame(QMainWindow):
 
     def __init__(self):
         super(MainFrame, self).__init__()
-
+        self.term_handler = Term_handler(self)
+        th.Term_handler.load_command_base(self)
         self.initUI()
 
     def initUI(self):
@@ -71,10 +74,10 @@ class MainFrame(QMainWindow):
         load_data = QPushButton("Load from file")
         load_data.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
-        init_rk_button = QPushButton("R-K plot")
-        init_rk_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        init_r_button = QPushButton("Rössler plot")
+        init_r_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
-        init_l_button = QPushButton("L plot")
+        init_l_button = QPushButton("Lorenz plot")
         init_l_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
         info_label = QLabel("Equation info:", left)
@@ -84,7 +87,7 @@ class MainFrame(QMainWindow):
         left_layout = QVBoxLayout(left)
         left_layout.setSpacing(5)
         left_layout.addWidget(left_label)
-        left_layout.addWidget(init_rk_button)
+        left_layout.addWidget(init_r_button)
         left_layout.addWidget(init_l_button)
         left_layout.addWidget(plot_button)
         left_layout.addWidget(load_data)
@@ -104,7 +107,6 @@ class MainFrame(QMainWindow):
         right_layout.addWidget(self.sc)
         right.setLayout(right_layout)
 
-
         splitter = QSplitter()
         splitter.addWidget(left)
         splitter.addWidget(right)
@@ -112,10 +114,12 @@ class MainFrame(QMainWindow):
 
         hbox_splitter.addWidget(splitter)
 
-        text_edit = QTextEdit()
+        self.text_edit = QTextEdit()
         term_label = QLabel("Terminal",self)
         hbox_bottom.addWidget(term_label)
-        hbox_bottom.addWidget(text_edit)
+        hbox_bottom.addWidget(self.text_edit)
+
+
 
         vbox.addLayout(hbox_splitter)
         vbox.addLayout(hbox_bottom)
@@ -124,7 +128,9 @@ class MainFrame(QMainWindow):
         self.setGeometry(0, 0, 1200, 800)
         self.setWindowTitle('Chaos Simulator')
 
-        #Just for testing #D plotting:
+        self.text_edit.textChanged.connect(self.look_for_enter_key)
+
+        #Just for testing 3D plotting:
 
         x = np.linspace(-5, 5, 20)
         y = np.linspace(-5, 5, 20)
@@ -133,6 +139,12 @@ class MainFrame(QMainWindow):
 
         self.sc.plot3D(X, Y, Z)
 
+
+    def look_for_enter_key(self):
+        if self.text_edit.toPlainText().endswith('\n'):
+            self.term_handler.get_command(self.text_edit, self.text_edit.toPlainText())
+        else:
+            print("something")
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main_window = MainFrame()

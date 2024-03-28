@@ -1,0 +1,11 @@
+exit->0
+refresh->1
+plot->2
+plot Lorenz->3
+plot Roessler->4
+load file->5
+show eq->6
+save session->7
+equation->8
+clear->9
+help->10
