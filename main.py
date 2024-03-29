@@ -13,7 +13,9 @@ from PyQt5 import QtCore, QtWidgets, QtGui, Qt
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QSplitter, QApplication, \
     QStyleFactory, QTextEdit, QWidget, QPushButton
 import terminal_handler as th
+import equation_handler as eqh
 from terminal_handler import Term_handler
+from equation_handler import Eq_Handler
 
 
 class MplCanvas3D2D(FigureCanvasQTAgg):
@@ -51,6 +53,7 @@ class MainFrame(QMainWindow):
     def __init__(self):
         super(MainFrame, self).__init__()
         self.term_handler = Term_handler(self)
+        self.Eq_handler = Eq_Handler(self)
         th.Term_handler.load_command_base(self)
         self.initUI()
 

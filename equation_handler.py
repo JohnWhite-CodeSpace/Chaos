@@ -1,9 +1,8 @@
-import main as mn
 import numpy as np
-class equation_handler():
+class Eq_Handler():
 
     def __init__(self, main_frame):
-        super(equation_handler,self).__init__()
+        super(Eq_Handler,self).__init__()
         self.main_frame = main_frame
         self.constants = []
 
@@ -11,6 +10,10 @@ class equation_handler():
     def Set_Lorenz_Conditions(self, rho, beta, sigma):
         self.constants = {rho,beta,sigma}
         return self.constants
+    def Set_Roessler_Conditions(self, a, b, c):
+        self.constants = {a, b, c}
+        return self.constants
+
     def Runge_Kutta_Algorithm_4(self,initial_conditions, t_start, t_end, num_steps):
         t_values = np.linspace(t_start, t_end, num_steps)
         dt = (t_end - t_start) / num_steps
@@ -34,12 +37,14 @@ class equation_handler():
             dzdt = x * y - self.constants[1] * z
         return np.array([dxdt, dydt, dzdt])
 
+    def Roessler(self, xyz, constants):
+        x, y, z = xyz
+        if constants is not None:
+            dxdt = -y-z
+            dydt = x+ constants[0]*y
+            dzdt = constants[1] + z*(x - constants[2])
+        return np.array([dxdt, dydt, dzdt])
 
-    #def Get_params_for_Lorenz(self, a, b, sig, Terminal, iter):
-
-
-
-    #def Get_params_for_Rossler(self,a, b, Terminal, iter):
 
 
 
