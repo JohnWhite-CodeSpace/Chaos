@@ -65,7 +65,7 @@ class Term_handler():
     def exit_command(self):
         sys.exit()
     def refresh_command(self):
-        print("something2")
+        print("shit on my tits")
 
     #def plot_command(self):
 

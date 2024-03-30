@@ -5,6 +5,7 @@ import keyboard
 import scipy as sp
 import sys
 import matplotlib
+from PyQt5.QtGui import QFont
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 matplotlib.use('Qt5Agg')
@@ -19,7 +20,7 @@ from equation_handler import Eq_Handler
 
 
 class MplCanvas3D2D(FigureCanvasQTAgg):
-    def __init__(self, parents = None, width=15, height=15, dpi=100):
+    def __init__(self, parents = None, width=20, height=20, dpi=100):
         self.figure = Figure(figsize=(width, height), dpi=dpi)
         super().__init__(self.figure)
     def plot3D(self, xarray, yarray, zarray):
@@ -30,7 +31,7 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
         zarray_flat = zarray.flatten()
         ax.plot_trisurf(xarray_flat, yarray_flat, zarray_flat, color='red', alpha=0.6, edgecolor='red',
                         linewidth=0.1, antialiased=True, shade=1)
-        ax.plot(xarray_flat, yarray_flat, zarray_flat, 'ok')
+        ax.plot(xarray_flat, yarray_flat, zarray_flat)
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
@@ -47,13 +48,12 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
         axe.set_ylabel('Y')
         self.draw()
 
-
 class MainFrame(QMainWindow):
 
     def __init__(self):
         super(MainFrame, self).__init__()
         self.term_handler = Term_handler(self)
-        self.Eq_handler = Eq_Handler(self)
+        self.eq_handler = Eq_Handler()
         th.Term_handler.load_command_base(self)
         self.initUI()
 
@@ -71,7 +71,7 @@ class MainFrame(QMainWindow):
 
         left_label = QLabel('Options:', left)
 
-        plot_button = QPushButton("Plot")
+        plot_button = QPushButton("Plot points")
         plot_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
         load_data = QPushButton("Load from file")
@@ -79,23 +79,73 @@ class MainFrame(QMainWindow):
 
         init_r_button = QPushButton("Rössler plot")
         init_r_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        init_r_button.pressed.connect(self.init_roessler)
 
         init_l_button = QPushButton("Lorenz plot")
         init_l_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        init_l_button.pressed.connect(self.init_lorenz)
+
+
+
+        self.lorenz_params1 = QtWidgets.QLineEdit(self)
+        self.lorenz_params1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.lorenz_params2 = QtWidgets.QLineEdit(self)
+        self.lorenz_params2.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self. lorenz_params3 = QtWidgets.QLineEdit(self)
+        self.lorenz_params3.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+
+        lorenz_label1 = QLabel("ρ:")
+        lorenz_label1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        lorenz_label2 = QLabel("β:")
+        lorenz_label2.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        lorenz_label3 = QLabel("σ:")
+        lorenz_label3.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        lorenz_layout = QHBoxLayout()
+        lorenz_layout.addWidget(lorenz_label1)
+        lorenz_layout.addWidget(self.lorenz_params1)
+        lorenz_layout.addWidget(lorenz_label2)
+        lorenz_layout.addWidget(self.lorenz_params2)
+        lorenz_layout.addWidget(lorenz_label3)
+        lorenz_layout.addWidget(self.lorenz_params3)
+
+        self.roessler_params1 = QtWidgets.QLineEdit(self)
+        self.roessler_params1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.roessler_params2 = QtWidgets.QLineEdit(self)
+        self.roessler_params2.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.roessler_params3 = QtWidgets.QLineEdit(self)
+        self.roessler_params3.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+
+        roessler_label1 = QLabel("a:")
+        roessler_label1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        roessler_label2 = QLabel("b:")
+        roessler_label2.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        roessler_label3 = QLabel("c:")
+        roessler_label3.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+
+        roessler_layout = QHBoxLayout()
+        roessler_layout.addWidget(roessler_label1)
+        roessler_layout.addWidget(self.roessler_params1)
+        roessler_layout.addWidget(roessler_label2)
+        roessler_layout.addWidget(self.roessler_params2)
+        roessler_layout.addWidget(roessler_label3)
+        roessler_layout.addWidget(self.roessler_params3)
 
         info_label = QLabel("Equation info:", left)
-        info_edit = QTextEdit()
-        info_edit.setReadOnly(True)
+        self.info_edit = QTextEdit()
+        self.info_edit.setFont(QFont('Times', 12))
+        self.info_edit.setReadOnly(True)
 
         left_layout = QVBoxLayout(left)
         left_layout.setSpacing(5)
         left_layout.addWidget(left_label)
         left_layout.addWidget(init_r_button)
+        left_layout.addLayout(roessler_layout)
         left_layout.addWidget(init_l_button)
+        left_layout.addLayout(lorenz_layout)
         left_layout.addWidget(plot_button)
         left_layout.addWidget(load_data)
         left_layout.addWidget(info_label)
-        left_layout.addWidget(info_edit)
+        left_layout.addWidget(self.info_edit)
 
         left.setLayout(left_layout)
 
@@ -134,11 +184,16 @@ class MainFrame(QMainWindow):
         self.text_edit.textChanged.connect(self.look_for_enter_key)
 
         #Just for testing 3D plotting:
-
-        x = np.linspace(-5, 5, 20)
-        y = np.linspace(-5, 5, 20)
-        X, Y = np.meshgrid(x, y)
-        Z = np.cos(np.sqrt(X ** 2 + Y ** 2))
+        self.eq_handler.set_lorenz_conditions(28, 8 / 3, 10)
+        init_conditions = np.array([1.0, 1.0, 1.0])
+        t_start = 0.0
+        t_end = 40.0
+        num_steps = 10000
+        t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_lorenz(init_conditions, t_start, t_end, num_steps)
+        X = xyz[:, 0]
+        Y = xyz[:, 1]
+        Z = xyz[:, 2]
+        self.info_edit.setText(self.eq_handler.print_lorenz_eq(28, 8/3, 10))
 
         self.sc.plot3D(X, Y, Z)
 
@@ -148,6 +203,50 @@ class MainFrame(QMainWindow):
             self.term_handler.get_command(self.text_edit, self.text_edit.toPlainText())
         else:
             print("something")
+
+    def init_lorenz(self):
+        self.info_edit.clear()
+        if(self.lorenz_params1.text!=None and self.lorenz_params2.text!=None and self.lorenz_params3.text!=None ):
+            self.eq_handler.set_lorenz_conditions(float(self.lorenz_params1.text()), float(self.lorenz_params2.text()), float(self.lorenz_params3.text()))
+            init_conditions = np.array([1.0, 1.0, 1.0])
+            t_start = 0.0
+            t_end = 40.0
+            num_steps = 10000
+            t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_lorenz(init_conditions, t_start, t_end, num_steps)
+            X = xyz[:, 0]
+            Y = xyz[:, 1]
+            Z = xyz[:, 2]
+            self.info_edit.setText(self.eq_handler.print_lorenz_eq(float(self.lorenz_params1.text()), float(self.lorenz_params2.text()), float(self.lorenz_params3.text())))
+            self.sc.plot3D(X, Y, Z)
+        else:
+            self.info_edit.setText("ERROR: Empty parameter fields!\n")
+    def init_roessler(self):
+        if (self.roessler_params1.text != None and self.roessler_params2.text != None and self.roessler_params3.text != None):
+            self.info_edit.clear()
+            print(float(self.roessler_params1.text()))
+            print(float(self.roessler_params2.text()))
+            print(float(self.roessler_params3.text()))
+            self.eq_handler.set_roessler_conditions(float(self.roessler_params1.text()), float(self.roessler_params1.text()), float(self.roessler_params1.text()))
+            init_conditions = np.array([1.0, 1.0, 1.0])
+            t_start = 0.0
+            t_end = 40.0
+            num_steps = 1000
+            t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_roessler(init_conditions, t_start, t_end, num_steps)
+            print(xyz[:, 0])
+            print(xyz[:, 1])
+            print(xyz[:, 2])
+            X = xyz[:, 0]
+            Y = xyz[:, 1]
+            Z = xyz[:, 2]
+            self.info_edit.setText(self.eq_handler.print_roessler_eq(float(self.roessler_params1.text()), float(self.roessler_params2.text()),float(self.roessler_params3.text())))
+            self.sc.plot3D(X, Y, Z)
+        else:
+            self.info_edit.setText("ERROR: Empty parameter fields!\n")
+    # def load_from_file(self):
+    #
+    # def save_to_file(self):
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main_window = MainFrame()
