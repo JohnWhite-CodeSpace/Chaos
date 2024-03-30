@@ -1,43 +1,58 @@
+import time
+
 import keyboard
 import sys
+
+from PyQt5.QtCore import QRegExp
+
 CommandList={}
 class Term_handler():
     def __init__(self, main_frame):
         self.main_frame = main_frame
 
+
     def get_command(self, textedit, text):
-        print('getting command')
-        command = text.strip().split('\n')
-        print(command[-1])
-        print('split')
+        commandcheck = 0
+        command = text.split('\n')
+        foundcom = self.get_last_non_empty_line(command)
         if CommandList is not None:
-            print("iterate")
             num=0
-            while(command[-1] != CommandList[num][0]):
-                print(f"iteration index: {num} looking for command {command[-1]}")
+            while(foundcom != CommandList[num][0]):
                 num += 1
-            print("condition met")
-            print(f"Command list index: {CommandList[num][1]}")
-        value = int(CommandList[num][1])
-        print("Function gets here")
-        print(value)
-        self.check_command_type(value, textedit)
+                if(foundcom == CommandList[num][0]):
+                    value = int(CommandList[num][1])
+                    self.check_command_type(value, textedit)
+                    commandcheck=1
+                    break
+                if(num>=len(CommandList)-1):
+                    break
+        if(commandcheck==0):
+            self.main_frame.print_onto_text_edit(f"ERROR: There is no such command as '{foundcom}'!")
+
+    def get_last_non_empty_line(self, lines):
+        for line in reversed(lines):
+            if line.strip():
+                return line
 
     def check_command_type(self, commandNum, textedit):
         print("looking for method")
         if commandNum == 0:
-            print("Exiting")
-            self.exit_command()
+            sys.exit()
         elif commandNum == 1:
-            print("Refreshing")
-            # self.refresh_command()
-
+            self.main_frame.redraw_figure()
+        elif commandNum == 6:
+            self.main_frame.show_equation()
         elif commandNum==9:
-            print("Clear terminal")
-            self.clear_terminal(textedit)
+            self.main_frame.clear_terminal()
+        elif commandNum==10:
+            self.main_frame.clear_info()
+        elif commandNum==11:
+            self.main_frame.print_onto_text_edit("List of console commands: \n")
+            for i in CommandList:
+                self.main_frame.print_onto_text_edit(CommandList[i][0])
+                print(CommandList[i][0])
         else:
-            print("some bs")
-
+            print("some debug bullshit")
     def load_command_base(self):
         file = open("command_list.txt")
         linenum = 0
@@ -59,26 +74,7 @@ class Term_handler():
                 linenum += 1
             else:
                 print(f"Ignoring invalid line: {line.strip()}")
-
         file.close()
-    #
-    def exit_command(self):
-        sys.exit()
-    def refresh_command(self):
-        print("shit on my tits")
-
-    #def plot_command(self):
-
-    #def load_file_command(self):
-
-    #def show_eq_command(self):
-
-    #def save_session_command(self):
-
-    #def get_equation(self):
-
-    def clear_terminal(self, textedit):
-        textedit.clear()
 
 
 

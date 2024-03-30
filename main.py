@@ -55,6 +55,12 @@ class MainFrame(QMainWindow):
         self.term_handler = Term_handler(self)
         self.eq_handler = Eq_Handler()
         th.Term_handler.load_command_base(self)
+        self.equation = 0
+        self.tempLor = []
+        self.tempRoe = []
+        self.X = []
+        self.Y = []
+        self.Z = []
         self.initUI()
 
     def initUI(self):
@@ -185,39 +191,40 @@ class MainFrame(QMainWindow):
 
         #Just for testing 3D plotting:
         self.eq_handler.set_lorenz_conditions(28, 8 / 3, 10)
+        self.tempLor = np.array([28, 8/3, 10])
         init_conditions = np.array([1.0, 1.0, 1.0])
         t_start = 0.0
         t_end = 40.0
         num_steps = 10000
         t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_lorenz(init_conditions, t_start, t_end, num_steps)
-        X = xyz[:, 0]
-        Y = xyz[:, 1]
-        Z = xyz[:, 2]
+        self.X = xyz[:, 0]
+        self.Y = xyz[:, 1]
+        self.Z = xyz[:, 2]
         self.info_edit.setText(self.eq_handler.print_lorenz_eq(28, 8/3, 10))
 
-        self.sc.plot3D(X, Y, Z)
+        self.sc.plot3D(self.X, self.Y, self.Z)
 
 
     def look_for_enter_key(self):
         if self.text_edit.toPlainText().endswith('\n'):
             self.term_handler.get_command(self.text_edit, self.text_edit.toPlainText())
-        else:
-            print("something")
 
     def init_lorenz(self):
         self.info_edit.clear()
         if(self.lorenz_params1.text!=None and self.lorenz_params2.text!=None and self.lorenz_params3.text!=None ):
             self.eq_handler.set_lorenz_conditions(float(self.lorenz_params1.text()), float(self.lorenz_params2.text()), float(self.lorenz_params3.text()))
+            self.tempLor = np.array([float(self.lorenz_params1.text()), float(self.lorenz_params2.text()), float(self.lorenz_params3.text())])
             init_conditions = np.array([1.0, 1.0, 1.0])
             t_start = 0.0
             t_end = 40.0
             num_steps = 10000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_lorenz(init_conditions, t_start, t_end, num_steps)
-            X = xyz[:, 0]
-            Y = xyz[:, 1]
-            Z = xyz[:, 2]
+            self.X = xyz[:, 0]
+            self.Y = xyz[:, 1]
+            self.Z = xyz[:, 2]
             self.info_edit.setText(self.eq_handler.print_lorenz_eq(float(self.lorenz_params1.text()), float(self.lorenz_params2.text()), float(self.lorenz_params3.text())))
-            self.sc.plot3D(X, Y, Z)
+            self.sc.plot3D(self.X, self.Y, self.Z)
+            self.equation=0
         else:
             self.info_edit.setText("ERROR: Empty parameter fields!\n")
     def init_roessler(self):
@@ -227,25 +234,46 @@ class MainFrame(QMainWindow):
             print(float(self.roessler_params2.text()))
             print(float(self.roessler_params3.text()))
             self.eq_handler.set_roessler_conditions(float(self.roessler_params1.text()), float(self.roessler_params1.text()), float(self.roessler_params1.text()))
+            self.tempRoe = np.array([float(self.roessler_params1.text()), float(self.roessler_params1.text()), float(self.roessler_params1.text())])
             init_conditions = np.array([1.0, 1.0, 1.0])
             t_start = 0.0
             t_end = 40.0
             num_steps = 1000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_roessler(init_conditions, t_start, t_end, num_steps)
-            print(xyz[:, 0])
-            print(xyz[:, 1])
-            print(xyz[:, 2])
-            X = xyz[:, 0]
-            Y = xyz[:, 1]
-            Z = xyz[:, 2]
+            #debug and shit cuz roessler sometimes doesnt work - it depends on the parameter values
+            # print(xyz[:, 0])
+            # print(xyz[:, 1])
+            # print(xyz[:, 2])
+            self.X = xyz[:, 0]
+            self.Y = xyz[:, 1]
+            self.Z = xyz[:, 2]
             self.info_edit.setText(self.eq_handler.print_roessler_eq(float(self.roessler_params1.text()), float(self.roessler_params2.text()),float(self.roessler_params3.text())))
-            self.sc.plot3D(X, Y, Z)
+            self.sc.plot3D(self.X, self.Y, self.Z)
+            self.equation=1
         else:
             self.info_edit.setText("ERROR: Empty parameter fields!\n")
     # def load_from_file(self):
     #
     # def save_to_file(self):
+    def redraw_figure(self):
+        self.sc.draw()
+        self.sc.plot3D(self.X, self.Y, self.Z)
+    def print_onto_text_edit(self,text):
+        self.info_edit.append(f"{text}\n")
 
+    def clear_terminal(self):
+        self.text_edit.clear()
+
+    def clear_info(self):
+        self.info_edit.clear()
+
+    def show_equation(self):
+        if(self.equation==0):
+            self.info_edit.clear()
+            self.info_edit.setText(self.eq_handler.print_lorenz_eq(self.tempLor[0],self.tempLor[1],self.tempLor[2]))
+        elif(self.equation==1):
+            self.info_edit.clear()
+            self.info_edit.setText(self.eq_handler.print_roessler_eq(self.tempRoe[0],self.tempRoe[1],self.tempRoe[2]))
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
