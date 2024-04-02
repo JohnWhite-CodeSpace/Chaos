@@ -238,7 +238,7 @@ class MainFrame(QMainWindow):
             init_conditions = np.array([1.0, 1.0, 1.0])
             t_start = 0.0
             t_end = 40.0
-            num_steps = 1000
+            num_steps = 2000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_roessler(init_conditions, t_start, t_end, num_steps)
             #debug and shit cuz roessler sometimes doesnt work - it depends on the parameter values
             # print(xyz[:, 0])

@@ -17,15 +17,14 @@ class Term_handler():
         foundcom = self.get_last_non_empty_line(command)
         if CommandList is not None:
             num=0
-            while(foundcom != CommandList[num][0]):
-                num += 1
+            while(num<=len(CommandList)-1):
                 if(foundcom == CommandList[num][0]):
                     value = int(CommandList[num][1])
+                    print(value)
                     self.check_command_type(value, textedit)
                     commandcheck=1
                     break
-                if(num>=len(CommandList)-1):
-                    break
+                num += 1
         if(commandcheck==0):
             self.main_frame.print_onto_text_edit(f"ERROR: There is no such command as '{foundcom}'!")
 
