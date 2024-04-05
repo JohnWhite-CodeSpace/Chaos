@@ -5,18 +5,18 @@ class Eq_Handler():
 
     def __init__(self):
         super(Eq_Handler, self).__init__()
-        self.constantsl = {}
-        self.constantsr = {}
+        self.lorenz_constants = {}
+        self.roessler_constants = {}
 
     def set_lorenz_conditions(self, rho, beta, sigma):
-        self.constantsl['rho'] = rho
-        self.constantsl['beta'] = beta
-        self.constantsl['sigma'] = sigma
+        self.lorenz_constants['rho'] = rho #spoko opcja na samodefniującego się enuma, nie znałem ~Tymeks
+        self.lorenz_constants['beta'] = beta
+        self.lorenz_constants['sigma'] = sigma
     def lorenz(self, xyz):
         x, y, z = xyz
-        dxdt = self.constantsl['sigma'] * (y - x)
-        dydt = x * (self.constantsl['rho'] - z) - y
-        dzdt = x * y - self.constantsl['beta'] * z
+        dxdt = self.lorenz_constants['sigma'] * (y - x)
+        dydt = x * (self.lorenz_constants['rho'] - z) - y
+        dzdt = x * y - self.lorenz_constants['beta'] * z
         return np.array([dxdt, dydt, dzdt])
 
     def runge_kutta_algorithm_4_lorenz(self, initial_conditions, t_start, t_end, num_steps):
@@ -35,15 +35,15 @@ class Eq_Handler():
         return t_values, xyz
 
     def set_roessler_conditions(self, a, b, c):
-        self.constantsr['a'] = a
-        self.constantsr['b'] = b
-        self.constantsr['c'] = c
+        self.roessler_constants['a'] = a
+        self.roessler_constants['b'] = b
+        self.roessler_constants['c'] = c
 
     def roessler(self, xyz):
         x, y, z = xyz
         dxdt = -y - z
-        dydt = x + self.constantsr['a'] * y
-        dzdt = self.constantsr['b'] + z * (x - self.constantsr['c'])
+        dydt = x + self.roessler_constants['a'] * y
+        dzdt = self.roessler_constants['b'] + z * (x - self.roessler_constants['c'])
         return np.array([dxdt, dydt, dzdt])
 
     def runge_kutta_algorithm_4_roessler(self, initial_conditions, t_start, t_end, num_steps):
@@ -74,4 +74,15 @@ class Eq_Handler():
                f"x + {a}y\n" \
                f"{b} + z(x -{c})\n"
 
+    def save_lorenz(self):
+        return "test save lorenz"
+
+    def save_roessler(self):
+        return "test save roessler"
+
+    def load_lorenz(self):
+        return "test load lorenz"
+
+    def load_roessler(self):
+        return "test load roessler"
 

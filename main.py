@@ -14,8 +14,6 @@ from PyQt5 import QtCore, QtWidgets, QtGui, Qt
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QSplitter, QApplication, \
     QStyleFactory, QTextEdit, QWidget, QPushButton
 import terminal_handler as th
-import equation_handler as eqh
-from terminal_handler import Term_handler
 from equation_handler import Eq_Handler
 
 
@@ -50,7 +48,7 @@ class MainFrame(QMainWindow):
 
     def __init__(self):
         super(MainFrame, self).__init__()
-        self.term_handler = Term_handler(self)
+        self.term_handler = th.Term_handler(self)
         self.eq_handler = Eq_Handler()
         th.Term_handler.load_command_base(self)
         self.equation = 0
@@ -187,7 +185,7 @@ class MainFrame(QMainWindow):
 
         self.text_edit.textChanged.connect(self.look_for_enter_key)
 
-        #Just for testing 3D plotting:
+        #Just for testing 3D plotting /// eq_handler call
         self.eq_handler.set_lorenz_conditions(28, 8 / 3, 10)
         self.tempLor = np.array([28, 8/3, 10])
         init_conditions = np.array([1.0, 1.0, 1.0])
@@ -206,6 +204,7 @@ class MainFrame(QMainWindow):
     def look_for_enter_key(self):
         if self.text_edit.toPlainText().endswith('\n'):
             self.term_handler.get_command(self.text_edit, self.text_edit.toPlainText())
+
 
     def init_lorenz(self):
         self.info_edit.clear()
