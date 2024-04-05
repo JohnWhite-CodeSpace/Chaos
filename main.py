@@ -29,8 +29,6 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
         xarray_flat = xarray.flatten()
         yarray_flat = yarray.flatten()
         zarray_flat = zarray.flatten()
-        ax.plot(xarray_flat, yarray_flat, zarray_flat, color='red', alpha=0.6,
-                        linewidth=0.1, antialiased=True)
         ax.plot(xarray_flat, yarray_flat, zarray_flat)
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
