@@ -29,8 +29,8 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
         xarray_flat = xarray.flatten()
         yarray_flat = yarray.flatten()
         zarray_flat = zarray.flatten()
-        ax.plot_trisurf(xarray_flat, yarray_flat, zarray_flat, color='red', alpha=0.6, edgecolor='red',
-                        linewidth=0.1, antialiased=True, shade=1)
+        ax.plot(xarray_flat, yarray_flat, zarray_flat, color='red', alpha=0.6,
+                        linewidth=0.1, antialiased=True)
         ax.plot(xarray_flat, yarray_flat, zarray_flat)
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
@@ -217,11 +217,13 @@ class MainFrame(QMainWindow):
             init_conditions = np.array([1.0, 1.0, 1.0])
             t_start = 0.0
             t_end = 40.0
-            num_steps = 10000
+            num_steps = 1000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_lorenz(init_conditions, t_start, t_end, num_steps)
             self.X = xyz[:, 0]
             self.Y = xyz[:, 1]
             self.Z = xyz[:, 2]
+
+
             self.info_edit.setText(self.eq_handler.print_lorenz_eq(float(self.lorenz_params1.text()), float(self.lorenz_params2.text()), float(self.lorenz_params3.text())))
             self.sc.plot3D(self.X, self.Y, self.Z)
             self.equation=0
@@ -259,13 +261,16 @@ class MainFrame(QMainWindow):
         self.sc.draw()
         self.sc.plot3D(self.X, self.Y, self.Z)
     def print_onto_text_edit(self,text):
-        self.info_edit.append(f"{text}\n")
+        self.info_edit.append(f"{text}")
 
     def clear_terminal(self):
         self.text_edit.clear()
 
     def clear_info(self):
         self.info_edit.clear()
+
+    def get_user_Equation(self):
+        return self.text_edit.toPlainText()
 
     def show_equation(self):
         if(self.equation==0):

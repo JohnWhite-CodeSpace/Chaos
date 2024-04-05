@@ -1,9 +1,4 @@
-import time
-
-import keyboard
 import sys
-
-from PyQt5.QtCore import QRegExp
 
 CommandList={}
 class Term_handler():
@@ -39,13 +34,17 @@ class Term_handler():
             sys.exit()
         elif commandNum == 1:
             self.main_frame.redraw_figure()
-        elif commandNum == 6:
+        elif commandNum == 2:
+            print("2dplot")
+        elif commandNum == 3:
+            print("3dplot")
+        elif commandNum == 7:
             self.main_frame.show_equation()
-        elif commandNum==9:
-            self.main_frame.clear_terminal()
         elif commandNum==10:
-            self.main_frame.clear_info()
+            self.main_frame.clear_terminal()
         elif commandNum==11:
+            self.main_frame.clear_info()
+        elif commandNum==12:
             self.main_frame.print_onto_text_edit("List of console commands: \n")
             for i in CommandList:
                 self.main_frame.print_onto_text_edit(CommandList[i][0])
@@ -74,6 +73,15 @@ class Term_handler():
             else:
                 print(f"Ignoring invalid line: {line.strip()}")
         file.close()
+
+    # def get_User_Equation2d(self):
+    #     equation = self.main_frame.get_user_Equation()
+    #     if 'x' in equation and 'y' in equation:
+    #
+    #         if '^' in equation:
+
+
+
 
 
 

@@ -1,12 +1,13 @@
 exit->0
 refresh->1
-plot->2
-plot-Lorenz->3
-plot Roessler->4
-load file->5
-show eq->6
-save session->7
-equation->8
-clear terminal->9
-clear infopanel->10
-help->11
+plot 2D->2
+plot 3D->3
+plot Lorenz->4
+plot Rossler->5
+load file->6
+show eq->7
+save session->8
+equation->9
+clear terminal->10
+clear infopanel->11
+help->12
