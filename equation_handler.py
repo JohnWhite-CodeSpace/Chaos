@@ -12,6 +12,7 @@ class Eq_Handler():
         self.constantsl['rho'] = rho
         self.constantsl['beta'] = beta
         self.constantsl['sigma'] = sigma
+
     def lorenz(self, xyz):
         x, y, z = xyz
         dxdt = self.constantsl['sigma'] * (y - x)
@@ -44,6 +45,7 @@ class Eq_Handler():
         dxdt = -y - z
         dydt = x + self.constantsr['a'] * y
         dzdt = self.constantsr['b'] + z * (x - self.constantsr['c'])
+
         return np.array([dxdt, dydt, dzdt])
 
     def runge_kutta_algorithm_4_roessler(self, initial_conditions, t_start, t_end, num_steps):
@@ -61,17 +63,14 @@ class Eq_Handler():
 
         return t_values, xyz
 
-
     def print_lorenz_eq(self, rho, beta, sigma):
-        return f"Lorenz system:\n"\
-               f"{sigma}(x-y)\n" \
-               f"x({rho}-z)-y\n" \
-               f"xy-{beta}z\n"
+        return f"Lorenz system:\n" \
+               f"dxdt = {sigma}(x-y)\n" \
+               f"dydt = x({rho}-z)-y\n" \
+               f"dzdt = xy-{beta}z\n"
 
     def print_roessler_eq(self, a, b, c):
-        return f"Rössler system:\n"\
-               f"-x - y\n" \
-               f"x + {a}y\n" \
-               f"{b} + z(x -{c})\n"
-
-
+        return f"Rössler system:\n" \
+               f"dxdt = -x - y\n" \
+               f"dydt = x + {a}y\n" \
+               f"dzdt = {b} + z(x -{c})\n"
