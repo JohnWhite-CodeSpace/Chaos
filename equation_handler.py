@@ -6,7 +6,9 @@ class Eq_Handler():
     def __init__(self):
         super(Eq_Handler, self).__init__()
         self.constantsl = {}
-        self.constantsr = {}
+        self.a = 0.2
+        self.b = 0.2
+        self.c = 0.2
 
     def set_lorenz_conditions(self, rho, beta, sigma):
         self.constantsl['rho'] = rho
@@ -36,23 +38,22 @@ class Eq_Handler():
         return t_values, xyz
 
     def set_roessler_conditions(self, a, b, c):
-        self.constantsr['a'] = a
-        self.constantsr['b'] = b
-        self.constantsr['c'] = c
+        self.a = a
+        self.b = b
+        self.c = c
 
     def roessler(self, xyz):
         x, y, z = xyz
         dxdt = -y - z
-        dydt = x + self.constantsr['a'] * y
-        dzdt = self.constantsr['b'] + z * (x - self.constantsr['c'])
-
+        dydt = x + self.a * y
+        dzdt = self.b + z * (x - self.c)
         return np.array([dxdt, dydt, dzdt])
 
-    def runge_kutta_algorithm_4_roessler(self, initial_conditions, t_start, t_end, num_steps):
+    def runge_kutta_algorithm_4_roessler(self, init_conditions, t_start, t_end, num_steps):
         t_values = np.linspace(t_start, t_end, num_steps)
         dt = (t_end - t_start) / num_steps
         xyz = np.zeros((num_steps, 3))
-        xyz[0] = initial_conditions
+        xyz[0] = init_conditions
 
         for i in range(1, num_steps):
             k1 = self.roessler(xyz[i - 1])

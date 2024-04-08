@@ -22,10 +22,7 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
     def plot3D(self, xarray, yarray, zarray):
         self.figure.clear()
         ax = self.figure.add_subplot(111, projection='3d', position=[0.05, 0.05, 0.9, 0.9])
-        xarray_flat = xarray.flatten()
-        yarray_flat = yarray.flatten()
-        zarray_flat = zarray.flatten()
-        ax.plot(xarray_flat, yarray_flat, zarray_flat)
+        ax.plot(xarray, yarray, zarray)
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.set_zlabel('Z')
@@ -229,8 +226,8 @@ class MainFrame(QMainWindow):
 
         # Just for testing 3D plotting:
         self.eq_handler.set_lorenz_conditions(28, 8 / 3, 10)
-        self.tempLor = np.array([28, 8 / 3, 10])
-        init_conditions = np.array([1.0, 1.0, 1.0])
+        self.tempLor = [28, 8 / 3, 10]
+        init_conditions = [1.0, 1.0, 1.0]
         t_start = 0.0
         t_end = 40.0
         num_steps = 10000
@@ -268,7 +265,7 @@ class MainFrame(QMainWindow):
                 self.info_edit.append("1.0")
 
             t_start = 0.0
-            t_end = 40.0
+            t_end = 100.0
             num_steps = 10000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_lorenz(init_conditions, t_start, t_end, num_steps)
             self.X = xyz[:, 0]
@@ -284,43 +281,38 @@ class MainFrame(QMainWindow):
             self.info_edit.setText("ERROR: Empty parameter fields!\n")
 
     def init_roessler(self):
-        if self.roessler_params1.text != None and self.roessler_params2.text != None and self.roessler_params3.text != None:
+        if self.roessler_params1.text() and self.roessler_params2.text() and self.roessler_params3.text():
             self.info_edit.clear()
-            print(float(self.roessler_params1.text()))
-            print(float(self.roessler_params2.text()))
-            print(float(self.roessler_params3.text()))
-            self.eq_handler.set_roessler_conditions(float(self.roessler_params1.text()),
-                                                    float(self.roessler_params1.text()),
-                                                    float(self.roessler_params1.text()))
-            self.tempRoe = np.array([float(self.roessler_params1.text()), float(self.roessler_params1.text()),
-                                     float(self.roessler_params1.text())])
+            a = float(self.roessler_params1.text())
+            b = float(self.roessler_params2.text())
+            c = float(self.roessler_params3.text())
+            self.eq_handler.set_roessler_conditions(a, b, c)
+            self.tempRoe = np.array([a, b, c])
+
             if self.init_r_condition1.text() and self.init_r_condition2.text() and self.init_r_condition3.text():
-                init_conditions = np.array([float(self.init_r_condition1.text()), float(self.init_r_condition2.text()),
-                                            float(self.init_r_condition3.text())])
+                init_conditions = [float(self.init_r_condition1.text()),
+                                   float(self.init_r_condition2.text()),
+                                   float(self.init_r_condition3.text())]
                 self.info_edit.append("Initial conditions set to:")
                 self.info_edit.append(self.init_r_condition1.text())
                 self.info_edit.append(self.init_r_condition2.text())
                 self.info_edit.append(self.init_r_condition3.text())
             else:
-                init_conditions = np.array([1.0, 1.0, 1.0])
+                init_conditions = [1.0, 1.0, 1.0]
                 self.info_edit.append("Initial conditions set to:")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
-            t_start = 0.0
-            t_end = 40.0
+
+            t_start = 0
+            t_end = 500
             num_steps = 10000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_roessler(init_conditions, t_start, t_end, num_steps)
-            # debug and shit cuz roessler sometimes doesnt work - it depends on the parameter values
-            # print(xyz[:, 0])
-            # print(xyz[:, 1])
-            # print(xyz[:, 2])
+
             self.X = xyz[:, 0]
             self.Y = xyz[:, 1]
             self.Z = xyz[:, 2]
-            self.info_edit.append(self.eq_handler.print_roessler_eq(float(self.roessler_params1.text()),
-                                                                    float(self.roessler_params2.text()),
-                                                                    float(self.roessler_params3.text())))
+            self.info_edit.append(self.eq_handler.print_roessler_eq(a, b, c))
             self.sc.plot3D(self.X, self.Y, self.Z)
             self.equation = 1
         else:
