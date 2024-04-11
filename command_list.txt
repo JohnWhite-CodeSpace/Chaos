@@ -1,27 +1,14 @@
 exit->0
 refresh->1
-<<<<<<< Updated upstream
 plot 2D->2
 plot 3D->3
 plot Lorenz->4
 plot Rossler->5
-load file->6
-show eq->7
-save session->8
-equation->9
-clear terminal->10
-clear infopanel->11
-help->12
-
-plot->2
-plot Lorenz->3
-plot Roessler->4
-load plot->5
-load session->6
-show eq->7
-save plot->8
-save session->9
-equation->10
+load plot->6
+load session->7
+show eq->8
+save plot ->9
+save session->10
 clear terminal->11
 clear infopanel->12
 help->13

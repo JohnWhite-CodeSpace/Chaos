@@ -1,11 +1,9 @@
 import sys
 import re
 
-<<<<<<< Updated upstream
 import numpy as np
 from PyQt5.QtCore import QRegExp
 
-import main
 
 CommandList={}
 class Term_handler():
@@ -40,46 +38,32 @@ class Term_handler():
         print("looking for method")
         if commandNum == 0: # exit
             sys.exit()
-
         elif commandNum == 1: # refresh
             self.main_frame.redraw_figure()
-<<<<<<< Updated upstream
         elif commandNum == 2:
             print("2dplot")
         elif commandNum == 3:
             print("3dplot")
-        elif commandNum == 7:
-            self.main_frame.show_equation()
-        elif commandNum==10:
-            self.main_frame.clear_terminal()
-        elif commandNum==11:
-            self.main_frame.clear_info()
-        elif commandNum==12:
-
-        elif commandNum == 5:  # load plot
+        elif commandNum == 4:
+            print("plot Lorenz")
+        elif commandNum == 5:
+            print("plot Roessler")
+        elif commandNum == 6:  # load plot
             self.main_frame.print_onto_text_edit("loading plot... \n")
             self.load_plot()
-
-        elif commandNum == 6:  # load session
+        elif commandNum == 7:  # load session
             self.main_frame.print_onto_text_edit("loading session... \n")
-
-
-        elif commandNum == 7: # show equation
+        elif commandNum == 8: # show equation
             self.main_frame.show_equation()
-
-        elif commandNum == 8:  # save plot
+        elif commandNum == 9:  # save plot
             self.main_frame.print_onto_text_edit("saving plot...  \n")
             self.save_plot()
-
-        elif commandNum == 9:  # save session
+        elif commandNum == 10:  # save session
             self.main_frame.print_onto_text_edit("saving session...  \n")
-
         elif commandNum==11: # opcja clear terminal
             self.main_frame.clear_terminal()
-
         elif commandNum==12: # clear infopanel
             self.main_frame.clear_info()
-
         elif commandNum==13: # help
             self.main_frame.print_onto_text_edit("List of console commands: \n")
             for i in CommandList:
@@ -110,7 +94,6 @@ class Term_handler():
                 print(f"Ignoring invalid line: {line.strip()}")
         file.close()
 
-<<<<<<< Updated upstream
     # def get_User_Equation2d(self):
     #     equation = self.main_frame.get_user_Equation()
     #     if 'x' in equation and 'y' in equation:
@@ -147,11 +130,6 @@ class Term_handler():
 
             print(float(tmp[0]),float(tmp[1]),float(tmp[2]))
             self.main_frame.eq_handler.set_lorenz_conditions(tmp[0],tmp[1],tmp[2])
-
-
-
-
-<<<<<<< Updated upstream
         if txt[1] == "":
             print("no roessler parameters")
         else:

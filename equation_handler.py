@@ -5,20 +5,13 @@ class Eq_Handler():
 
     def __init__(self):
         super(Eq_Handler, self).__init__()
-<<<<<<< HEAD
-        self.lorenz_constants = {}
-        self.roessler_constants = {}
-
-    def set_lorenz_conditions(self, rho, beta, sigma):
-        self.lorenz_constants['rho'] = rho #spoko opcja na samodefniującego się enuma, nie znałem ~Tymeks
-        self.lorenz_constants['beta'] = beta
-        self.lorenz_constants['sigma'] = sigma
-
         self.constantsl = {}
         self.constantsr = {}
 
+
+
     def set_lorenz_conditions(self, rho, beta, sigma):
-        self.constantsl['rho'] = rho
+        self.constantsl['rho'] = rho #spoko opcja na samodefniującego się enuma, nie znałem ~Tymeks
         self.constantsl['beta'] = beta
         self.constantsl['sigma'] = sigma
         print(self.constantsl)
@@ -26,9 +19,9 @@ class Eq_Handler():
 
     def lorenz(self, xyz):
         x, y, z = xyz
-        dxdt = self.lorenz_constants['sigma'] * (y - x)
-        dydt = x * (self.lorenz_constants['rho'] - z) - y
-        dzdt = x * y - self.lorenz_constants['beta'] * z
+        dxdt = self.constantsl['sigma'] * (y - x)
+        dydt = x * (self.constantsl['rho'] - z) - y
+        dzdt = x * y - self.constantsl['beta'] * z
         return np.array([dxdt, dydt, dzdt])
 
     def runge_kutta_algorithm_4_lorenz(self, initial_conditions, t_start, t_end, num_steps):
@@ -47,15 +40,6 @@ class Eq_Handler():
         return t_values, xyz
 
     def set_roessler_conditions(self, a, b, c):
-<<<<<<< HEAD
-<<<<<<< HEAD
-        self.roessler_constants['a'] = a
-        self.roessler_constants['b'] = b
-        self.roessler_constants['c'] = c
-
-        self.a = a
-        self.b = b
-        self.c = c
         self.constantsr['a'] = a
         self.constantsr['b'] = b
         self.constantsr['c'] = c
@@ -64,11 +48,8 @@ class Eq_Handler():
     def roessler(self, xyz):
         x, y, z = xyz
         dxdt = -y - z
-<<<<<<< HEAD
-        dydt = x + self.roessler_constants['a'] * y
-        dzdt = self.roessler_constants['b'] + z * (x - self.roessler_constants['c'])
-        dydt = x + self.a * y
-        dzdt = self.b + z * (x - self.c)
+        dydt = x + self.constantsr['a'] * y
+        dzdt = self.constantsr['b'] + z * (x - self.constantsr['c'])
         return np.array([dxdt, dydt, dzdt])
 
     def runge_kutta_algorithm_4_roessler(self, init_conditions, t_start, t_end, num_steps):
@@ -93,7 +74,6 @@ class Eq_Handler():
                f"dzdt = xy-{beta}z\n"
 
     def print_roessler_eq(self, a, b, c):
-<<<<<<< HEAD
         return f"Rössler system:\n"\
                f"-x - y\n" \
                f"x + {a}y\n" \
@@ -111,9 +91,4 @@ class Eq_Handler():
     def load_roessler(self):
         return "test load roessler"
 
-
-        return f"Rössler system:\n" \
-               f"dxdt = -x - y\n" \
-               f"dydt = x + {a}y\n" \
-               f"dzdt = {b} + z(x -{c})\n"
 

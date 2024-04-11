@@ -9,10 +9,7 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QSplitter, QApplication, \
     QStyleFactory, QTextEdit, QWidget, QPushButton
 import terminal_handler as th
-<<<<<<< HEAD
-
 from terminal_handler import Term_handler
-
 from equation_handler import Eq_Handler
 
 matplotlib.use('Qt5Agg')
@@ -45,7 +42,6 @@ class MainFrame(QMainWindow):
 
     def __init__(self):
         super(MainFrame, self).__init__()
-<<<<<<< HEAD
         self.term_handler = th.Term_handler(self)
         self.setWindowIcon(QtGui.QIcon('icon.png'))
         self.text_edit = None
@@ -269,7 +265,6 @@ class MainFrame(QMainWindow):
 
         self.text_edit.textChanged.connect(self.look_for_enter_key)
 
-<<<<<<< HEAD
         #Just for testing 3D plotting /// eq_handler call
 
         # Just for testing 3D plotting:
