@@ -12,7 +12,7 @@ equation->9
 clear terminal->10
 clear infopanel->11
 help->12
-=======
+
 plot->2
 plot Lorenz->3
 plot Roessler->4
@@ -25,4 +25,3 @@ equation->10
 clear terminal->11
 clear infopanel->12
 help->13
->>>>>>> Stashed changes

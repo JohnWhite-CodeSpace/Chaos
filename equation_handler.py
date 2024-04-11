@@ -15,14 +15,13 @@ class Eq_Handler():
         self.lorenz_constants['sigma'] = sigma
 
         self.constantsl = {}
-        self.a = 0.2
-        self.b = 0.2
-        self.c = 0.2
+        self.constantsr = {}
 
     def set_lorenz_conditions(self, rho, beta, sigma):
         self.constantsl['rho'] = rho
         self.constantsl['beta'] = beta
         self.constantsl['sigma'] = sigma
+        print(self.constantsl)
 
 
     def lorenz(self, xyz):
@@ -49,6 +48,7 @@ class Eq_Handler():
 
     def set_roessler_conditions(self, a, b, c):
 <<<<<<< HEAD
+<<<<<<< HEAD
         self.roessler_constants['a'] = a
         self.roessler_constants['b'] = b
         self.roessler_constants['c'] = c
@@ -56,6 +56,10 @@ class Eq_Handler():
         self.a = a
         self.b = b
         self.c = c
+        self.constantsr['a'] = a
+        self.constantsr['b'] = b
+        self.constantsr['c'] = c
+        print("kutas")
 
     def roessler(self, xyz):
         x, y, z = xyz

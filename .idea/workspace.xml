@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7332fe19-3183-4b24-bcd2-98318d5b403e" name="Changes" comment="">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/saved_plots.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Chaos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Chaos.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
@@ -17,6 +18,8 @@
 >>>>>>> Stashed changes
 =======
       <change beforePath="$PROJECT_DIR$/.idea/Chaos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Chaos.iml" afterDir="false" />
+=======
+>>>>>>> 6f789b62b597caf272042a39250cb40ef8a57d1c
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/equation_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/equation_handler.py" afterDir="false" />
@@ -65,6 +68,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       <option name="SDK_HOME" value="C:\Users\janbi\PycharmProjects\SymPlot\venv\Scripts\python.exe" />
       <option name="SDK_NAME" value="Python 3.11 (SymPlot)" />
@@ -75,6 +79,10 @@
       <option name="SDK_HOME" value="D:\Moje dane\Programy Python\Chaos\venv\Scripts\python.exe" />
       <option name="SDK_NAME" value="Python 3.9 (Chaos)" />
 >>>>>>> 2d4ca28052f98ab0ce60ca168c039a25b48f3bd6
+=======
+      <option name="SDK_HOME" value="C:\Users\janbi\AppData\Local\Programs\Python\Python311\python.exe" />
+      <option name="SDK_NAME" value="Python 3.11" />
+>>>>>>> 6f789b62b597caf272042a39250cb40ef8a57d1c
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />

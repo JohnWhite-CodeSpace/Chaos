@@ -2,13 +2,11 @@ import sys
 import re
 
 <<<<<<< Updated upstream
-=======
 import numpy as np
 from PyQt5.QtCore import QRegExp
 
 import main
 
->>>>>>> Stashed changes
 CommandList={}
 class Term_handler():
     def __init__(self, main_frame):
@@ -57,7 +55,6 @@ class Term_handler():
         elif commandNum==11:
             self.main_frame.clear_info()
         elif commandNum==12:
-=======
 
         elif commandNum == 5:  # load plot
             self.main_frame.print_onto_text_edit("loading plot... \n")
@@ -84,7 +81,6 @@ class Term_handler():
             self.main_frame.clear_info()
 
         elif commandNum==13: # help
->>>>>>> Stashed changes
             self.main_frame.print_onto_text_edit("List of console commands: \n")
             for i in CommandList:
                 self.main_frame.print_onto_text_edit(CommandList[i][0])
@@ -120,7 +116,6 @@ class Term_handler():
     #     if 'x' in equation and 'y' in equation:
     #
     #         if '^' in equation:
-=======
     def save_plot(self):
         file = open("saved_plots.txt", 'w')
         if len(self.main_frame.eq_handler.lorenz_constants) != 0:
@@ -152,13 +147,11 @@ class Term_handler():
 
             print(float(tmp[0]),float(tmp[1]),float(tmp[2]))
             self.main_frame.eq_handler.set_lorenz_conditions(tmp[0],tmp[1],tmp[2])
->>>>>>> Stashed changes
 
 
 
 
 <<<<<<< Updated upstream
-=======
         if txt[1] == "":
             print("no roessler parameters")
         else:
@@ -167,7 +160,6 @@ class Term_handler():
             self.main_frame.eq_handler.set_roessler_conditions(tmp[0],tmp[1],tmp[2])
 
         self.main_frame.print_onto_text_edit("plot loaded succesfully")
->>>>>>> Stashed changes
 
 
 
