@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7332fe19-3183-4b24-bcd2-98318d5b403e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Chaos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Chaos.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/equation_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/equation_handler.py" afterDir="false" />
@@ -52,8 +51,8 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\Moje dane\Programy Python\Chaos\venv\Scripts\python.exe" />
-      <option name="SDK_NAME" value="Python 3.9 (Chaos)" />
+      <option name="SDK_HOME" value="C:\Users\janbi\AppData\Local\Programs\Python\Python311\python.exe" />
+      <option name="SDK_NAME" value="Python 3.11" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />

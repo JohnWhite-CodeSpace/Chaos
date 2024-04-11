@@ -283,11 +283,11 @@ class MainFrame(QMainWindow):
     def init_roessler(self):
         if self.roessler_params1.text() and self.roessler_params2.text() and self.roessler_params3.text():
             self.info_edit.clear()
-            a = float(self.roessler_params1.text())
-            b = float(self.roessler_params2.text())
-            c = float(self.roessler_params3.text())
-            self.eq_handler.set_roessler_conditions(a, b, c)
-            self.tempRoe = np.array([a, b, c])
+            self.eq_handler.set_roessler_conditions(float(self.roessler_params1.text()),
+                                                    float(self.roessler_params2.text()),
+                                                    float(self.roessler_params3.text()))
+            self.tempRoe = np.array([float(self.roessler_params1.text()), float(self.roessler_params2.text()),
+                                     float(self.roessler_params3.text())])
 
             if self.init_r_condition1.text() and self.init_r_condition2.text() and self.init_r_condition3.text():
                 init_conditions = [float(self.init_r_condition1.text()),
@@ -305,14 +305,16 @@ class MainFrame(QMainWindow):
                 self.info_edit.append("1.0")
 
             t_start = 0
-            t_end = 500
+            t_end = 400
             num_steps = 10000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_roessler(init_conditions, t_start, t_end, num_steps)
 
             self.X = xyz[:, 0]
             self.Y = xyz[:, 1]
             self.Z = xyz[:, 2]
-            self.info_edit.append(self.eq_handler.print_roessler_eq(a, b, c))
+            self.info_edit.append(self.eq_handler.print_roessler_eq(float(self.roessler_params1.text()),
+                                                                    float(self.roessler_params2.text()),
+                                                                    float(self.roessler_params3.text())))
             self.sc.plot3D(self.X, self.Y, self.Z)
             self.equation = 1
         else:
