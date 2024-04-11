@@ -277,6 +277,22 @@ class MainFrame(QMainWindow):
         self.info_edit.setText(self.eq_handler.print_lorenz_eq(28, 8 / 3, 10))
 
         self.sc.plot3D(self.X, self.Y, self.Z)
+        self.lorenz_params1.setText('28')
+        self.lorenz_params2.setText('2.6666666')
+        self.lorenz_params3.setText('10')
+        self.roessler_params1.setText('0.1')
+        self.roessler_params2.setText('0.1')
+        self.roessler_params3.setText('14')
+        self.init_r_condition1.setText('1.0')
+        self.init_r_condition2.setText('1.0')
+        self.init_r_condition3.setText('1.0')
+        self.init_l_condition1.setText('1.0')
+        self.init_l_condition2.setText('1.0')
+        self.init_l_condition3.setText('1.0')
+        self.step_start.setText('0')
+        self.step_stop.setText('50')
+        self.step_count.setText('10000')
+
 
     def look_for_enter_key(self):
         if self.text_edit.toPlainText().endswith('\n'):
@@ -301,6 +317,9 @@ class MainFrame(QMainWindow):
                 self.info_edit.append(self.init_l_condition3.text())
             else:
                 init_conditions = np.array([1.0, 1.0, 1.0])
+                self.init_l_condition1.setText('1.0')
+                self.init_l_condition2.setText('1.0')
+                self.init_l_condition3.setText('1.0')
                 self.info_edit.append("Initial conditions set to:")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
@@ -310,6 +329,9 @@ class MainFrame(QMainWindow):
                 t_end = int(self.step_stop.text())
                 num_steps = int(self.step_count.text())
             else:
+                self.step_start.setText('0')
+                self.step_stop.setText('50')
+                self.step_count.setText('10000')
                 t_start = 0
                 t_end = 50
                 num_steps = 10000
@@ -351,6 +373,9 @@ class MainFrame(QMainWindow):
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
+                self.init_r_condition1.setText('1.0')
+                self.init_r_condition2.setText('1.0')
+                self.init_r_condition3.setText('1.0')
             if self.step_start.text() and self.step_stop.text() and self.step_count.text():
                 t_start = int(self.step_start.text())
                 t_end = int(self.step_stop.text())
@@ -359,6 +384,9 @@ class MainFrame(QMainWindow):
                 t_start = 0
                 t_end = 400
                 num_steps = 10000
+                self.step_start.setText('0')
+                self.step_stop.setText('400')
+                self.step_count.setText('10000')
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_roessler(init_conditions, t_start, t_end, num_steps)
 
             self.X = xyz[:, 0]
