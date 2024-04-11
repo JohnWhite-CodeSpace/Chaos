@@ -1,5 +1,6 @@
 import sys
 import matplotlib
+from matplotlib import pyplot as plt
 from PyQt5.QtGui import QFont
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
@@ -28,15 +29,12 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
         ax.set_zlabel('Z')
         self.draw()
 
-    def plot2D(self, xarray, yarray):
+    def plot2D(self, xarray, yarray, label1, label2, color):
         self.figure.clear()
-        axe = self.figure.add_subplot(111)
-        xarray_flat = xarray.flatten()
-        yarray_flat = yarray.flatten()
-        axe.plot(xarray_flat, yarray_flat, 'ok')
-        axe.plot(xarray_flat, yarray_flat, 'r-')
-        axe.set_xlabel('X')
-        axe.set_ylabel('Y')
+        ax = self.figure.add_subplot(111, position=[0.15, 0.2, 0.8, 0.8])
+        ax.plot(xarray, yarray, color=color)
+        ax.set_xlabel(label1)
+        ax.set_ylabel(label2)
         self.draw()
 
 
@@ -63,6 +61,9 @@ class MainFrame(QMainWindow):
 
     def initUI(self):
         self.sc = MplCanvas3D2D()
+        self.scNoise1 = MplCanvas3D2D()
+        self.scNoise2 = MplCanvas3D2D()
+        self.scNoise3 = MplCanvas3D2D()
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
@@ -113,6 +114,34 @@ class MainFrame(QMainWindow):
         l_condition_layout.addWidget(self.init_l_condition1)
         l_condition_layout.addWidget(self.init_l_condition2)
         l_condition_layout.addWidget(self.init_l_condition3)
+
+        steps_layout = QHBoxLayout()
+
+        steps_label = QLabel("t0, tn and N step values:")
+        self.step_start = QtWidgets.QLineEdit(self)
+        t0_layout = QHBoxLayout()
+        step_start_label = QLabel("t0:")
+        self.step_stop = QtWidgets.QLineEdit(self)
+        tn_layout =  QHBoxLayout()
+        step_stop_label = QLabel('tn:')
+        n_layout = QHBoxLayout()
+        self.step_count = QtWidgets.QLineEdit(self)
+        step_count_label = QLabel('N:')
+
+        t0_layout.addWidget(step_start_label)
+        t0_layout.addWidget(self.step_start)
+
+        tn_layout.addWidget(step_stop_label)
+        tn_layout.addWidget(self.step_stop)
+
+        n_layout.addWidget(step_count_label)
+        n_layout.addWidget(self.step_count)
+
+        steps_layout.addLayout(t0_layout)
+        steps_layout.addLayout(tn_layout)
+        steps_layout.addLayout(n_layout)
+
+
 
         menu_sublayout = QHBoxLayout()
         lorenz_layout1 = QHBoxLayout()
@@ -183,6 +212,8 @@ class MainFrame(QMainWindow):
         left_layout.setSpacing(5)
         left_layout.addWidget(left_label)
         left_layout.addLayout(menu_sublayout)
+        left_layout.addWidget(steps_label)
+        left_layout.addLayout(steps_layout)
         left_layout.addWidget(plot_button)
         left_layout.addWidget(load_data)
         left_layout.addWidget(info_label)
@@ -195,10 +226,18 @@ class MainFrame(QMainWindow):
 
         right_label = QLabel('Plot Panel:', right)
         right_layout = QVBoxLayout(right)
-        right_layout.addWidget(right_label)
+        right_layout.addWidget(right_label, 1)
         toolbar = NavigationToolbar(self.sc, self)
-        right_layout.addWidget(toolbar)
-        right_layout.addWidget(self.sc)
+        right_layout.addWidget(toolbar, 4)
+        right_layout.addWidget(self.sc, 60)
+
+        noise_layout = QHBoxLayout()
+        noise_layout.addWidget(self.scNoise1)
+        noise_layout.addWidget(self.scNoise2)
+        noise_layout.addWidget(self.scNoise3)
+
+        right_layout.addLayout(noise_layout, 35)
+
         right.setLayout(right_layout)
 
         splitter = QSplitter()
@@ -215,8 +254,8 @@ class MainFrame(QMainWindow):
         term_layout.addWidget(self.text_edit)
         hbox_bottom.addLayout(term_layout)
 
-        vbox.addLayout(hbox_splitter, 80)
-        vbox.addLayout(hbox_bottom, 20)
+        vbox.addLayout(hbox_splitter, 85)
+        vbox.addLayout(hbox_bottom, 15)
 
         QApplication.setStyle(QStyleFactory.create('Cleanlooks'))
         self.setGeometry(0, 0, 1200, 800)
@@ -245,14 +284,17 @@ class MainFrame(QMainWindow):
 
     def init_lorenz(self):
         self.info_edit.clear()
-        if (self.lorenz_params1.text() != "" and self.lorenz_params2.text() != "" and self.lorenz_params3.text() != ""):
+        if self.lorenz_params1.text() and self.lorenz_params2.text() and self.lorenz_params3.text():
+            print(float(self.lorenz_params1.text()))
+            print(float(self.lorenz_params2.text()))
+            print(float(self.lorenz_params3.text()))
             self.eq_handler.set_lorenz_conditions(float(self.lorenz_params1.text()), float(self.lorenz_params2.text()),
                                                   float(self.lorenz_params3.text()))
             self.tempLor = np.array([float(self.lorenz_params1.text()), float(self.lorenz_params2.text()),
                                      float(self.lorenz_params3.text())])
-            if (self.init_l_condition1.text() and self.init_l_condition2.text() and self.init_l_condition3.text()):
-                init_conditions = np.array([float(self.init_l_condition1.text()), float(self.init_l_condition2.text()),
-                                            float(self.init_l_condition3.text())])
+            if self.init_l_condition1.text() and self.init_l_condition2.text() and self.init_l_condition3.text():
+                init_conditions = [float(self.init_l_condition1.text()), float(self.init_l_condition2.text()),
+                                   float(self.init_l_condition3.text())]
                 self.info_edit.append("Initial conditions set to:")
                 self.info_edit.append(self.init_l_condition1.text())
                 self.info_edit.append(self.init_l_condition2.text())
@@ -263,10 +305,14 @@ class MainFrame(QMainWindow):
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
-
-            t_start = 0.0
-            t_end = 100.0
-            num_steps = 10000
+            if self.step_start.text() and self.step_stop.text() and self.step_count.text():
+                t_start = int(self.step_start.text())
+                t_end = int(self.step_stop.text())
+                num_steps = int(self.step_count.text())
+            else:
+                t_start = 0
+                t_end = 50
+                num_steps = 10000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_lorenz(init_conditions, t_start, t_end, num_steps)
             self.X = xyz[:, 0]
             self.Y = xyz[:, 1]
@@ -277,6 +323,8 @@ class MainFrame(QMainWindow):
                                                 float(self.lorenz_params3.text())))
             self.sc.plot3D(self.X, self.Y, self.Z)
             self.equation = 0
+            t = np.linspace(t_start, t_end, num_steps)
+            self.draw_noise_plots(t, self.X, self.Y, self.Z)
         else:
             self.info_edit.setText("ERROR: Empty parameter fields!\n")
 
@@ -303,10 +351,14 @@ class MainFrame(QMainWindow):
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
-
-            t_start = 0
-            t_end = 400
-            num_steps = 10000
+            if self.step_start.text() and self.step_stop.text() and self.step_count.text():
+                t_start = int(self.step_start.text())
+                t_end = int(self.step_stop.text())
+                num_steps = int(self.step_count.text())
+            else:
+                t_start = 0
+                t_end = 400
+                num_steps = 10000
             t_values, xyz = self.eq_handler.runge_kutta_algorithm_4_roessler(init_conditions, t_start, t_end, num_steps)
 
             self.X = xyz[:, 0]
@@ -317,19 +369,23 @@ class MainFrame(QMainWindow):
                                                                     float(self.roessler_params3.text())))
             self.sc.plot3D(self.X, self.Y, self.Z)
             self.equation = 1
+            t = np.linspace(t_start, t_end, num_steps)
+            self.draw_noise_plots(t, self.X, self.Y, self.Z)
         else:
             self.info_edit.setText("ERROR: Empty parameter fields!\n")
 
     # def load_from_file(self):
     #
     # def save_to_file(self):
+
+    def draw_noise_plots(self, t_num, X, Y, Z):
+        self.scNoise1.plot2D(t_num, X, 'Time steps', 'X', 'red')
+        self.scNoise2.plot2D(t_num, Y, 'Time steps', 'Y', 'green')
+        self.scNoise3.plot2D(t_num, Z, 'Time steps', 'Z', 'orange')
+
     def redraw_figure(self):
         self.sc.draw()
         self.sc.plot3D(self.X, self.Y, self.Z)
-
-    # def set_init_conditions_roessler(self):
-
-    # def set_init_conditions_lorenz(self):
 
     def print_onto_text_edit(self, text):
         self.info_edit.append(f"{text}")

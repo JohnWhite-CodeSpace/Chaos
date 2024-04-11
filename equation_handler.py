@@ -12,6 +12,7 @@ class Eq_Handler():
         self.constantsl['rho'] = rho
         self.constantsl['beta'] = beta
         self.constantsl['sigma'] = sigma
+        print(self.constantsl)
 
     def lorenz(self, xyz):
         x, y, z = xyz
