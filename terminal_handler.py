@@ -101,6 +101,7 @@ class Term_handler():
     #         if '^' in equation:
     def save_plot(self):
         file = open("saved_plots.txt", 'w')
+        # lorenz parameters
         file.write(self.main_frame.lorenz_params1.text())
         file.write(",")
         file.write(self.main_frame.lorenz_params2.text())
@@ -108,11 +109,38 @@ class Term_handler():
         file.write(self.main_frame.lorenz_params3.text())
         file.write("\n")
 
+        # lorenz start condition
+        file.write(self.main_frame.init_l_condition1.text())
+        file.write(",")
+        file.write(self.main_frame.init_l_condition2.text())
+        file.write(",")
+        file.write(self.main_frame.init_l_condition3.text())
+        file.write("\n")
+
+        # roessler parameters
         file.write(self.main_frame.roessler_params1.text())
         file.write(",")
         file.write(self.main_frame.roessler_params2.text())
         file.write(",")
         file.write(self.main_frame.roessler_params3.text())
+        file.write("\n")
+
+        # roessler start condition
+        file.write(self.main_frame.init_r_condition1.text())
+        file.write(",")
+        file.write(self.main_frame.init_r_condition2.text())
+        file.write(",")
+        file.write(self.main_frame.init_r_condition3.text())
+        file.write("\n")
+
+        # stop start step
+        file.write(self.main_frame.step_start.text())
+        file.write(",")
+        file.write(self.main_frame.step_stop.text())
+        file.write(",")
+        file.write(self.main_frame.step_count.text())
+
+
 
         self.main_frame.print_onto_text_edit("saved plot for parameters")
 
@@ -131,13 +159,40 @@ class Term_handler():
             self.main_frame.lorenz_params3.setText(tmp[2])
 
         if txt[1] == "":
-            print("no roessler parameters")
+            print("no lorenz starting conditions")
         else:
             tmp = txt[1].split(',')
+            print(tmp[0], tmp[1], tmp[2])
+            self.main_frame.init_l_condition1.setText(tmp[0])
+            self.main_frame.init_l_condition2.setText(tmp[1])
+            self.main_frame.init_l_condition3.setText(tmp[2])
+
+        if txt[2] == "":
+            print("no roessler parameters")
+        else:
+            tmp = txt[2].split(',')
             print(tmp[0],tmp[1],tmp[2])
             self.main_frame.roessler_params1.setText(tmp[0])
             self.main_frame.roessler_params2.setText(tmp[1])
             self.main_frame.roessler_params3.setText(tmp[2])
+
+        if txt[3] == "":
+            print("no roessler starting conditions")
+        else:
+            tmp = txt[3].split(',')
+            print(tmp[0], tmp[1], tmp[2])
+            self.main_frame.init_r_condition1.setText(tmp[0])
+            self.main_frame.init_r_condition2.setText(tmp[1])
+            self.main_frame.init_r_condition3.setText(tmp[2])
+
+        if txt[4] == "":
+            print("no step conditions")
+        else:
+            tmp = txt[4].split(',')
+            print(tmp[0], tmp[1], tmp[2])
+            self.main_frame.step_start.setText(tmp[0])
+            self.main_frame.step_stop.setText(tmp[1])
+            self.main_frame.step_count.setText(tmp[2])
 
         file.close()
 

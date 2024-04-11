@@ -54,6 +54,17 @@ class MainFrame(QMainWindow):
         self.roessler_params2 = None
         self.roessler_params3 = None
 
+        self.init_l_condition1 = None
+        self.init_l_condition2 = None
+        self.init_l_condition3 = None
+        self.init_r_condition1 = None
+        self.init_r_condition2 = None
+        self.init_r_condition3 = None
+
+        self.step_start = None
+        self.step_stop = None
+        self.step_count = None
+
         self.term_handler = Term_handler(self)
 
         self.eq_handler = Eq_Handler()
