@@ -7,7 +7,7 @@ plot Rossler->5
 load plot->6
 load session->7
 show eq->8
-save plot ->9
+save plot->9
 save session->10
 clear terminal->11
 clear infopanel->12

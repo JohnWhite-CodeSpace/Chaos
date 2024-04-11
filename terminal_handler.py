@@ -101,20 +101,18 @@ class Term_handler():
     #         if '^' in equation:
     def save_plot(self):
         file = open("saved_plots.txt", 'w')
-        if len(self.main_frame.eq_handler.lorenz_constants) != 0:
-            file.write(str(self.main_frame.eq_handler.lorenz_constants['rho']))
-            file.write(",")
-            file.write(str(self.main_frame.eq_handler.lorenz_constants['beta']))
-            file.write(",")
-            file.write(str(self.main_frame.eq_handler.lorenz_constants['sigma']))
-            file.write("\n")
+        file.write(self.main_frame.lorenz_params1.text())
+        file.write(",")
+        file.write(self.main_frame.lorenz_params2.text())
+        file.write(",")
+        file.write(self.main_frame.lorenz_params3.text())
+        file.write("\n")
 
-        if len(self.main_frame.eq_handler.roessler_constants) != 0:
-            file.write(str(self.main_frame.eq_handler.roessler_constants['a']))
-            file.write(",")
-            file.write(str(self.main_frame.eq_handler.roessler_constants['b']))
-            file.write(",")
-            file.write(str(self.main_frame.eq_handler.roessler_constants['c']))
+        file.write(self.main_frame.roessler_params1.text())
+        file.write(",")
+        file.write(self.main_frame.roessler_params2.text())
+        file.write(",")
+        file.write(self.main_frame.roessler_params3.text())
 
         self.main_frame.print_onto_text_edit("saved plot for parameters")
 
@@ -127,15 +125,21 @@ class Term_handler():
             print("no lorenz parameters")
         else:
             tmp = txt[0].split(',')
+            print(tmp[0], tmp[1], tmp[2])
+            self.main_frame.lorenz_params1.setText(tmp[0])
+            self.main_frame.lorenz_params2.setText(tmp[1])
+            self.main_frame.lorenz_params3.setText(tmp[2])
 
-            print(float(tmp[0]),float(tmp[1]),float(tmp[2]))
-            self.main_frame.eq_handler.set_lorenz_conditions(tmp[0],tmp[1],tmp[2])
         if txt[1] == "":
             print("no roessler parameters")
         else:
             tmp = txt[1].split(',')
-            print(float(tmp[0]),float(tmp[1]),float(tmp[2]))
-            self.main_frame.eq_handler.set_roessler_conditions(tmp[0],tmp[1],tmp[2])
+            print(tmp[0],tmp[1],tmp[2])
+            self.main_frame.roessler_params1.setText(tmp[0])
+            self.main_frame.roessler_params2.setText(tmp[1])
+            self.main_frame.roessler_params3.setText(tmp[2])
+
+        file.close()
 
         self.main_frame.print_onto_text_edit("plot loaded succesfully")
 

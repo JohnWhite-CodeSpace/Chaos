@@ -46,9 +46,14 @@ class MainFrame(QMainWindow):
         self.setWindowIcon(QtGui.QIcon('icon.png'))
         self.text_edit = None
         self.sc = None
+
         self.lorenz_params3 = None
         self.lorenz_params2 = None
         self.lorenz_params1 = None
+        self.roessler_params1 = None
+        self.roessler_params2 = None
+        self.roessler_params3 = None
+
         self.term_handler = Term_handler(self)
 
         self.eq_handler = Eq_Handler()
@@ -87,6 +92,7 @@ class MainFrame(QMainWindow):
         init_r_button = QPushButton("Rössler plot")
         init_r_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         init_r_button.pressed.connect(self.init_roessler)
+
 
         init_l_button = QPushButton("Lorenz plot")
         init_l_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
