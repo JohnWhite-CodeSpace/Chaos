@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< Updated upstream
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11" project-jdk-type="Python SDK" />
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9" project-jdk-type="Python SDK" />
+>>>>>>> Stashed changes
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (Chaos)" project-jdk-type="Python SDK" />
+>>>>>>> 2d4ca28052f98ab0ce60ca168c039a25b48f3bd6
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11" project-jdk-type="Python SDK" />
+>>>>>>> 6f789b62b597caf272042a39250cb40ef8a57d1c
 </project>

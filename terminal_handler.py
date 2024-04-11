@@ -1,4 +1,9 @@
 import sys
+import re
+
+import numpy as np
+from PyQt5.QtCore import QRegExp
+
 
 CommandList={}
 class Term_handler():
@@ -23,6 +28,7 @@ class Term_handler():
         if(commandcheck==0):
             self.main_frame.print_onto_text_edit(f"ERROR: There is no such command as '{foundcom}'!")
 
+
     def get_last_non_empty_line(self, lines):
         for line in reversed(lines):
             if line.strip():
@@ -30,21 +36,35 @@ class Term_handler():
 
     def check_command_type(self, commandNum, textedit):
         print("looking for method")
-        if commandNum == 0:
+        if commandNum == 0: # exit
             sys.exit()
-        elif commandNum == 1:
+        elif commandNum == 1: # refresh
             self.main_frame.redraw_figure()
         elif commandNum == 2:
             print("2dplot")
         elif commandNum == 3:
             print("3dplot")
-        elif commandNum == 7:
+        elif commandNum == 4:
+            print("plot Lorenz")
+        elif commandNum == 5:
+            print("plot Roessler")
+        elif commandNum == 6:  # load plot
+            self.main_frame.print_onto_text_edit("loading plot... \n")
+            self.load_plot()
+        elif commandNum == 7:  # load session
+            self.main_frame.print_onto_text_edit("loading session... \n")
+        elif commandNum == 8: # show equation
             self.main_frame.show_equation()
-        elif commandNum==10:
+        elif commandNum == 9:  # save plot
+            self.main_frame.print_onto_text_edit("saving plot...  \n")
+            self.save_plot()
+        elif commandNum == 10:  # save session
+            self.main_frame.print_onto_text_edit("saving session...  \n")
+        elif commandNum==11: # opcja clear terminal
             self.main_frame.clear_terminal()
-        elif commandNum==11:
+        elif commandNum==12: # clear infopanel
             self.main_frame.clear_info()
-        elif commandNum==12:
+        elif commandNum==13: # help
             self.main_frame.print_onto_text_edit("List of console commands: \n")
             for i in CommandList:
                 self.main_frame.print_onto_text_edit(CommandList[i][0])
@@ -79,10 +99,45 @@ class Term_handler():
     #     if 'x' in equation and 'y' in equation:
     #
     #         if '^' in equation:
+    def save_plot(self):
+        file = open("saved_plots.txt", 'w')
+        if len(self.main_frame.eq_handler.lorenz_constants) != 0:
+            file.write(str(self.main_frame.eq_handler.lorenz_constants['rho']))
+            file.write(",")
+            file.write(str(self.main_frame.eq_handler.lorenz_constants['beta']))
+            file.write(",")
+            file.write(str(self.main_frame.eq_handler.lorenz_constants['sigma']))
+            file.write("\n")
 
+        if len(self.main_frame.eq_handler.roessler_constants) != 0:
+            file.write(str(self.main_frame.eq_handler.roessler_constants['a']))
+            file.write(",")
+            file.write(str(self.main_frame.eq_handler.roessler_constants['b']))
+            file.write(",")
+            file.write(str(self.main_frame.eq_handler.roessler_constants['c']))
 
+        self.main_frame.print_onto_text_edit("saved plot for parameters")
 
+    def load_plot(self):
+        file = open("saved_plots.txt", 'r')
+        tmp = file.read()
+        txt = tmp.split("\n")
 
+        if txt[0] == "":
+            print("no lorenz parameters")
+        else:
+            tmp = txt[0].split(',')
+
+            print(float(tmp[0]),float(tmp[1]),float(tmp[2]))
+            self.main_frame.eq_handler.set_lorenz_conditions(tmp[0],tmp[1],tmp[2])
+        if txt[1] == "":
+            print("no roessler parameters")
+        else:
+            tmp = txt[1].split(',')
+            print(float(tmp[0]),float(tmp[1]),float(tmp[2]))
+            self.main_frame.eq_handler.set_roessler_conditions(tmp[0],tmp[1],tmp[2])
+
+        self.main_frame.print_onto_text_edit("plot loaded succesfully")
 
 
 

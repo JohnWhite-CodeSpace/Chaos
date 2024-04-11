@@ -42,6 +42,7 @@ class MainFrame(QMainWindow):
 
     def __init__(self):
         super(MainFrame, self).__init__()
+        self.term_handler = th.Term_handler(self)
         self.setWindowIcon(QtGui.QIcon('icon.png'))
         self.text_edit = None
         self.sc = None
@@ -49,6 +50,7 @@ class MainFrame(QMainWindow):
         self.lorenz_params2 = None
         self.lorenz_params1 = None
         self.term_handler = Term_handler(self)
+
         self.eq_handler = Eq_Handler()
         th.Term_handler.load_command_base(self)
         self.equation = 0
@@ -263,6 +265,8 @@ class MainFrame(QMainWindow):
 
         self.text_edit.textChanged.connect(self.look_for_enter_key)
 
+        #Just for testing 3D plotting /// eq_handler call
+
         # Just for testing 3D plotting:
         self.eq_handler.set_lorenz_conditions(28, 8 / 3, 10)
         self.tempLor = [28, 8 / 3, 10]
@@ -297,6 +301,7 @@ class MainFrame(QMainWindow):
     def look_for_enter_key(self):
         if self.text_edit.toPlainText().endswith('\n'):
             self.term_handler.get_command(self.text_edit, self.text_edit.toPlainText())
+
 
     def init_lorenz(self):
         self.info_edit.clear()

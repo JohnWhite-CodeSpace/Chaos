@@ -8,11 +8,14 @@ class Eq_Handler():
         self.constantsl = {}
         self.constantsr = {}
 
+
+
     def set_lorenz_conditions(self, rho, beta, sigma):
-        self.constantsl['rho'] = rho
+        self.constantsl['rho'] = rho #spoko opcja na samodefniującego się enuma, nie znałem ~Tymeks
         self.constantsl['beta'] = beta
         self.constantsl['sigma'] = sigma
         print(self.constantsl)
+
 
     def lorenz(self, xyz):
         x, y, z = xyz
@@ -71,7 +74,21 @@ class Eq_Handler():
                f"dzdt = xy-{beta}z\n"
 
     def print_roessler_eq(self, a, b, c):
-        return f"Rössler system:\n" \
-               f"dxdt = -x - y\n" \
-               f"dydt = x + {a}y\n" \
-               f"dzdt = {b} + z(x -{c})\n"
+        return f"Rössler system:\n"\
+               f"-x - y\n" \
+               f"x + {a}y\n" \
+               f"{b} + z(x -{c})\n"
+
+    def save_lorenz(self):
+        return "test save lorenz"
+
+    def save_roessler(self):
+        return "test save roessler"
+
+    def load_lorenz(self):
+        return "test load lorenz"
+
+    def load_roessler(self):
+        return "test load roessler"
+
+
