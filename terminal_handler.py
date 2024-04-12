@@ -1,77 +1,77 @@
-import sys
 import re
+import sys
 
 import numpy as np
 from PyQt5.QtCore import QRegExp
 
+CommandList = {}
 
-CommandList={}
+
 class Term_handler():
     def __init__(self, main_frame):
         self.main_frame = main_frame
 
-
-    def get_command(self, textedit, text):
+    def get_command(self, textedit, text):  # gets command for later type determination
         commandcheck = 0
         command = text.split('\n')
         foundcom = self.get_last_non_empty_line(command)
         if CommandList is not None:
-            num=0
-            while(num<=len(CommandList)-1):
-                if(foundcom == CommandList[num][0]):
+            num = 0
+            while (num <= len(CommandList) - 1):
+                if (foundcom == CommandList[num][0]):
                     value = int(CommandList[num][1])
                     print(value)
                     self.check_command_type(value, textedit)
-                    commandcheck=1
+                    commandcheck = 1
                     break
                 num += 1
-        if(commandcheck==0):
+        if (commandcheck == 0):
             self.main_frame.print_onto_text_edit(f"ERROR: There is no such command as '{foundcom}'!")
-
 
     def get_last_non_empty_line(self, lines):
         for line in reversed(lines):
             if line.strip():
                 return line
 
-    def check_command_type(self, commandNum, textedit):
+    def check_command_type(self, commandNum, textedit):  # listening to command types
         print("looking for method")
-        if commandNum == 0: # exit
+        if commandNum == 0:  # exit
             sys.exit()
-        elif commandNum == 1: # refresh
+        elif commandNum == 1:  # refresh
             self.main_frame.redraw_figure()
-        elif commandNum == 2:
+        elif commandNum == 2:  # plot 2d
             print("2dplot")
-        elif commandNum == 3:
+        elif commandNum == 3:  # plot 3d
             print("3dplot")
-        elif commandNum == 4:
+        elif commandNum == 4:  # plot lorenz
             print("plot Lorenz")
-        elif commandNum == 5:
+        elif commandNum == 5:  # plot roessler
             print("plot Roessler")
         elif commandNum == 6:  # load plot
             self.main_frame.print_onto_text_edit("loading plot... \n")
             self.load_plot()
         elif commandNum == 7:  # load session
             self.main_frame.print_onto_text_edit("loading session... \n")
-        elif commandNum == 8: # show equation
+        elif commandNum == 8:  # show equation
             self.main_frame.show_equation()
         elif commandNum == 9:  # save plot
             self.main_frame.print_onto_text_edit("saving plot...  \n")
             self.save_plot()
         elif commandNum == 10:  # save session
             self.main_frame.print_onto_text_edit("saving session...  \n")
-        elif commandNum==11: # opcja clear terminal
+        elif commandNum == 11:  # opcja clear terminal
             self.main_frame.clear_terminal()
-        elif commandNum==12: # clear infopanel
+        elif commandNum == 12:  # clear infopanel
             self.main_frame.clear_info()
-        elif commandNum==13: # help
+        elif commandNum == 13:  # help
             self.main_frame.print_onto_text_edit("List of console commands: \n")
             for i in CommandList:
                 self.main_frame.print_onto_text_edit(CommandList[i][0])
                 print(CommandList[i][0])
         else:
-            print("some debug bullshit")
-    def load_command_base(self):
+            print("no such command")
+
+    def load_command_base(self):  # loads commands from file
         file = open("command_list.txt")
         linenum = 0
         while True:
@@ -140,7 +140,7 @@ class Term_handler():
         file.write(",")
         file.write(self.main_frame.step_count.text())
 
-
+        file.close()
 
         self.main_frame.print_onto_text_edit("saved plot for parameters")
 
@@ -149,6 +149,7 @@ class Term_handler():
         tmp = file.read()
         txt = tmp.split("\n")
 
+        # load lorenz parameters
         if txt[0] == "":
             print("no lorenz parameters")
         else:
@@ -158,6 +159,7 @@ class Term_handler():
             self.main_frame.lorenz_params2.setText(tmp[1])
             self.main_frame.lorenz_params3.setText(tmp[2])
 
+        # load lorenz conditions
         if txt[1] == "":
             print("no lorenz starting conditions")
         else:
@@ -167,15 +169,17 @@ class Term_handler():
             self.main_frame.init_l_condition2.setText(tmp[1])
             self.main_frame.init_l_condition3.setText(tmp[2])
 
+        # load roessler parameters
         if txt[2] == "":
             print("no roessler parameters")
         else:
             tmp = txt[2].split(',')
-            print(tmp[0],tmp[1],tmp[2])
+            print(tmp[0], tmp[1], tmp[2])
             self.main_frame.roessler_params1.setText(tmp[0])
             self.main_frame.roessler_params2.setText(tmp[1])
             self.main_frame.roessler_params3.setText(tmp[2])
 
+        # load roessler conditions
         if txt[3] == "":
             print("no roessler starting conditions")
         else:
@@ -185,6 +189,7 @@ class Term_handler():
             self.main_frame.init_r_condition2.setText(tmp[1])
             self.main_frame.init_r_condition3.setText(tmp[2])
 
+        # load step conditions
         if txt[4] == "":
             print("no step conditions")
         else:
@@ -195,9 +200,4 @@ class Term_handler():
             self.main_frame.step_count.setText(tmp[2])
 
         file.close()
-
         self.main_frame.print_onto_text_edit("plot loaded succesfully")
-
-
-
-

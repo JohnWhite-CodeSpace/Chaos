@@ -1,16 +1,17 @@
 import sys
+
 import matplotlib
-from matplotlib import pyplot as plt
-from PyQt5.QtGui import QFont
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
-from matplotlib.figure import Figure
 import numpy as np
+import terminal_handler as th
 from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QSplitter, QApplication, \
     QStyleFactory, QTextEdit, QWidget, QPushButton
-import terminal_handler as th
-from terminal_handler import Term_handler
 from equation_handler import Eq_Handler
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
+from terminal_handler import Term_handler
 
 matplotlib.use('Qt5Agg')
 
@@ -47,6 +48,7 @@ class MainFrame(QMainWindow):
         self.text_edit = None
         self.sc = None
 
+        # lorenz parameter textfields
         self.lorenz_params3 = None
         self.lorenz_params2 = None
         self.lorenz_params1 = None
@@ -54,6 +56,7 @@ class MainFrame(QMainWindow):
         self.roessler_params2 = None
         self.roessler_params3 = None
 
+        # lorenz start condition textfields
         self.init_l_condition1 = None
         self.init_l_condition2 = None
         self.init_l_condition3 = None
@@ -92,6 +95,7 @@ class MainFrame(QMainWindow):
         left = QFrame()
         left.setFrameShape(QFrame.StyledPanel)
 
+        # buttons
         left_label = QLabel('Options:', left)
 
         plot_button = QPushButton("Plot points")
@@ -99,11 +103,15 @@ class MainFrame(QMainWindow):
 
         load_data = QPushButton("Load from file")
         load_data.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        load_data.pressed.connect(self.term_handler.load_plot)
+
+        save_data = QPushButton("Save to file")
+        save_data.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        save_data.pressed.connect(self.term_handler.save_plot)
 
         init_r_button = QPushButton("Rössler plot")
         init_r_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         init_r_button.pressed.connect(self.init_roessler)
-
 
         init_l_button = QPushButton("Lorenz plot")
         init_l_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
@@ -141,7 +149,7 @@ class MainFrame(QMainWindow):
         t0_layout = QHBoxLayout()
         step_start_label = QLabel("t0:")
         self.step_stop = QtWidgets.QLineEdit(self)
-        tn_layout =  QHBoxLayout()
+        tn_layout = QHBoxLayout()
         step_stop_label = QLabel('tn:')
         n_layout = QHBoxLayout()
         self.step_count = QtWidgets.QLineEdit(self)
@@ -159,8 +167,6 @@ class MainFrame(QMainWindow):
         steps_layout.addLayout(t0_layout)
         steps_layout.addLayout(tn_layout)
         steps_layout.addLayout(n_layout)
-
-
 
         menu_sublayout = QHBoxLayout()
         lorenz_layout1 = QHBoxLayout()
@@ -233,8 +239,9 @@ class MainFrame(QMainWindow):
         left_layout.addLayout(menu_sublayout)
         left_layout.addWidget(steps_label)
         left_layout.addLayout(steps_layout)
-        left_layout.addWidget(plot_button)
         left_layout.addWidget(load_data)
+        left_layout.addWidget(save_data)
+        left_layout.addWidget(plot_button)
         left_layout.addWidget(info_label)
         left_layout.addWidget(self.info_edit)
 
@@ -282,7 +289,7 @@ class MainFrame(QMainWindow):
 
         self.text_edit.textChanged.connect(self.look_for_enter_key)
 
-        #Just for testing 3D plotting /// eq_handler call
+        # Just for testing 3D plotting /// eq_handler call
 
         # Just for testing 3D plotting:
         self.eq_handler.set_lorenz_conditions(28, 8 / 3, 10)
@@ -314,11 +321,9 @@ class MainFrame(QMainWindow):
         self.step_stop.setText('50')
         self.step_count.setText('10000')
 
-
     def look_for_enter_key(self):
         if self.text_edit.toPlainText().endswith('\n'):
             self.term_handler.get_command(self.text_edit, self.text_edit.toPlainText())
-
 
     def init_lorenz(self):
         self.info_edit.clear()
@@ -450,10 +455,10 @@ class MainFrame(QMainWindow):
         return self.text_edit.toPlainText()
 
     def show_equation(self):
-        if (self.equation == 0):
+        if self.equation == 0:
             self.info_edit.clear()
             self.info_edit.setText(self.eq_handler.print_lorenz_eq(self.tempLor[0], self.tempLor[1], self.tempLor[2]))
-        elif (self.equation == 1):
+        elif self.equation == 1:
             self.info_edit.clear()
             self.info_edit.setText(self.eq_handler.print_roessler_eq(self.tempRoe[0], self.tempRoe[1], self.tempRoe[2]))
 
