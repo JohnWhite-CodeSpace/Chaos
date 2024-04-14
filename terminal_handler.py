@@ -7,33 +7,78 @@ from PyQt5.QtCore import QRegExp
 CommandList = {}
 
 
-class Term_handler():
+class Term_handler:
+    """
+    Class used for execution and management of commands from text passed by terminal.
+
+    Attributes
+        main_frame: UI class object used for outside function execution
+
+    Methods
+        get_command(self, textedit, text) - determines if text matches any know command and assigns it value.\n
+        get_last_non_empty_line(self, lines) - cuts empty lines from user input.\n
+        check_command_type(self, commandNum, textedit) - determines what command should be executed.\n
+        load_command_base(self) - loads commands from .txt file\n
+        save_plot(self) - saves plot parameters to .txt file\n
+        load_plot(self) - loads plot parameters from .txt file\n
+    """
     def __init__(self, main_frame):
+        """
+        Initializes Term_handler class object while passing an external main_frame argument for command execution in the MainFrame UI.
+
+        :param main_frame: UI class object used for outside function execution
+        :type main_frame: MainFrame
+        """
         self.main_frame = main_frame
 
-    def get_command(self, textedit, text):  # gets command for later type determination
+    def get_command(self, textedit, text):
+        """
+        Determines if text matches any know commmand and assigns it its enum value based on loaded CommandList
+
+        :param textedit: does nothing
+        :param text: string to evaluate
+        :type text: string
+        :return: void
+        """
         commandcheck = 0
         command = text.split('\n')
         foundcom = self.get_last_non_empty_line(command)
         if CommandList is not None:
             num = 0
-            while (num <= len(CommandList) - 1):
-                if (foundcom == CommandList[num][0]):
+            while num <= len(CommandList) - 1:
+                if foundcom == CommandList[num][0]:
                     value = int(CommandList[num][1])
                     print(value)
                     self.check_command_type(value, textedit)
                     commandcheck = 1
                     break
                 num += 1
-        if (commandcheck == 0):
+        if commandcheck == 0:
             self.main_frame.print_onto_text_edit(f"ERROR: There is no such command as '{foundcom}'!")
 
     def get_last_non_empty_line(self, lines):
+        """
+        Cuts empty lines from user input.
+
+        :param lines: input text from terminal
+        :type lines: str
+        :return: last non-empty line
+        :rtype: str
+        """
+
         for line in reversed(lines):
             if line.strip():
                 return line
 
-    def check_command_type(self, commandNum, textedit):  # listening to command types
+    def check_command_type(self, commandNum, textedit):
+        """
+        Determines what command should be executed based on signal send by get_command()
+
+        :param commandNum: signal send by get_command()
+        :type commandNum: int
+        :param textedit: does nothing
+        """
+
         print("looking for method")
         if commandNum == 0:  # exit
             sys.exit()
@@ -59,7 +104,7 @@ class Term_handler():
             self.save_plot()
         elif commandNum == 10:  # save session
             self.main_frame.print_onto_text_edit("saving session...  \n")
-        elif commandNum == 11:  # opcja clear terminal
+        elif commandNum == 11:  # clear terminal
             self.main_frame.clear_terminal()
         elif commandNum == 12:  # clear infopanel
             self.main_frame.clear_info()
@@ -71,7 +116,11 @@ class Term_handler():
         else:
             print("no such command")
 
-    def load_command_base(self):  # loads commands from file
+    def load_command_base(self):
+        """
+        Loads available commands from command_list.txt and transforms into an enum following pattern:\n
+        [enum string]->[enum iterator]
+        """
         file = open("command_list.txt")
         linenum = 0
         while True:
@@ -100,6 +149,20 @@ class Term_handler():
     #
     #         if '^' in equation:
     def save_plot(self):
+        """
+        Saves given parameters from textfields to a saved_plots.txt file.
+
+        The parameters come from lorenz and roessler parameters & start
+        conditions, as well as stop, start & step conditions, they are as saved as:
+        ______________________________________________\n
+        rho,beta,sigma\n
+        initial X,initial Y, initial Z (for Lorenz)\n
+        a,b,c\n
+        initial X,initial Y, initial Z (for Roessler)\n
+        stary,stop,step\n
+        ______________________________________________
+        """
+
         file = open("saved_plots.txt", 'w')
         # lorenz parameters
         file.write(self.main_frame.lorenz_params1.text())
@@ -145,6 +208,13 @@ class Term_handler():
         self.main_frame.print_onto_text_edit("saved plot for parameters")
 
     def load_plot(self):
+        """
+        Loads parameters from a previously saved saved_plots.txt file.
+
+        The parameters are saved in "0,0,0 /n" format by .save_plot()
+        and can be used to recall previous results of the program.
+        """
+
         file = open("saved_plots.txt", 'r')
         tmp = file.read()
         txt = tmp.split("\n")
@@ -200,4 +270,6 @@ class Term_handler():
             self.main_frame.step_count.setText(tmp[2])
 
         file.close()
-        self.main_frame.print_onto_text_edit("plot loaded succesfully")
+        self.main_frame.print_onto_text_edit("plot loaded successfully")
+
+
