@@ -18,13 +18,27 @@ matplotlib.use('Qt5Agg')
 
 class MplCanvas3D2D(FigureCanvasQTAgg):
     """
-    Class is a modified version of a basic PyQT FigureCanvas
+    Class is a version of a basic PyQT FigureCanvas with modified plotting function meant for Lorenz and Roessler
+    attractors plotting.
+
+    Atributes
+        figure - graph of given size and format
+
+    Methods
+        plot3D - Plots XYZ points on a 3D graph based on supplied arrays of coordinates
+        plot2D - Plots XY points on 2D graph based on supplied arrays of coordinates
     """
-    def __init__(self, parents=None, width=20, height=20, dpi=100):
+    def __init__(self, width=20, height=20, dpi=100):
         self.figure = Figure(figsize=(width, height), dpi=dpi)
         super().__init__(self.figure)
 
     def plot3D(self, xarray, yarray, zarray):
+        """
+        Plots XYZ points on a 3D graph based on supplied arrays of coordinates
+        :param xarray: x coordinates array
+        :param yarray: y coordinates array
+        :param zarray: z coordinates array
+        """
         self.figure.clear()
         ax = self.figure.add_subplot(111, projection='3d', position=[0.05, 0.05, 0.9, 0.9])
         ax.plot(xarray, yarray, zarray)
@@ -33,16 +47,46 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
         ax.set_zlabel('Z')
         self.draw()
 
-    def plot2D(self, xarray, yarray, label1, label2, color):
+    def plot2D(self, xarray, yarray, xlabel, ylabel, color):
+        """
+        Plots XY points on 2D graph based on supplied arrays of coordinates
+        :param xarray: x coordinates array
+        :param yarray: y coordinates array
+        :param xlabel: label of OX axis
+        :param ylabel: label of OY axis
+        :param color: color of the plot
+        """
         self.figure.clear()
         ax = self.figure.add_subplot(111, position=[0.15, 0.2, 0.8, 0.8])
         ax.plot(xarray, yarray, color=color)
-        ax.set_xlabel(label1)
-        ax.set_ylabel(label2)
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
         self.draw()
 
 
 class MainFrame(QMainWindow):
+    """
+
+    Attributes
+        term_handler - Term_handler class object used for command execution \n
+        text_edit - text send from terminal to Term_handler \n
+        sc - MplCanvas2D3D class object \n
+
+        eq_handler - Eq_handler class object used for numerical calculations of Lorenz and Roessler attractors equation \n
+        equation - flag distinguishing between Lorenz (equation=0) and Roessler (equation=1) attractors display \n
+        tempLor - \n
+        tempRoe \n
+        X,Y,Z \n
+
+        lorenz_params3, lorenz_params2, lorenz_params1 \n
+        roessler_params1, roessler_params2, roessler_params3 \n
+        init_l_condition1, init_l_condition2, init_l_condition3 \n
+        init_r_condition1, init_r_condition2, init_r_condition3 \n
+
+        step_start \n
+        step_stop \n
+        step_count \n
+    """
 
     def __init__(self):
         super(MainFrame, self).__init__()
@@ -84,6 +128,10 @@ class MainFrame(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        """
+        Function initializes user interface setting up layouts, button and other widgets.
+        It also displays and draws a number of plots related to Lorenz and Roessler attractors.
+        """
         self.sc = MplCanvas3D2D()
         self.scNoise1 = MplCanvas3D2D()
         self.scNoise2 = MplCanvas3D2D()
@@ -325,10 +373,17 @@ class MainFrame(QMainWindow):
         self.step_count.setText('10000')
 
     def look_for_enter_key(self):
+        """
+        Listens to commands entered into terminal passing thwem to Term_handler class methods
+        """
         if self.text_edit.toPlainText().endswith('\n'):
             self.term_handler.get_command(self.text_edit, self.text_edit.toPlainText())
 
     def init_lorenz(self):
+        """
+        Initializes Lorenz equation handler from textfields, displays information about step, equations and parameters
+        and finally draws 3D plots of Lorenz equations.
+        """
         self.info_edit.clear()
         if self.lorenz_params1.text() and self.lorenz_params2.text() and self.lorenz_params3.text():
             print(float(self.lorenz_params1.text()))
@@ -381,6 +436,10 @@ class MainFrame(QMainWindow):
             self.info_edit.setText("ERROR: Empty parameter fields!\n")
 
     def init_roessler(self):
+        """
+        Initializes Roessler equation handler from textfields, displays information about step, equations and parameters
+        and finally draws 3D plots of Lorenz equations.
+        """
         if self.roessler_params1.text() and self.roessler_params2.text() and self.roessler_params3.text():
             self.info_edit.clear()
             self.eq_handler.set_roessler_conditions(float(self.roessler_params1.text()),
@@ -437,27 +496,51 @@ class MainFrame(QMainWindow):
     # def save_to_file(self):
 
     def draw_noise_plots(self, t_num, X, Y, Z):
+        """
+        Plots X, Y & Z noise in 2D as a function of time steps
+        :param t_num: time steps array
+        :param X: x coordinates array
+        :param Y: y coordinates array
+        :param Z: z coordinates array
+        """
         self.scNoise1.plot2D(t_num, X, 'Time steps', 'X', 'red')
         self.scNoise2.plot2D(t_num, Y, 'Time steps', 'Y', 'green')
         self.scNoise3.plot2D(t_num, Z, 'Time steps', 'Z', 'orange')
 
     def redraw_figure(self):
+        """
+
+        :return:
+        """
         self.sc.draw()
         self.sc.plot3D(self.X, self.Y, self.Z)
 
     def print_onto_text_edit(self, text):
+        """
+        prints
+        :param text:
+        """
         self.info_edit.append(f"{text}")
 
     def clear_terminal(self):
+        """"
+        """
         self.text_edit.clear()
 
     def clear_info(self):
+        """
+
+        :return: 
+        """
         self.info_edit.clear()
 
     def get_user_Equation(self):
         return self.text_edit.toPlainText()
 
     def show_equation(self):
+        """
+
+        """
         if self.equation == 0:
             self.info_edit.clear()
             self.info_edit.setText(self.eq_handler.print_lorenz_eq(self.tempLor[0], self.tempLor[1], self.tempLor[2]))

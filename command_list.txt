@@ -5,7 +5,7 @@ plot 3D->3
 plot Lorenz->4
 plot Rossler->5
 load plot->6
-load session->7
+load session->7q
 show eq->8
 save plot->9
 save session->10

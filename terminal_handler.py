@@ -12,7 +12,7 @@ class Term_handler:
     Class used for execution and management of commands from text passed by terminal.
 
     Attributes
-        main_frame: UI class object used for outside function execution
+        main_frame - UI class object used for outside function execution
 
     Methods
         get_command(self, textedit, text) - determines if text matches any know command and assigns it value.\n
