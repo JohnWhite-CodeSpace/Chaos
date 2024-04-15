@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class Eq_Handler:
+class EquationHandler:
     """
     Class designed for numeric operations based on  Lorenz and Roessler attractors theorem
 
@@ -22,7 +22,7 @@ class Eq_Handler:
         points for Roessler attractor of given parameters\n
     """
     def __init__(self):
-        super(Eq_Handler, self).__init__()
+        super(EquationHandler, self).__init__()
         self.constantsl = {}
         self.constantsr = {}
 

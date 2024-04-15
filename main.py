@@ -7,11 +7,10 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QSplitter, QApplication, \
     QStyleFactory, QTextEdit, QWidget, QPushButton
-from equation_handler import Eq_Handler
-from matplotlib import pyplot as plt
+from equation_handler import EquationHandler
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-from terminal_handler import Term_handler
+from terminal_handler import TerminalHandler
 
 matplotlib.use('Qt5Agg')
 
@@ -66,19 +65,18 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
 
 class MainFrame(QMainWindow):
     """
-
     Attributes
-        term_handler - Term_handler class object used for command execution \n
+        term_handler - TerminalHandler class object used for command execution \n
         text_edit - text send from terminal to Term_handler \n
         sc - MplCanvas2D3D class object \n
 
-        eq_handler - Eq_handler class object used for numerical calculations of Lorenz and Roessler attractors equation \n
+        eq_handler - EquationHandler class object used for numerical calculations of Lorenz and Roessler attractors equation \n
         equation - flag distinguishing between Lorenz (equation=0) and Roessler (equation=1) attractors display \n
         tempLor - \n
         tempRoe \n
         X,Y,Z \n
 
-        lorenz_params3, lorenz_params2, lorenz_params1 \n
+        lorenz_params_rho, lorenz_params_beta, lorenz_params_sigma \n
         roessler_params1, roessler_params2, roessler_params3 \n
         init_l_condition1, init_l_condition2, init_l_condition3 \n
         init_r_condition1, init_r_condition2, init_r_condition3 \n
@@ -90,36 +88,36 @@ class MainFrame(QMainWindow):
 
     def __init__(self):
         super(MainFrame, self).__init__()
-        self.term_handler = th.Term_handler(self)
         self.setWindowIcon(QtGui.QIcon('icon.png'))
         self.text_edit = None
         self.sc = None
 
+        self.term_handler = TerminalHandler(self)
+
+        self.eq_handler = EquationHandler()
+        TerminalHandler.load_command_base(self)
+
         # lorenz parameter textfields
-        self.lorenz_params3 = None
-        self.lorenz_params2 = None
-        self.lorenz_params1 = None
-        self.roessler_params1 = None
-        self.roessler_params2 = None
-        self.roessler_params3 = None
+        self.lor_params_rho = None
+        self.lor_params_beta = None
+        self.lor_params_sigma = None
+        self.roe_params_a = None
+        self.roe_params_b = None
+        self.roe_params_c = None
 
         # lorenz start condition textfields
-        self.init_l_condition1 = None
-        self.init_l_condition2 = None
-        self.init_l_condition3 = None
-        self.init_r_condition1 = None
-        self.init_r_condition2 = None
-        self.init_r_condition3 = None
+        self.lor_init_condition_rho = None
+        self.lor_init_condition_beta = None
+        self.lor_init_condition_sigma = None
+        self.roe_init_condition_a = None
+        self.roe_init_condition_b = None
+        self.roe_init_condition_c = None
 
         self.step_start = None
         self.step_stop = None
         self.step_count = None
 
-        self.term_handler = Term_handler(self)
-
-        self.eq_handler = Eq_Handler()
-        th.Term_handler.load_command_base(self)
-        self.equation = 0
+        self.eq_type_flag = 0
         self.tempLor = []
         self.tempRoe = []
         self.X = []
@@ -168,12 +166,12 @@ class MainFrame(QMainWindow):
         init_l_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         init_l_button.pressed.connect(self.init_lorenz)
 
-        self.lorenz_params1 = QtWidgets.QLineEdit(self)
-        self.lorenz_params1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.lorenz_params2 = QtWidgets.QLineEdit(self)
-        self.lorenz_params2.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.lorenz_params3 = QtWidgets.QLineEdit(self)
-        self.lorenz_params3.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.lor_params_rho = QtWidgets.QLineEdit(self)
+        self.lor_params_rho.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.lor_params_beta = QtWidgets.QLineEdit(self)
+        self.lor_params_beta.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.lor_params_sigma = QtWidgets.QLineEdit(self)
+        self.lor_params_sigma.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
         lorenz_label1 = QLabel("ρ:")
         lorenz_label1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
@@ -185,13 +183,13 @@ class MainFrame(QMainWindow):
 
         self.init_l_params = QLabel("Initial Lorenz args:")
         l_condition_layout = QHBoxLayout()
-        self.init_l_condition1 = QtWidgets.QLineEdit(self)
-        self.init_l_condition2 = QtWidgets.QLineEdit(self)
-        self.init_l_condition3 = QtWidgets.QLineEdit(self)
+        self.lor_init_condition_rho = QtWidgets.QLineEdit(self)
+        self.lor_init_condition_beta = QtWidgets.QLineEdit(self)
+        self.lor_init_condition_sigma = QtWidgets.QLineEdit(self)
 
-        l_condition_layout.addWidget(self.init_l_condition1)
-        l_condition_layout.addWidget(self.init_l_condition2)
-        l_condition_layout.addWidget(self.init_l_condition3)
+        l_condition_layout.addWidget(self.lor_init_condition_rho)
+        l_condition_layout.addWidget(self.lor_init_condition_beta)
+        l_condition_layout.addWidget(self.lor_init_condition_sigma)
 
         steps_layout = QHBoxLayout()
 
@@ -222,13 +220,13 @@ class MainFrame(QMainWindow):
         menu_sublayout = QHBoxLayout()
         lorenz_layout1 = QHBoxLayout()
         lorenz_layout1.addWidget(lorenz_label1, 10)
-        lorenz_layout1.addWidget(self.lorenz_params1, 90)
+        lorenz_layout1.addWidget(self.lor_params_rho, 90)
         lorenz_layout2 = QHBoxLayout()
         lorenz_layout2.addWidget(lorenz_label2, 10)
-        lorenz_layout2.addWidget(self.lorenz_params2, 90)
+        lorenz_layout2.addWidget(self.lor_params_beta, 90)
         lorenz_layout3 = QHBoxLayout()
         lorenz_layout3.addWidget(lorenz_label3, 10)
-        lorenz_layout3.addWidget(self.lorenz_params3, 90)
+        lorenz_layout3.addWidget(self.lor_params_sigma, 90)
         lorenz_layout.addWidget(init_l_button)
         lorenz_layout.addLayout(lorenz_layout1)
         lorenz_layout.addLayout(lorenz_layout2)
@@ -236,12 +234,12 @@ class MainFrame(QMainWindow):
         lorenz_layout.addWidget(self.init_l_params)
         lorenz_layout.addLayout(l_condition_layout)
 
-        self.roessler_params1 = QtWidgets.QLineEdit(self)
-        self.roessler_params1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.roessler_params2 = QtWidgets.QLineEdit(self)
-        self.roessler_params2.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        self.roessler_params3 = QtWidgets.QLineEdit(self)
-        self.roessler_params3.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.roe_params_a = QtWidgets.QLineEdit(self)
+        self.roe_params_a.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.roe_params_b = QtWidgets.QLineEdit(self)
+        self.roe_params_b.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.roe_params_c = QtWidgets.QLineEdit(self)
+        self.roe_params_c.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
         roessler_label1 = QLabel("a:")
         roessler_label1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
@@ -252,24 +250,24 @@ class MainFrame(QMainWindow):
 
         self.init_r_params = QLabel("Initial Rössler args:")
         r_condition_layout = QHBoxLayout()
-        self.init_r_condition1 = QtWidgets.QLineEdit(self)
-        self.init_r_condition2 = QtWidgets.QLineEdit(self)
-        self.init_r_condition3 = QtWidgets.QLineEdit(self)
+        self.roe_init_condition_a = QtWidgets.QLineEdit(self)
+        self.roe_init_condition_b = QtWidgets.QLineEdit(self)
+        self.roe_init_condition_c = QtWidgets.QLineEdit(self)
 
-        r_condition_layout.addWidget(self.init_r_condition1)
-        r_condition_layout.addWidget(self.init_r_condition2)
-        r_condition_layout.addWidget(self.init_r_condition3)
+        r_condition_layout.addWidget(self.roe_init_condition_a)
+        r_condition_layout.addWidget(self.roe_init_condition_b)
+        r_condition_layout.addWidget(self.roe_init_condition_c)
         roessler_layout = QVBoxLayout()
 
         roessler_layout1 = QHBoxLayout()
         roessler_layout2 = QHBoxLayout()
         roessler_layout3 = QHBoxLayout()
         roessler_layout1.addWidget(roessler_label1, 10)
-        roessler_layout1.addWidget(self.roessler_params1, 90)
+        roessler_layout1.addWidget(self.roe_params_a, 90)
         roessler_layout2.addWidget(roessler_label2, 10)
-        roessler_layout2.addWidget(self.roessler_params2, 90)
+        roessler_layout2.addWidget(self.roe_params_b, 90)
         roessler_layout3.addWidget(roessler_label3, 10)
-        roessler_layout3.addWidget(self.roessler_params3, 90)
+        roessler_layout3.addWidget(self.roe_params_c, 90)
         roessler_layout.addWidget(init_r_button)
         roessler_layout.addLayout(roessler_layout1)
         roessler_layout.addLayout(roessler_layout2)
@@ -356,18 +354,18 @@ class MainFrame(QMainWindow):
         self.info_edit.setText(self.eq_handler.print_lorenz_eq(28, 8 / 3, 10))
 
         self.sc.plot3D(self.X, self.Y, self.Z)
-        self.lorenz_params1.setText('28')
-        self.lorenz_params2.setText('2.6666666')
-        self.lorenz_params3.setText('10')
-        self.roessler_params1.setText('0.1')
-        self.roessler_params2.setText('0.1')
-        self.roessler_params3.setText('14')
-        self.init_r_condition1.setText('1.0')
-        self.init_r_condition2.setText('1.0')
-        self.init_r_condition3.setText('1.0')
-        self.init_l_condition1.setText('1.0')
-        self.init_l_condition2.setText('1.0')
-        self.init_l_condition3.setText('1.0')
+        self.lor_params_rho.setText('28')
+        self.lor_params_beta.setText('2.6666666')
+        self.lor_params_sigma.setText('10')
+        self.roe_params_a.setText('0.1')
+        self.roe_params_b.setText('0.1')
+        self.roe_params_c.setText('14')
+        self.roe_init_condition_a.setText('1.0')
+        self.roe_init_condition_b.setText('1.0')
+        self.roe_init_condition_c.setText('1.0')
+        self.lor_init_condition_rho.setText('1.0')
+        self.lor_init_condition_beta.setText('1.0')
+        self.lor_init_condition_sigma.setText('1.0')
         self.step_start.setText('0')
         self.step_stop.setText('50')
         self.step_count.setText('10000')
@@ -385,26 +383,26 @@ class MainFrame(QMainWindow):
         and finally draws 3D plots of Lorenz equations.
         """
         self.info_edit.clear()
-        if self.lorenz_params1.text() and self.lorenz_params2.text() and self.lorenz_params3.text():
-            print(float(self.lorenz_params1.text()))
-            print(float(self.lorenz_params2.text()))
-            print(float(self.lorenz_params3.text()))
-            self.eq_handler.set_lorenz_conditions(float(self.lorenz_params1.text()), float(self.lorenz_params2.text()),
-                                                  float(self.lorenz_params3.text()))
-            self.tempLor = np.array([float(self.lorenz_params1.text()), float(self.lorenz_params2.text()),
-                                     float(self.lorenz_params3.text())])
-            if self.init_l_condition1.text() and self.init_l_condition2.text() and self.init_l_condition3.text():
-                init_conditions = [float(self.init_l_condition1.text()), float(self.init_l_condition2.text()),
-                                   float(self.init_l_condition3.text())]
+        if self.lor_params_rho.text() and self.lor_params_beta.text() and self.lor_params_sigma.text():
+            print(float(self.lor_params_rho.text()))
+            print(float(self.lor_params_beta.text()))
+            print(float(self.lor_params_sigma.text()))
+            self.eq_handler.set_lorenz_conditions(float(self.lor_params_rho.text()), float(self.lor_params_beta.text()),
+                                                  float(self.lor_params_sigma.text()))
+            self.tempLor = np.array([float(self.lor_params_rho.text()), float(self.lor_params_beta.text()),
+                                     float(self.lor_params_sigma.text())])
+            if self.lor_init_condition_rho.text() and self.lor_init_condition_beta.text() and self.lor_init_condition_sigma.text():
+                init_conditions = [float(self.lor_init_condition_rho.text()), float(self.lor_init_condition_beta.text()),
+                                   float(self.lor_init_condition_sigma.text())]
                 self.info_edit.append("Initial conditions set to:")
-                self.info_edit.append(self.init_l_condition1.text())
-                self.info_edit.append(self.init_l_condition2.text())
-                self.info_edit.append(self.init_l_condition3.text())
+                self.info_edit.append(self.lor_init_condition_rho.text())
+                self.info_edit.append(self.lor_init_condition_beta.text())
+                self.info_edit.append(self.lor_init_condition_sigma.text())
             else:
                 init_conditions = np.array([1.0, 1.0, 1.0])
-                self.init_l_condition1.setText('1.0')
-                self.init_l_condition2.setText('1.0')
-                self.init_l_condition3.setText('1.0')
+                self.lor_init_condition_rho.setText('1.0')
+                self.lor_init_condition_beta.setText('1.0')
+                self.lor_init_condition_sigma.setText('1.0')
                 self.info_edit.append("Initial conditions set to:")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
@@ -426,10 +424,10 @@ class MainFrame(QMainWindow):
             self.Z = xyz[:, 2]
 
             self.info_edit.append(
-                self.eq_handler.print_lorenz_eq(float(self.lorenz_params1.text()), float(self.lorenz_params2.text()),
-                                                float(self.lorenz_params3.text())))
+                self.eq_handler.print_lorenz_eq(float(self.lor_params_rho.text()), float(self.lor_params_beta.text()),
+                                                float(self.lor_params_sigma.text())))
             self.sc.plot3D(self.X, self.Y, self.Z)
-            self.equation = 0
+            self.eq_type_flag = 0
             t = np.linspace(t_start, t_end, num_steps)
             self.draw_noise_plots(t, self.X, self.Y, self.Z)
         else:
@@ -440,31 +438,31 @@ class MainFrame(QMainWindow):
         Initializes Roessler equation handler from textfields, displays information about step, equations and parameters
         and finally draws 3D plots of Lorenz equations.
         """
-        if self.roessler_params1.text() and self.roessler_params2.text() and self.roessler_params3.text():
+        if self.roe_params_a.text() and self.roe_params_b.text() and self.roe_params_c.text():
             self.info_edit.clear()
-            self.eq_handler.set_roessler_conditions(float(self.roessler_params1.text()),
-                                                    float(self.roessler_params2.text()),
-                                                    float(self.roessler_params3.text()))
-            self.tempRoe = np.array([float(self.roessler_params1.text()), float(self.roessler_params2.text()),
-                                     float(self.roessler_params3.text())])
+            self.eq_handler.set_roessler_conditions(float(self.roe_params_a.text()),
+                                                    float(self.roe_params_b.text()),
+                                                    float(self.roe_params_c.text()))
+            self.tempRoe = np.array([float(self.roe_params_a.text()), float(self.roe_params_b.text()),
+                                     float(self.roe_params_c.text())])
 
-            if self.init_r_condition1.text() and self.init_r_condition2.text() and self.init_r_condition3.text():
-                init_conditions = [float(self.init_r_condition1.text()),
-                                   float(self.init_r_condition2.text()),
-                                   float(self.init_r_condition3.text())]
+            if self.roe_init_condition_a.text() and self.roe_init_condition_b.text() and self.roe_init_condition_c.text():
+                init_conditions = [float(self.roe_init_condition_a.text()),
+                                   float(self.roe_init_condition_b.text()),
+                                   float(self.roe_init_condition_c.text())]
                 self.info_edit.append("Initial conditions set to:")
-                self.info_edit.append(self.init_r_condition1.text())
-                self.info_edit.append(self.init_r_condition2.text())
-                self.info_edit.append(self.init_r_condition3.text())
+                self.info_edit.append(self.roe_init_condition_a.text())
+                self.info_edit.append(self.roe_init_condition_b.text())
+                self.info_edit.append(self.roe_init_condition_c.text())
             else:
                 init_conditions = [1.0, 1.0, 1.0]
                 self.info_edit.append("Initial conditions set to:")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
                 self.info_edit.append("1.0")
-                self.init_r_condition1.setText('1.0')
-                self.init_r_condition2.setText('1.0')
-                self.init_r_condition3.setText('1.0')
+                self.roe_init_condition_a.setText('1.0')
+                self.roe_init_condition_b.setText('1.0')
+                self.roe_init_condition_c.setText('1.0')
             if self.step_start.text() and self.step_stop.text() and self.step_count.text():
                 t_start = int(self.step_start.text())
                 t_end = int(self.step_stop.text())
@@ -481,11 +479,11 @@ class MainFrame(QMainWindow):
             self.X = xyz[:, 0]
             self.Y = xyz[:, 1]
             self.Z = xyz[:, 2]
-            self.info_edit.append(self.eq_handler.print_roessler_eq(float(self.roessler_params1.text()),
-                                                                    float(self.roessler_params2.text()),
-                                                                    float(self.roessler_params3.text())))
+            self.info_edit.append(self.eq_handler.print_roessler_eq(float(self.roe_params_a.text()),
+                                                                    float(self.roe_params_b.text()),
+                                                                    float(self.roe_params_c.text())))
             self.sc.plot3D(self.X, self.Y, self.Z)
-            self.equation = 1
+            self.eq_type_flag = 1
             t = np.linspace(t_start, t_end, num_steps)
             self.draw_noise_plots(t, self.X, self.Y, self.Z)
         else:
@@ -530,7 +528,7 @@ class MainFrame(QMainWindow):
     def clear_info(self):
         """
 
-        :return: 
+        :return:
         """
         self.info_edit.clear()
 
@@ -541,10 +539,10 @@ class MainFrame(QMainWindow):
         """
 
         """
-        if self.equation == 0:
+        if self.eq_type_flag == 0:
             self.info_edit.clear()
             self.info_edit.setText(self.eq_handler.print_lorenz_eq(self.tempLor[0], self.tempLor[1], self.tempLor[2]))
-        elif self.equation == 1:
+        elif self.eq_type_flag == 1:
             self.info_edit.clear()
             self.info_edit.setText(self.eq_handler.print_roessler_eq(self.tempRoe[0], self.tempRoe[1], self.tempRoe[2]))
 

@@ -1,13 +1,8 @@
 import re
 import sys
-
-import numpy as np
-from PyQt5.QtCore import QRegExp
-
 CommandList = {}
 
-
-class Term_handler:
+class TerminalHandler:
     """
     Class used for execution and management of commands from text passed by terminal.
 
@@ -165,35 +160,35 @@ class Term_handler:
 
         file = open("saved_plots.txt", 'w')
         # lorenz parameters
-        file.write(self.main_frame.lorenz_params1.text())
+        file.write(self.main_frame.lor_params_rho.text())
         file.write(",")
-        file.write(self.main_frame.lorenz_params2.text())
+        file.write(self.main_frame.lor_params_beta.text())
         file.write(",")
-        file.write(self.main_frame.lorenz_params3.text())
+        file.write(self.main_frame.lor_params_sigma.text())
         file.write("\n")
 
         # lorenz start condition
-        file.write(self.main_frame.init_l_condition1.text())
+        file.write(self.main_frame.lor_init_condition_rho.text())
         file.write(",")
-        file.write(self.main_frame.init_l_condition2.text())
+        file.write(self.main_frame.lor_init_condition_beta.text())
         file.write(",")
-        file.write(self.main_frame.init_l_condition3.text())
+        file.write(self.main_frame.lor_init_condition_sigma.text())
         file.write("\n")
 
         # roessler parameters
-        file.write(self.main_frame.roessler_params1.text())
+        file.write(self.main_frame.roe_params_a.text())
         file.write(",")
-        file.write(self.main_frame.roessler_params2.text())
+        file.write(self.main_frame.roe_params_b.text())
         file.write(",")
-        file.write(self.main_frame.roessler_params3.text())
+        file.write(self.main_frame.roe_params_c.text())
         file.write("\n")
 
         # roessler start condition
-        file.write(self.main_frame.init_r_condition1.text())
+        file.write(self.main_frame.roe_init_condition_a.text())
         file.write(",")
-        file.write(self.main_frame.init_r_condition2.text())
+        file.write(self.main_frame.roe_init_condition_b.text())
         file.write(",")
-        file.write(self.main_frame.init_r_condition3.text())
+        file.write(self.main_frame.roe_init_condition_c.text())
         file.write("\n")
 
         # stop start step
@@ -225,9 +220,9 @@ class Term_handler:
         else:
             tmp = txt[0].split(',')
             print(tmp[0], tmp[1], tmp[2])
-            self.main_frame.lorenz_params1.setText(tmp[0])
-            self.main_frame.lorenz_params2.setText(tmp[1])
-            self.main_frame.lorenz_params3.setText(tmp[2])
+            self.main_frame.lor_params_rho.setText(tmp[0])
+            self.main_frame.lor_params_beta.setText(tmp[1])
+            self.main_frame.lor_params_sigma.setText(tmp[2])
 
         # load lorenz conditions
         if txt[1] == "":
@@ -235,9 +230,9 @@ class Term_handler:
         else:
             tmp = txt[1].split(',')
             print(tmp[0], tmp[1], tmp[2])
-            self.main_frame.init_l_condition1.setText(tmp[0])
-            self.main_frame.init_l_condition2.setText(tmp[1])
-            self.main_frame.init_l_condition3.setText(tmp[2])
+            self.main_frame.lor_init_condition_rho.setText(tmp[0])
+            self.main_frame.lor_init_condition_beta.setText(tmp[1])
+            self.main_frame.lor_init_condition_sigma.setText(tmp[2])
 
         # load roessler parameters
         if txt[2] == "":
@@ -245,9 +240,9 @@ class Term_handler:
         else:
             tmp = txt[2].split(',')
             print(tmp[0], tmp[1], tmp[2])
-            self.main_frame.roessler_params1.setText(tmp[0])
-            self.main_frame.roessler_params2.setText(tmp[1])
-            self.main_frame.roessler_params3.setText(tmp[2])
+            self.main_frame.roe_params_a.setText(tmp[0])
+            self.main_frame.roe_params_b.setText(tmp[1])
+            self.main_frame.roe_params_c.setText(tmp[2])
 
         # load roessler conditions
         if txt[3] == "":
@@ -255,9 +250,9 @@ class Term_handler:
         else:
             tmp = txt[3].split(',')
             print(tmp[0], tmp[1], tmp[2])
-            self.main_frame.init_r_condition1.setText(tmp[0])
-            self.main_frame.init_r_condition2.setText(tmp[1])
-            self.main_frame.init_r_condition3.setText(tmp[2])
+            self.main_frame.roe_init_condition_a.setText(tmp[0])
+            self.main_frame.roe_init_condition_b.setText(tmp[1])
+            self.main_frame.roe_init_condition_c.setText(tmp[2])
 
         # load step conditions
         if txt[4] == "":
