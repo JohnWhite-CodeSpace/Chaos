@@ -17,6 +17,9 @@ matplotlib.use('Qt5Agg')
 
 
 class MplCanvas3D2D(FigureCanvasQTAgg):
+    """
+    Class is a modified version of a basic PyQT FigureCanvas
+    """
     def __init__(self, parents=None, width=20, height=20, dpi=100):
         self.figure = Figure(figsize=(width, height), dpi=dpi)
         super().__init__(self.figure)
@@ -468,4 +471,3 @@ if __name__ == "__main__":
     main_window = MainFrame()
     main_window.show()
     sys.exit(app.exec_())
-
