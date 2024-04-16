@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.terminal_handler &#8212; Chaos 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for src.terminal_handler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">CommandList</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="TerminalHandler">
+<a class="viewcode-back" href="../../src.html#src.terminal_handler.TerminalHandler">[docs]</a>
+<span class="k">class</span> <span class="nc">TerminalHandler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class used for execution and management of commands from text passed by terminal.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        main_frame - UI class object used for outside function execution</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">        get_command(self, textedit, text) - determines if text matches any know command and assigns it value.\n</span>
+<span class="sd">        get_last_non_empty_line(self, lines) - cuts empty lines from user input.\n</span>
+<span class="sd">        check_command_type(self, commandNum, textedit) - determines what command should be executed.\n</span>
+<span class="sd">        load_command_base(self) - loads commands from .txt file\n</span>
+<span class="sd">        save_plot(self) - saves plot parameters to .txt file\n</span>
+<span class="sd">        load_plot(self) - loads plot parameters from .txt file\n</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main_frame</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes Term_handler class object while passing an external main_frame argument for command execution in the MainFrame UI.</span>
+
+<span class="sd">        :param main_frame: UI class object used for outside function execution</span>
+<span class="sd">        :type main_frame: MainFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span> <span class="o">=</span> <span class="n">main_frame</span>
+
+<div class="viewcode-block" id="TerminalHandler.get_command">
+<a class="viewcode-back" href="../../src.html#src.terminal_handler.TerminalHandler.get_command">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">textedit</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines if text matches any know command and assigns it its enum value based on loaded CommandList</span>
+
+<span class="sd">        :param textedit: does nothing</span>
+<span class="sd">        :param text: string to evaluate</span>
+<span class="sd">        :type text: string</span>
+<span class="sd">        :return: void</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">commandcheck</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">foundcom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_last_non_empty_line</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">CommandList</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">CommandList</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">foundcom</span> <span class="o">==</span> <span class="n">CommandList</span><span class="p">[</span><span class="n">num</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">CommandList</span><span class="p">[</span><span class="n">num</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">check_command_type</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">textedit</span><span class="p">)</span>
+                    <span class="n">commandcheck</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">break</span>
+                <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">commandcheck</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: There is no such command as &#39;</span><span class="si">{</span><span class="n">foundcom</span><span class="si">}</span><span class="s2">&#39;!&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TerminalHandler.get_last_non_empty_line">
+<a class="viewcode-back" href="../../src.html#src.terminal_handler.TerminalHandler.get_last_non_empty_line">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_last_non_empty_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cuts empty lines from user input.</span>
+
+<span class="sd">        :param lines: input text from terminal</span>
+<span class="sd">        :type lines: str</span>
+<span class="sd">        :return: last non-empty line</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">line</span></div>
+
+
+<div class="viewcode-block" id="TerminalHandler.check_command_type">
+<a class="viewcode-back" href="../../src.html#src.terminal_handler.TerminalHandler.check_command_type">[docs]</a>
+    <span class="k">def</span> <span class="nf">check_command_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commandNum</span><span class="p">,</span> <span class="n">textedit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines what command should be executed based on signal send by get_command()</span>
+
+<span class="sd">        :param commandNum: signal send by get_command()</span>
+<span class="sd">        :type commandNum: int</span>
+<span class="sd">        :param textedit: does nothing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;looking for method&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># exit</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># refresh</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">redraw_figure</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># plot 2d</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2dplot&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># plot 3d</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3dplot&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>  <span class="c1"># plot lorenz</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;plot Lorenz&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>  <span class="c1"># plot roessler</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;plot Roessler&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>  <span class="c1"># load plot</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;loading plot... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_plot</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>  <span class="c1"># load session</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;loading session... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>  <span class="c1"># show equation</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">show_equation</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>  <span class="c1"># save plot</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;saving plot...  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_plot</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>  <span class="c1"># save session</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;saving session...  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>  <span class="c1"># clear terminal</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">clear_terminal</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">12</span><span class="p">:</span>  <span class="c1"># clear infopanel</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">clear_info</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">13</span><span class="p">:</span>  <span class="c1"># help</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;List of console commands: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">CommandList</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="n">CommandList</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">CommandList</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no such command&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TerminalHandler.load_command_base">
+<a class="viewcode-back" href="../../src.html#src.terminal_handler.TerminalHandler.load_command_base">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_command_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads available commands from command_list.txt and transforms into an enum following pattern:\n</span>
+<span class="sd">        [enum string]-&gt;[enum iterator]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;command_list.txt&quot;</span><span class="p">)</span>
+        <span class="n">linenum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Command List loaded!&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List of commands:&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">CommandList</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">CommandList</span><span class="p">[</span><span class="n">command</span><span class="p">])</span>
+                <span class="k">break</span>
+
+            <span class="n">temparr</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temparr</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">CommandList</span><span class="p">[</span><span class="n">linenum</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">CommandList</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">linenum</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">temparr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">CommandList</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">linenum</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">temparr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="p">)</span>
+                <span class="n">linenum</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ignoring invalid line: </span><span class="si">{</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+    <span class="c1"># def get_User_Equation2d(self):</span>
+    <span class="c1">#     equation = self.main_frame.get_user_Equation()</span>
+    <span class="c1">#     if &#39;x&#39; in equation and &#39;y&#39; in equation:</span>
+    <span class="c1">#</span>
+    <span class="c1">#         if &#39;^&#39; in equation:</span>
+<div class="viewcode-block" id="TerminalHandler.save_plot">
+<a class="viewcode-back" href="../../src.html#src.terminal_handler.TerminalHandler.save_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves given parameters from textfields to a saved_plots.txt file.</span>
+
+<span class="sd">        The parameters come from lorenz and roessler parameters &amp; start</span>
+<span class="sd">        conditions, as well as stop, start &amp; step conditions, they are as saved as:</span>
+<span class="sd">        ______________________________________________\n</span>
+<span class="sd">        rho,beta,sigma\n</span>
+<span class="sd">        initial X,initial Y, initial Z (for Lorenz)\n</span>
+<span class="sd">        a,b,c\n</span>
+<span class="sd">        initial X,initial Y, initial Z (for Roessler)\n</span>
+<span class="sd">        stary,stop,step\n</span>
+<span class="sd">        ______________________________________________</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;saved_plots.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="c1"># lorenz parameters</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_params_rho</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_params_beta</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_params_sigma</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># lorenz start condition</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_init_condition_rho</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_init_condition_beta</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_init_condition_sigma</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># roessler parameters</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_params_a</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_params_b</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_params_c</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># roessler start condition</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_init_condition_a</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_init_condition_b</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_init_condition_c</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># stop start step</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">step_start</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">step_stop</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">step_count</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;saved plot for parameters&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TerminalHandler.load_plot">
+<a class="viewcode-back" href="../../src.html#src.terminal_handler.TerminalHandler.load_plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads parameters from a previously saved saved_plots.txt file.</span>
+
+<span class="sd">        The parameters are saved in &quot;0,0,0 /n&quot; format by .save_plot()</span>
+<span class="sd">        and can be used to recall previous results of the program.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;saved_plots.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># load lorenz parameters</span>
+        <span class="k">if</span> <span class="n">txt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no lorenz parameters&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">txt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_params_rho</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_params_beta</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_params_sigma</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="c1"># load lorenz conditions</span>
+        <span class="k">if</span> <span class="n">txt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no lorenz starting conditions&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">txt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_init_condition_rho</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_init_condition_beta</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">lor_init_condition_sigma</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="c1"># load roessler parameters</span>
+        <span class="k">if</span> <span class="n">txt</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no roessler parameters&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">txt</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_params_a</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_params_b</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_params_c</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="c1"># load roessler conditions</span>
+        <span class="k">if</span> <span class="n">txt</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no roessler starting conditions&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">txt</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_init_condition_a</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_init_condition_b</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">roe_init_condition_c</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="c1"># load step conditions</span>
+        <span class="k">if</span> <span class="n">txt</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no step conditions&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">txt</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">step_start</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">step_stop</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">step_count</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;plot loaded successfully&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Chaos</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Jan Bialy & Tymoteusz Januszek.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
