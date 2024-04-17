@@ -107,13 +107,17 @@
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame">[docs]</a>
 <span class="k">class</span> <span class="nc">MainFrame</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class repsonsible for the User interface of the application</span>
+
 <span class="sd">    Attributes</span>
 <span class="sd">        term_handler - TerminalHandler class object used for command execution \n</span>
 <span class="sd">        text_edit - text send from terminal to Term_handler \n</span>
 <span class="sd">        sc - MplCanvas2D3D class object</span>
 
-<span class="sd">        eq_handler - EquationHandler class object used for numerical calculations of Lorenz and Roessler attractors equation \n</span>
-<span class="sd">        self.eq_type_flag - flag distinguishing between Lorenz (equation=0) and Roessler (equation=1) attractors display \n</span>
+<span class="sd">        eq_handler - EquationHandler class object used for numerical calculations of</span>
+<span class="sd">        Lorenz and Roessler attractors equation \n</span>
+<span class="sd">        self.eq_type_flag - flag distinguishing between Lorenz (equation=0) and Roessler (equation=1)</span>
+<span class="sd">        attractors display \n</span>
 <span class="sd">        lor_tmp - array of temporary parameter values of Lorenz attractor \n</span>
 <span class="sd">        lor_tmp - array of temporary parameter values of Roessler attractor\n</span>
 <span class="sd">        X,Y,Z -  XYZ coordinates used for attractor plotting \n</span>
@@ -121,27 +125,33 @@
 <span class="sd">        lor_params_rho, lor_params_beta, lor_params_sigma - textfields representing Lorenz attractor parameters \n</span>
 <span class="sd">        roe_params_a, roe_params_b, roe_params_c - textfields representing Roessler attractor parameters\n</span>
 
-<span class="sd">        lor_init_condition_rho, lor_init_condition_beta, lor_init_condition_sigma - textfields representing Lorenz attractor starting conditions \n</span>
-<span class="sd">        self.roe_init_condition_a, self.roe_init_condition_b, self.roe_init_condition_c - textfields representing Lorenz attractor starting conditions \n</span>
+<span class="sd">        lor_init_condition_rho, lor_init_condition_beta, lor_init_condition_sigma - textfields representing Lorenz</span>
+<span class="sd">        attractor starting conditions \n</span>
+<span class="sd">        self.roe_init_condition_a, self.roe_init_condition_b, self.roe_init_condition_c - textfields representing</span>
+<span class="sd">        Lorenz attractor starting conditions \n</span>
 
 <span class="sd">        step_start - textfield representing starting step \n</span>
 <span class="sd">        step_stop - textfield representing last step \n</span>
 <span class="sd">        step_count - textfield representing number of steps \n</span>
 
 <span class="sd">    Methods</span>
-<span class="sd">        initUI(self)</span>
-<span class="sd">        look_for_enter_key(self)</span>
-<span class="sd">        init_lorenz(self)</span>
-<span class="sd">        init_roessler(self)</span>
-<span class="sd">        draw_noise_plots(self)</span>
-<span class="sd">        redraw_figure(self)</span>
-<span class="sd">        r</span>
+<span class="sd">        initUI(self) - function initializes user interface setting up layouts, buttons and other widgets\n</span>
+<span class="sd">        look_for_enter_key(self) - listens to commands entered into terminal passing them to Term_handler class methods\n</span>
+<span class="sd">        init_lorenz(self) - initializes equation handler, displays information about equations and parameters, draws 3D plots of Lorenz equations\n</span>
+<span class="sd">        init_roessler(self) - initializes equation handler, displays information about equations and parameters, draws 3D plots of Lorenz equations \n</span>
+<span class="sd">        draw_noise_plots((self, t_num, X, Y, Z) -  plots X, Y &amp; Z noise in 2D as a function of time steps \n</span>
+<span class="sd">        redraw_figure(self) -  redraws the attractor plot \n</span>
+<span class="sd">        print_onto_text_edit(self, text) -  prints given text in the info_edit panel of the UI \n</span>
+<span class="sd">        clear_terminal(self) - clears all text from the terminal \n</span>
+<span class="sd">        clear_info(self) - clears all text from info_edit panel \n</span>
+<span class="sd">        show_equation(self)</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MainFrame</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;icon.png&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term_edit</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">main_plot_canvas</span> <span class="o">=</span> <span class="n">MplCanvas3D2D</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_noise_canvas</span> <span class="o">=</span> <span class="n">MplCanvas3D2D</span><span class="p">()</span>
@@ -185,7 +195,7 @@
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame.initUI">[docs]</a>
     <span class="k">def</span> <span class="nf">initUI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function initializes user interface setting up layouts, button and other widgets.</span>
+<span class="sd">        Function initializes user interface setting up layouts, buttons and other widgets.</span>
 <span class="sd">        It also displays and draws a number of plots related to Lorenz and Roessler attractors.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">central_widget</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
@@ -198,28 +208,29 @@
         <span class="n">left</span> <span class="o">=</span> <span class="n">QFrame</span><span class="p">()</span>
         <span class="n">left</span><span class="o">.</span><span class="n">setFrameShape</span><span class="p">(</span><span class="n">QFrame</span><span class="o">.</span><span class="n">StyledPanel</span><span class="p">)</span>
 
-        <span class="c1"># buttons</span>
+        <span class="c1"># Buttons</span>
         <span class="n">left_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s1">&#39;Options:&#39;</span><span class="p">,</span> <span class="n">left</span><span class="p">)</span>
 
         <span class="n">plot_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Plot points&quot;</span><span class="p">)</span>
         <span class="n">plot_button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
 
-        <span class="n">load_data</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Load from file&quot;</span><span class="p">)</span>
-        <span class="n">load_data</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
-        <span class="n">load_data</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term_handler</span><span class="o">.</span><span class="n">load_plot</span><span class="p">)</span>
+        <span class="n">load_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Load from file&quot;</span><span class="p">)</span>
+        <span class="n">load_button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">load_button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term_handler</span><span class="o">.</span><span class="n">load_plot</span><span class="p">)</span>
 
-        <span class="n">save_data</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Save to file&quot;</span><span class="p">)</span>
-        <span class="n">save_data</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
-        <span class="n">save_data</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term_handler</span><span class="o">.</span><span class="n">save_plot</span><span class="p">)</span>
+        <span class="n">save_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Save to file&quot;</span><span class="p">)</span>
+        <span class="n">save_button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">save_button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term_handler</span><span class="o">.</span><span class="n">save_plot</span><span class="p">)</span>
 
-        <span class="n">init_r_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Rössler plot&quot;</span><span class="p">)</span>
-        <span class="n">init_r_button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
-        <span class="n">init_r_button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_roessler</span><span class="p">)</span>
+        <span class="n">roe_init_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Rössler plot&quot;</span><span class="p">)</span>
+        <span class="n">roe_init_button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">roe_init_button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_roessler</span><span class="p">)</span>
 
-        <span class="n">init_l_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Lorenz plot&quot;</span><span class="p">)</span>
-        <span class="n">init_l_button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
-        <span class="n">init_l_button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_lorenz</span><span class="p">)</span>
+        <span class="n">lor_init_button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Lorenz plot&quot;</span><span class="p">)</span>
+        <span class="n">lor_init_button</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">lor_init_button</span><span class="o">.</span><span class="n">pressed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_lorenz</span><span class="p">)</span>
 
+        <span class="c1"># Lorenz parameters textfields and labels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lor_params_rho</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lor_params_rho</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lor_params_beta</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -227,23 +238,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lor_params_sigma</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lor_params_sigma</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
 
-        <span class="n">lorenz_label1</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;ρ:&quot;</span><span class="p">)</span>
-        <span class="n">lorenz_label1</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
-        <span class="n">lorenz_label2</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;β:&quot;</span><span class="p">)</span>
-        <span class="n">lorenz_label2</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
-        <span class="n">lorenz_label3</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;σ:&quot;</span><span class="p">)</span>
-        <span class="n">lorenz_label3</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">lor_label_rho</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;ρ:&quot;</span><span class="p">)</span>
+        <span class="n">lor_label_rho</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">lor_label_beta</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;β:&quot;</span><span class="p">)</span>
+        <span class="n">lor_label_beta</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
+        <span class="n">lor_label_sigma</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;σ:&quot;</span><span class="p">)</span>
+        <span class="n">lor_label_sigma</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
         <span class="n">lorenz_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">init_l_params</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Initial Lorenz args:&quot;</span><span class="p">)</span>
-        <span class="n">l_condition_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">lor_condition_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_rho</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_beta</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_sigma</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="n">l_condition_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_rho</span><span class="p">)</span>
-        <span class="n">l_condition_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_beta</span><span class="p">)</span>
-        <span class="n">l_condition_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_sigma</span><span class="p">)</span>
+        <span class="n">lor_condition_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_rho</span><span class="p">)</span>
+        <span class="n">lor_condition_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_beta</span><span class="p">)</span>
+        <span class="n">lor_condition_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_init_condition_sigma</span><span class="p">)</span>
 
         <span class="n">steps_layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
 
@@ -271,22 +282,21 @@
         <span class="n">steps_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">tn_layout</span><span class="p">)</span>
         <span class="n">steps_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">n_layout</span><span class="p">)</span>
 
-        <span class="n">menu_sublayout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
-        <span class="n">lorenz_layout1</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
-        <span class="n">lorenz_layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lorenz_label1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-        <span class="n">lorenz_layout1</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_params_rho</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
-        <span class="n">lorenz_layout2</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
-        <span class="n">lorenz_layout2</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lorenz_label2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-        <span class="n">lorenz_layout2</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_params_beta</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
-        <span class="n">lorenz_layout3</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
-        <span class="n">lorenz_layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lorenz_label3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-        <span class="n">lorenz_layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_params_sigma</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
-        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">init_l_button</span><span class="p">)</span>
-        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lorenz_layout1</span><span class="p">)</span>
-        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lorenz_layout2</span><span class="p">)</span>
-        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lorenz_layout3</span><span class="p">)</span>
+        <span class="n">lor_layout_rho</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">lor_layout_rho</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lor_label_rho</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">lor_layout_rho</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_params_rho</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="n">lor_layout_beta</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">lor_layout_beta</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lor_label_beta</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">lor_layout_beta</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_params_beta</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="n">lor_layout_sigma</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
+        <span class="n">lor_layout_sigma</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lor_label_sigma</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">lor_layout_sigma</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_params_sigma</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">lor_init_button</span><span class="p">)</span>
+        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lor_layout_rho</span><span class="p">)</span>
+        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lor_layout_beta</span><span class="p">)</span>
+        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lor_layout_sigma</span><span class="p">)</span>
         <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_l_params</span><span class="p">)</span>
-        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">l_condition_layout</span><span class="p">)</span>
+        <span class="n">lorenz_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lor_condition_layout</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">roe_params_a</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">roe_params_a</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Fixed</span><span class="p">)</span>
@@ -322,13 +332,14 @@
         <span class="n">roessler_layout2</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">roe_params_b</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
         <span class="n">roessler_layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">roessler_label3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
         <span class="n">roessler_layout3</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">roe_params_c</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
-        <span class="n">roessler_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">init_r_button</span><span class="p">)</span>
+        <span class="n">roessler_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">roe_init_button</span><span class="p">)</span>
         <span class="n">roessler_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">roessler_layout1</span><span class="p">)</span>
         <span class="n">roessler_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">roessler_layout2</span><span class="p">)</span>
         <span class="n">roessler_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">roessler_layout3</span><span class="p">)</span>
         <span class="n">roessler_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_r_params</span><span class="p">)</span>
         <span class="n">roessler_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">roe_condition_layout</span><span class="p">)</span>
 
+        <span class="n">menu_sublayout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">()</span>
         <span class="n">menu_sublayout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">lorenz_layout</span><span class="p">)</span>
         <span class="n">menu_sublayout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">roessler_layout</span><span class="p">)</span>
         <span class="n">info_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Equation info:&quot;</span><span class="p">,</span> <span class="n">left</span><span class="p">)</span>
@@ -342,8 +353,8 @@
         <span class="n">left_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">menu_sublayout</span><span class="p">)</span>
         <span class="n">left_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">steps_label</span><span class="p">)</span>
         <span class="n">left_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">steps_layout</span><span class="p">)</span>
-        <span class="n">left_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">load_data</span><span class="p">)</span>
-        <span class="n">left_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">save_data</span><span class="p">)</span>
+        <span class="n">left_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">load_button</span><span class="p">)</span>
+        <span class="n">left_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">save_button</span><span class="p">)</span>
         <span class="n">left_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">plot_button</span><span class="p">)</span>
         <span class="n">left_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">info_label</span><span class="p">)</span>
         <span class="n">left_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="p">)</span>
@@ -380,11 +391,11 @@
 
         <span class="n">hbox_splitter</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">splitter</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span> <span class="o">=</span> <span class="n">QTextEdit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term_edit</span> <span class="o">=</span> <span class="n">QTextEdit</span><span class="p">()</span>
         <span class="n">term_label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Terminal:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
         <span class="n">term_layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
         <span class="n">term_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">term_label</span><span class="p">)</span>
-        <span class="n">term_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="p">)</span>
+        <span class="n">term_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term_edit</span><span class="p">)</span>
         <span class="n">hbox_bottom</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">term_layout</span><span class="p">)</span>
 
         <span class="n">vbox</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">hbox_splitter</span><span class="p">,</span> <span class="mi">85</span><span class="p">)</span>
@@ -394,7 +405,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1200</span><span class="p">,</span> <span class="mi">800</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s1">&#39;Chaos Simulator&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">look_for_enter_key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term_edit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">look_for_enter_key</span><span class="p">)</span>
 
         <span class="c1"># Just for testing 3D plotting /// eq_handler call</span>
 
@@ -433,18 +444,18 @@
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame.look_for_enter_key">[docs]</a>
     <span class="k">def</span> <span class="nf">look_for_enter_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Listens to commands entered into terminal passing thwem to Term_handler class methods</span>
+<span class="sd">        Listens to commands entered into terminal passing them to Term_handler class methods</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">term_handler</span><span class="o">.</span><span class="n">get_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">term_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">term_handler</span><span class="o">.</span><span class="n">get_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">term_edit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">term_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="MainFrame.init_lorenz">
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame.init_lorenz">[docs]</a>
     <span class="k">def</span> <span class="nf">init_lorenz</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initializes Lorenz equation handler from textfields, displays information about step, equations and parameters</span>
-<span class="sd">        and finally draws 3D plots of Lorenz equations.</span>
+<span class="sd">        Initializes equation handler from textfield parameters, displays information about step, equations and parameters</span>
+<span class="sd">        and draws 3D plots of Lorenz equations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lor_params_rho</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">lor_params_beta</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">lor_params_sigma</span><span class="o">.</span><span class="n">text</span><span class="p">():</span>
@@ -502,8 +513,8 @@
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame.init_roessler">[docs]</a>
     <span class="k">def</span> <span class="nf">init_roessler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initializes Roessler equation handler from textfields, displays information about step, equations and parameters</span>
-<span class="sd">        and finally draws 3D plots of Lorenz equations.</span>
+<span class="sd">        Initializes equation handler from textfield parameters, displays information about step, equations and parameters</span>
+<span class="sd">        and draws 3D plots of Lorenz equations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">roe_params_a</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">roe_params_b</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">roe_params_c</span><span class="o">.</span><span class="n">text</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -576,19 +587,19 @@
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame.redraw_figure">[docs]</a>
     <span class="k">def</span> <span class="nf">redraw_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        :return:</span>
+<span class="sd">        Redraws the attractor plot</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">main_plot_canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">main_plot_canvas</span><span class="o">.</span><span class="n">plot3D</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MainFrame.print_onto_text_edit">
-<a class="viewcode-back" href="../../src.html#src.main.MainFrame.print_onto_text_edit">[docs]</a>
-    <span class="k">def</span> <span class="nf">print_onto_text_edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<div class="viewcode-block" id="MainFrame.print_onto_info_edit">
+<a class="viewcode-back" href="../../src.html#src.main.MainFrame.print_onto_info_edit">[docs]</a>
+    <span class="k">def</span> <span class="nf">print_onto_info_edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        prints</span>
-<span class="sd">        :param text:</span>
+<span class="sd">        Prints given text in the info_edit panel of the UI</span>
+<span class="sd">        :param text: text to be displayed in UI</span>
+<span class="sd">        :type text: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
@@ -596,37 +607,31 @@
 <div class="viewcode-block" id="MainFrame.clear_terminal">
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame.clear_terminal">[docs]</a>
     <span class="k">def</span> <span class="nf">clear_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears all text from the terminal</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">term_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="MainFrame.clear_info">
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame.clear_info">[docs]</a>
     <span class="k">def</span> <span class="nf">clear_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        :return:</span>
+<span class="sd">        Clears all text from info_edit panel</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="MainFrame.get_user_Equation">
-<a class="viewcode-back" href="../../src.html#src.main.MainFrame.get_user_Equation">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_user_Equation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="MainFrame.show_equation">
 <a class="viewcode-back" href="../../src.html#src.main.MainFrame.show_equation">[docs]</a>
     <span class="k">def</span> <span class="nf">show_equation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-
+<span class="sd">        Prints Roessler or Lorenz equation onto info_edit panel</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_type_flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_type_flag</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># Lorenz equation</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eq_handler</span><span class="o">.</span><span class="n">print_lorenz_eq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">lor_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">lor_tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_type_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_type_flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Roessler equation</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">info_edit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eq_handler</span><span class="o">.</span><span class="n">print_roessler_eq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">roe_tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">roe_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">roe_tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span></div>
 </div>

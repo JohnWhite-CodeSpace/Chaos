@@ -84,7 +84,7 @@
                     <span class="k">break</span>
                 <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">commandcheck</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: There is no such command as &#39;</span><span class="si">{</span><span class="n">foundcom</span><span class="si">}</span><span class="s2">&#39;!&quot;</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: There is no such command as &#39;</span><span class="si">{</span><span class="n">foundcom</span><span class="si">}</span><span class="s2">&#39;!&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TerminalHandler.get_last_non_empty_line">
@@ -129,25 +129,25 @@
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>  <span class="c1"># plot roessler</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;plot Roessler&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>  <span class="c1"># load plot</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;loading plot... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="s2">&quot;loading plot... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_plot</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>  <span class="c1"># load session</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;loading session... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="s2">&quot;loading session... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>  <span class="c1"># show equation</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">show_equation</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>  <span class="c1"># save plot</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;saving plot...  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="s2">&quot;saving plot...  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_plot</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>  <span class="c1"># save session</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;saving session...  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="s2">&quot;saving session...  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>  <span class="c1"># clear terminal</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">clear_terminal</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">12</span><span class="p">:</span>  <span class="c1"># clear infopanel</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">clear_info</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">commandNum</span> <span class="o">==</span> <span class="mi">13</span><span class="p">:</span>  <span class="c1"># help</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;List of console commands: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="s2">&quot;List of console commands: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">CommandList</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="n">CommandList</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="n">CommandList</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">CommandList</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no such command&quot;</span><span class="p">)</span></div>
@@ -183,11 +183,6 @@
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
-    <span class="c1"># def get_User_Equation2d(self):</span>
-    <span class="c1">#     equation = self.main_frame.get_user_Equation()</span>
-    <span class="c1">#     if &#39;x&#39; in equation and &#39;y&#39; in equation:</span>
-    <span class="c1">#</span>
-    <span class="c1">#         if &#39;^&#39; in equation:</span>
 <div class="viewcode-block" id="TerminalHandler.save_plot">
 <a class="viewcode-back" href="../../src.html#src.terminal_handler.TerminalHandler.save_plot">[docs]</a>
     <span class="k">def</span> <span class="nf">save_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -247,7 +242,7 @@
 
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;saved plot for parameters&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="s2">&quot;saved plot for parameters&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TerminalHandler.load_plot">
@@ -310,7 +305,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">step_count</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
         <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_text_edit</span><span class="p">(</span><span class="s2">&quot;plot loaded successfully&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_frame</span><span class="o">.</span><span class="n">print_onto_info_edit</span><span class="p">(</span><span class="s2">&quot;plot loaded successfully&quot;</span><span class="p">)</span></div>
 </div>
 
 

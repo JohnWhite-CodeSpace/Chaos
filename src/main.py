@@ -64,13 +64,17 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
 
 class MainFrame(QMainWindow):
     """
+    Class repsonsible for the User interface of the application
+
     Attributes
         term_handler - TerminalHandler class object used for command execution \n
         text_edit - text send from terminal to Term_handler \n
         sc - MplCanvas2D3D class object
 
-        eq_handler - EquationHandler class object used for numerical calculations of Lorenz and Roessler attractors equation \n
-        self.eq_type_flag - flag distinguishing between Lorenz (equation=0) and Roessler (equation=1) attractors display \n
+        eq_handler - EquationHandler class object used for numerical calculations of
+        Lorenz and Roessler attractors equation \n
+        self.eq_type_flag - flag distinguishing between Lorenz (equation=0) and Roessler (equation=1)
+        attractors display \n
         lor_tmp - array of temporary parameter values of Lorenz attractor \n
         lor_tmp - array of temporary parameter values of Roessler attractor\n
         X,Y,Z -  XYZ coordinates used for attractor plotting \n
@@ -78,27 +82,33 @@ class MainFrame(QMainWindow):
         lor_params_rho, lor_params_beta, lor_params_sigma - textfields representing Lorenz attractor parameters \n
         roe_params_a, roe_params_b, roe_params_c - textfields representing Roessler attractor parameters\n
 
-        lor_init_condition_rho, lor_init_condition_beta, lor_init_condition_sigma - textfields representing Lorenz attractor starting conditions \n
-        self.roe_init_condition_a, self.roe_init_condition_b, self.roe_init_condition_c - textfields representing Lorenz attractor starting conditions \n
+        lor_init_condition_rho, lor_init_condition_beta, lor_init_condition_sigma - textfields representing Lorenz
+        attractor starting conditions \n
+        self.roe_init_condition_a, self.roe_init_condition_b, self.roe_init_condition_c - textfields representing
+        Lorenz attractor starting conditions \n
 
         step_start - textfield representing starting step \n
         step_stop - textfield representing last step \n
         step_count - textfield representing number of steps \n
 
     Methods
-        initUI(self)
-        look_for_enter_key(self)
-        init_lorenz(self)
-        init_roessler(self)
-        draw_noise_plots(self)
-        redraw_figure(self)
-        r
+        initUI(self) - function initializes user interface setting up layouts, buttons and other widgets\n
+        look_for_enter_key(self) - listens to commands entered into terminal passing them to Term_handler class methods\n
+        init_lorenz(self) - initializes equation handler, displays information about equations and parameters, draws 3D plots of Lorenz equations\n
+        init_roessler(self) - initializes equation handler, displays information about equations and parameters, draws 3D plots of Lorenz equations \n
+        draw_noise_plots((self, t_num, X, Y, Z) -  plots X, Y & Z noise in 2D as a function of time steps \n
+        redraw_figure(self) -  redraws the attractor plot \n
+        print_onto_text_edit(self, text) -  prints given text in the info_edit panel of the UI \n
+        clear_terminal(self) - clears all text from the terminal \n
+        clear_info(self) - clears all text from info_edit panel \n
+        show_equation(self) - prints Roessler or Lorenz equation onto info_edit panel
+
     """
 
     def __init__(self):
         super(MainFrame, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icon.png'))
-        self.text_edit = None
+        self.term_edit = None
 
         self.main_plot_canvas = MplCanvas3D2D()
         self.x_noise_canvas = MplCanvas3D2D()
@@ -140,7 +150,7 @@ class MainFrame(QMainWindow):
 
     def initUI(self):
         """
-        Function initializes user interface setting up layouts, button and other widgets.
+        Function initializes user interface setting up layouts, buttons and other widgets.
         It also displays and draws a number of plots related to Lorenz and Roessler attractors.
         """
         central_widget = QWidget()
@@ -153,28 +163,29 @@ class MainFrame(QMainWindow):
         left = QFrame()
         left.setFrameShape(QFrame.StyledPanel)
 
-        # buttons
+        # Buttons
         left_label = QLabel('Options:', left)
 
         plot_button = QPushButton("Plot points")
         plot_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
-        load_data = QPushButton("Load from file")
-        load_data.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        load_data.pressed.connect(self.term_handler.load_plot)
+        load_button = QPushButton("Load from file")
+        load_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        load_button.pressed.connect(self.term_handler.load_plot)
 
-        save_data = QPushButton("Save to file")
-        save_data.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        save_data.pressed.connect(self.term_handler.save_plot)
+        save_button = QPushButton("Save to file")
+        save_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        save_button.pressed.connect(self.term_handler.save_plot)
 
-        init_r_button = QPushButton("Rössler plot")
-        init_r_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        init_r_button.pressed.connect(self.init_roessler)
+        roe_init_button = QPushButton("Rössler plot")
+        roe_init_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        roe_init_button.pressed.connect(self.init_roessler)
 
-        init_l_button = QPushButton("Lorenz plot")
-        init_l_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        init_l_button.pressed.connect(self.init_lorenz)
+        lor_init_button = QPushButton("Lorenz plot")
+        lor_init_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        lor_init_button.pressed.connect(self.init_lorenz)
 
+        # Lorenz parameters textfields and labels
         self.lor_params_rho = QtWidgets.QLineEdit(self)
         self.lor_params_rho.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.lor_params_beta = QtWidgets.QLineEdit(self)
@@ -182,23 +193,23 @@ class MainFrame(QMainWindow):
         self.lor_params_sigma = QtWidgets.QLineEdit(self)
         self.lor_params_sigma.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
 
-        lorenz_label1 = QLabel("ρ:")
-        lorenz_label1.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        lorenz_label2 = QLabel("β:")
-        lorenz_label2.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
-        lorenz_label3 = QLabel("σ:")
-        lorenz_label3.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        lor_label_rho = QLabel("ρ:")
+        lor_label_rho.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        lor_label_beta = QLabel("β:")
+        lor_label_beta.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        lor_label_sigma = QLabel("σ:")
+        lor_label_sigma.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         lorenz_layout = QVBoxLayout()
 
         self.init_l_params = QLabel("Initial Lorenz args:")
-        l_condition_layout = QHBoxLayout()
+        lor_condition_layout = QHBoxLayout()
         self.lor_init_condition_rho = QtWidgets.QLineEdit(self)
         self.lor_init_condition_beta = QtWidgets.QLineEdit(self)
         self.lor_init_condition_sigma = QtWidgets.QLineEdit(self)
 
-        l_condition_layout.addWidget(self.lor_init_condition_rho)
-        l_condition_layout.addWidget(self.lor_init_condition_beta)
-        l_condition_layout.addWidget(self.lor_init_condition_sigma)
+        lor_condition_layout.addWidget(self.lor_init_condition_rho)
+        lor_condition_layout.addWidget(self.lor_init_condition_beta)
+        lor_condition_layout.addWidget(self.lor_init_condition_sigma)
 
         steps_layout = QHBoxLayout()
 
@@ -226,22 +237,21 @@ class MainFrame(QMainWindow):
         steps_layout.addLayout(tn_layout)
         steps_layout.addLayout(n_layout)
 
-        menu_sublayout = QHBoxLayout()
-        lorenz_layout1 = QHBoxLayout()
-        lorenz_layout1.addWidget(lorenz_label1, 10)
-        lorenz_layout1.addWidget(self.lor_params_rho, 90)
-        lorenz_layout2 = QHBoxLayout()
-        lorenz_layout2.addWidget(lorenz_label2, 10)
-        lorenz_layout2.addWidget(self.lor_params_beta, 90)
-        lorenz_layout3 = QHBoxLayout()
-        lorenz_layout3.addWidget(lorenz_label3, 10)
-        lorenz_layout3.addWidget(self.lor_params_sigma, 90)
-        lorenz_layout.addWidget(init_l_button)
-        lorenz_layout.addLayout(lorenz_layout1)
-        lorenz_layout.addLayout(lorenz_layout2)
-        lorenz_layout.addLayout(lorenz_layout3)
+        lor_layout_rho = QHBoxLayout()
+        lor_layout_rho.addWidget(lor_label_rho, 10)
+        lor_layout_rho.addWidget(self.lor_params_rho, 90)
+        lor_layout_beta = QHBoxLayout()
+        lor_layout_beta.addWidget(lor_label_beta, 10)
+        lor_layout_beta.addWidget(self.lor_params_beta, 90)
+        lor_layout_sigma = QHBoxLayout()
+        lor_layout_sigma.addWidget(lor_label_sigma, 10)
+        lor_layout_sigma.addWidget(self.lor_params_sigma, 90)
+        lorenz_layout.addWidget(lor_init_button)
+        lorenz_layout.addLayout(lor_layout_rho)
+        lorenz_layout.addLayout(lor_layout_beta)
+        lorenz_layout.addLayout(lor_layout_sigma)
         lorenz_layout.addWidget(self.init_l_params)
-        lorenz_layout.addLayout(l_condition_layout)
+        lorenz_layout.addLayout(lor_condition_layout)
 
         self.roe_params_a = QtWidgets.QLineEdit(self)
         self.roe_params_a.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
@@ -277,13 +287,14 @@ class MainFrame(QMainWindow):
         roessler_layout2.addWidget(self.roe_params_b, 90)
         roessler_layout3.addWidget(roessler_label3, 10)
         roessler_layout3.addWidget(self.roe_params_c, 90)
-        roessler_layout.addWidget(init_r_button)
+        roessler_layout.addWidget(roe_init_button)
         roessler_layout.addLayout(roessler_layout1)
         roessler_layout.addLayout(roessler_layout2)
         roessler_layout.addLayout(roessler_layout3)
         roessler_layout.addWidget(self.init_r_params)
         roessler_layout.addLayout(roe_condition_layout)
 
+        menu_sublayout = QHBoxLayout()
         menu_sublayout.addLayout(lorenz_layout)
         menu_sublayout.addLayout(roessler_layout)
         info_label = QLabel("Equation info:", left)
@@ -297,8 +308,8 @@ class MainFrame(QMainWindow):
         left_layout.addLayout(menu_sublayout)
         left_layout.addWidget(steps_label)
         left_layout.addLayout(steps_layout)
-        left_layout.addWidget(load_data)
-        left_layout.addWidget(save_data)
+        left_layout.addWidget(load_button)
+        left_layout.addWidget(save_button)
         left_layout.addWidget(plot_button)
         left_layout.addWidget(info_label)
         left_layout.addWidget(self.info_edit)
@@ -335,11 +346,11 @@ class MainFrame(QMainWindow):
 
         hbox_splitter.addWidget(splitter)
 
-        self.text_edit = QTextEdit()
+        self.term_edit = QTextEdit()
         term_label = QLabel("Terminal:", self)
         term_layout = QVBoxLayout()
         term_layout.addWidget(term_label)
-        term_layout.addWidget(self.text_edit)
+        term_layout.addWidget(self.term_edit)
         hbox_bottom.addLayout(term_layout)
 
         vbox.addLayout(hbox_splitter, 85)
@@ -349,7 +360,7 @@ class MainFrame(QMainWindow):
         self.setGeometry(0, 0, 1200, 800)
         self.setWindowTitle('Chaos Simulator')
 
-        self.text_edit.textChanged.connect(self.look_for_enter_key)
+        self.term_edit.textChanged.connect(self.look_for_enter_key)
 
         # Just for testing 3D plotting /// eq_handler call
 
@@ -385,15 +396,15 @@ class MainFrame(QMainWindow):
 
     def look_for_enter_key(self):
         """
-        Listens to commands entered into terminal passing thwem to Term_handler class methods
+        Listens to commands entered into terminal passing them to Term_handler class methods
         """
-        if self.text_edit.toPlainText().endswith('\n'):
-            self.term_handler.get_command(self.text_edit, self.text_edit.toPlainText())
+        if self.term_edit.toPlainText().endswith('\n'):
+            self.term_handler.get_command(self.term_edit, self.term_edit.toPlainText())
 
     def init_lorenz(self):
         """
-        Initializes Lorenz equation handler from textfields, displays information about step, equations and parameters
-        and finally draws 3D plots of Lorenz equations.
+        Initializes equation handler from textfield parameters, displays information about step, equations and parameters
+        and draws 3D plots of Lorenz equations.
         """
         self.info_edit.clear()
         if self.lor_params_rho.text() and self.lor_params_beta.text() and self.lor_params_sigma.text():
@@ -448,8 +459,8 @@ class MainFrame(QMainWindow):
 
     def init_roessler(self):
         """
-        Initializes Roessler equation handler from textfields, displays information about step, equations and parameters
-        and finally draws 3D plots of Lorenz equations.
+        Initializes equation handler from textfield parameters, displays information about step, equations and parameters
+        and draws 3D plots of Lorenz equations.
         """
         if self.roe_params_a.text() and self.roe_params_b.text() and self.roe_params_c.text():
             self.info_edit.clear()
@@ -516,42 +527,39 @@ class MainFrame(QMainWindow):
 
     def redraw_figure(self):
         """
-
-        :return:
+        Redraws the attractor plot
         """
         self.main_plot_canvas.draw()
         self.main_plot_canvas.plot3D(self.X, self.Y, self.Z)
 
-    def print_onto_text_edit(self, text):
+    def print_onto_info_edit(self, text):
         """
-        prints
-        :param text:
+        Prints given text in the info_edit panel of the UI
+        :param text: text to be displayed in UI
+        :type text: str
         """
         self.info_edit.append(f"{text}")
 
     def clear_terminal(self):
-        """"
         """
-        self.text_edit.clear()
+        Clears all text from the terminal
+        """
+        self.term_edit.clear()
 
     def clear_info(self):
         """
-
-        :return:
+        Clears all text from info_edit panel
         """
         self.info_edit.clear()
 
-    def get_user_Equation(self):
-        return self.text_edit.toPlainText()
-
     def show_equation(self):
         """
-
+        Prints Roessler or Lorenz equation onto info_edit panel
         """
-        if self.eq_type_flag == 0:
+        if self.eq_type_flag == 0: # Lorenz equation
             self.info_edit.clear()
             self.info_edit.setText(self.eq_handler.print_lorenz_eq(self.lor_tmp[0], self.lor_tmp[1], self.lor_tmp[2]))
-        elif self.eq_type_flag == 1:
+        elif self.eq_type_flag == 1: # Roessler equation
             self.info_edit.clear()
             self.info_edit.setText(self.eq_handler.print_roessler_eq(self.roe_tmp[0], self.roe_tmp[1], self.roe_tmp[2]))
 

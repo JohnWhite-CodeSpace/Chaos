@@ -49,7 +49,7 @@ class TerminalHandler:
                     break
                 num += 1
         if commandcheck == 0:
-            self.main_frame.print_onto_text_edit(f"ERROR: There is no such command as '{foundcom}'!")
+            self.main_frame.print_onto_info_edit(f"ERROR: There is no such command as '{foundcom}'!")
 
     def get_last_non_empty_line(self, lines):
         """
@@ -88,25 +88,25 @@ class TerminalHandler:
         elif commandNum == 5:  # plot roessler
             print("plot Roessler")
         elif commandNum == 6:  # load plot
-            self.main_frame.print_onto_text_edit("loading plot... \n")
+            self.main_frame.print_onto_info_edit("loading plot... \n")
             self.load_plot()
         elif commandNum == 7:  # load session
-            self.main_frame.print_onto_text_edit("loading session... \n")
+            self.main_frame.print_onto_info_edit("loading session... \n")
         elif commandNum == 8:  # show equation
             self.main_frame.show_equation()
         elif commandNum == 9:  # save plot
-            self.main_frame.print_onto_text_edit("saving plot...  \n")
+            self.main_frame.print_onto_info_edit("saving plot...  \n")
             self.save_plot()
         elif commandNum == 10:  # save session
-            self.main_frame.print_onto_text_edit("saving session...  \n")
+            self.main_frame.print_onto_info_edit("saving session...  \n")
         elif commandNum == 11:  # clear terminal
             self.main_frame.clear_terminal()
         elif commandNum == 12:  # clear infopanel
             self.main_frame.clear_info()
         elif commandNum == 13:  # help
-            self.main_frame.print_onto_text_edit("List of console commands: \n")
+            self.main_frame.print_onto_info_edit("List of console commands: \n")
             for i in CommandList:
-                self.main_frame.print_onto_text_edit(CommandList[i][0])
+                self.main_frame.print_onto_info_edit(CommandList[i][0])
                 print(CommandList[i][0])
         else:
             print("no such command")
@@ -200,7 +200,7 @@ class TerminalHandler:
 
         file.close()
 
-        self.main_frame.print_onto_text_edit("saved plot for parameters")
+        self.main_frame.print_onto_info_edit("saved plot for parameters")
 
     def load_plot(self):
         """
@@ -265,6 +265,6 @@ class TerminalHandler:
             self.main_frame.step_count.setText(tmp[2])
 
         file.close()
-        self.main_frame.print_onto_text_edit("plot loaded successfully")
+        self.main_frame.print_onto_info_edit("plot loaded successfully")
 
 
