@@ -31,7 +31,7 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
 
     def plot2D(self, xarray, yarray, label1, label2, color):
         self.figure.clear()
-        ax = self.figure.add_subplot(111, position=[0.15, 0.2, 0.8, 0.8])
+        ax = self.figure.add_subplot(111, position=[0.15, 0.15, 0.8, 0.8])
         ax.plot(xarray, yarray, color=color)
         ax.set_xlabel(label1)
         ax.set_ylabel(label2)
