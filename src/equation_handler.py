@@ -6,16 +6,16 @@ class EquationHandler:
     Class designed for numeric operations based on  Lorenz and Roessler attractors theorem
 
     Attributes
-        constantsl - lorenz constants array
-        constantsr - roessler constants array
+        lor_constants - lorenz constants array\n
+        roe_constants - roessler constants array\n
 
     Methods
-        set_lorenz_conditions(self, rho, beta, sigma) -  Sets Lorenz rho, beta & sigma parameters of constantsl array to given values\n
+        set_lorenz_conditions(self, rho, beta, sigma) -  Sets Lorenz rho, beta & sigma parameters of lor_constants array to given values\n
         lorenz(self, xyz) - Calculates difference quotients based on Lorenz attractor equations to be used in Runge-Kutta algorithm\n
-        set_roessler_conditions(self, a, b, c) - Sets Roessler a, b & c parameters of constantsr array to given values\n
+        set_roessler_conditions(self, a, b, c) - Sets Roessler a, b & c parameters of roe_constants array to given values\n
         roessler(self, xyz) - Calculates difference quotients based on Roessler attractor equations to be used in Runge-Kutta algorithm\n
-        print_lorenz_eq(self, rho, beta, sigma) - Outputs Lorenz attractor equations in a legible form
-        print_roessler_eq(self, a, b, c) - Outputs Roessler attractor equations in a legible form\n
+        print_lorenz_eq(self, rho, beta, sigma) - Return Lorenz attractor equations in a legible form \n
+        print_roessler_eq(self, a, b, c) - Returns Roessler attractor equations in a legible form \n
         runge_kutta_algorithm_4_lorenz(self, initial_conditions, t_start, t_end, num_steps) - uses 4th order Runge-Kutta algorithm to solve Lorenz attractor equations numerically, calculating the XYZ
         points for Roessler attractor of given parameters\n
         runge_kutta_algorithm_4_roessler(self, initial_conditions, t_start, t_end, num_steps) -  uses 4th order Runge-Kutta algorithm to solve Roessler attractor equations numerically, calculating the XYZ
@@ -23,12 +23,12 @@ class EquationHandler:
     """
     def __init__(self):
         super(EquationHandler, self).__init__()
-        self.constantsl = {}
-        self.constantsr = {}
+        self.lor_constants = {}
+        self.roe_constants = {}
 
     def set_lorenz_conditions(self, rho, beta, sigma):
         """
-        Sets Lorenz rho, beta & sigma parameters of constantsl array to given values
+        Sets Lorenz rho, beta & sigma parameters of lor_constants array to given values
 
         :param rho: rho parameter of Lorenz attractor equation
         :param beta: beta parameter of Lorenz attractor equation
@@ -36,10 +36,10 @@ class EquationHandler:
         :return: array of Lorenz parameters
         """
 
-        self.constantsl['rho'] = rho
-        self.constantsl['beta'] = beta
-        self.constantsl['sigma'] = sigma
-        print(self.constantsl)
+        self.lor_constants['rho'] = rho
+        self.lor_constants['beta'] = beta
+        self.lor_constants['sigma'] = sigma
+        print(self.lor_constants)
 
     def lorenz(self, xyz):
         """
@@ -49,24 +49,23 @@ class EquationHandler:
         :return: array of difference quotients as an array
         """
         x, y, z = xyz
-        dxdt = self.constantsl['sigma'] * (y - x)
-        dydt = x * (self.constantsl['rho'] - z) - y
-        dzdt = x * y - self.constantsl['beta'] * z
+        dxdt = self.lor_constants['sigma'] * (y - x)
+        dydt = x * (self.lor_constants['rho'] - z) - y
+        dzdt = x * y - self.lor_constants['beta'] * z
         return np.array([dxdt, dydt, dzdt])
 
     def set_roessler_conditions(self, a, b, c):
         """
-        Sets Roessler a, b & c parameters of constantsr array to given values
+        Sets Roessler a, b & c parameters of roe_constants array to given values
 
         :param a: a parameter of Roessler attractor equation
         :param b: b parameter of Roessler attractor equation
         :param c: c parameter of Roessler attractor equation
         :return: array of Roessler parameters
         """
-        self.constantsr['a'] = a
-        self.constantsr['b'] = b
-        self.constantsr['c'] = c
-        print("kutas")
+        self.roe_constants['a'] = a
+        self.roe_constants['b'] = b
+        self.roe_constants['c'] = c
 
     def roessler(self, xyz):
         """
@@ -77,8 +76,8 @@ class EquationHandler:
         """
         x, y, z = xyz
         dxdt = -y - z
-        dydt = x + self.constantsr['a'] * y
-        dzdt = self.constantsr['b'] + z * (x - self.constantsr['c'])
+        dydt = x + self.roe_constants['a'] * y
+        dzdt = self.roe_constants['b'] + z * (x - self.roe_constants['c'])
         return np.array([dxdt, dydt, dzdt])
 
     def print_lorenz_eq(self, rho, beta, sigma):
@@ -90,10 +89,10 @@ class EquationHandler:
         :param sigma: sigma parameter of Lorenz attractor equation
         :return: string representation of Lorenz attractor equation
         """
-        return f"Lorenz system:\n" \
-               f"dxdt = {sigma}(x-y)\n" \
-               f"dydt = x({rho}-z)-y\n" \
-               f"dzdt = xy-{beta}z\n"
+        return f"Lorenz system: \n" \
+               f"dx = {sigma}(x-y)dt \n" \
+               f"dy = (x({rho}-z)-y))dt \n" \
+               f"dz = (xy-{beta}z)dt \n"
 
     def print_roessler_eq(self, a, b, c):
         """
@@ -105,9 +104,9 @@ class EquationHandler:
         :return: string representation of Roessler attractor equation
         """
         return f"Rössler system:\n" \
-               f"-x - y\n" \
-               f"x + {a}y\n" \
-               f"{b} + z(x -{c})\n"
+               f"dx = (-x - y)dt \n" \
+               f"dy  = (x + {a}y)dt \n" \
+               f"dz = ({b} + z(x -{c}))dt \n"
 
     def runge_kutta_algorithm_4_lorenz(self, init_conditions, t_start, t_end, num_steps):
         """

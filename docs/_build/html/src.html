@@ -1,57 +1,149 @@
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-<html lang="en" data-content_root="./">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>src package &#8212; Chaos 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
-    <script src="_static/documentation_options.js?v=f2a433a1"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src package &mdash; Chaos 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
 
-  
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
           
+          
+          <a href="index.html" class="icon icon-home">
+            Chaos
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">src package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.equation_handler">src.equation_handler module</a><ul>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler"><code class="docutils literal notranslate"><span class="pre">EquationHandler</span></code></a><ul>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler.lorenz"><code class="docutils literal notranslate"><span class="pre">EquationHandler.lorenz()</span></code></a></li>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler.print_lorenz_eq"><code class="docutils literal notranslate"><span class="pre">EquationHandler.print_lorenz_eq()</span></code></a></li>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler.print_roessler_eq"><code class="docutils literal notranslate"><span class="pre">EquationHandler.print_roessler_eq()</span></code></a></li>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler.roessler"><code class="docutils literal notranslate"><span class="pre">EquationHandler.roessler()</span></code></a></li>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler.runge_kutta_algorithm_4_lorenz"><code class="docutils literal notranslate"><span class="pre">EquationHandler.runge_kutta_algorithm_4_lorenz()</span></code></a></li>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler.runge_kutta_algorithm_4_roessler"><code class="docutils literal notranslate"><span class="pre">EquationHandler.runge_kutta_algorithm_4_roessler()</span></code></a></li>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler.set_lorenz_conditions"><code class="docutils literal notranslate"><span class="pre">EquationHandler.set_lorenz_conditions()</span></code></a></li>
+<li><a class="reference internal" href="#src.equation_handler.EquationHandler.set_roessler_conditions"><code class="docutils literal notranslate"><span class="pre">EquationHandler.set_roessler_conditions()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.main">src.main module</a><ul>
+<li><a class="reference internal" href="#src.main.MainFrame"><code class="docutils literal notranslate"><span class="pre">MainFrame</span></code></a><ul>
+<li><a class="reference internal" href="#src.main.MainFrame.clear_info"><code class="docutils literal notranslate"><span class="pre">MainFrame.clear_info()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.clear_terminal"><code class="docutils literal notranslate"><span class="pre">MainFrame.clear_terminal()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.draw_noise_plots"><code class="docutils literal notranslate"><span class="pre">MainFrame.draw_noise_plots()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.initUI"><code class="docutils literal notranslate"><span class="pre">MainFrame.initUI()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.init_lorenz"><code class="docutils literal notranslate"><span class="pre">MainFrame.init_lorenz()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.init_roessler"><code class="docutils literal notranslate"><span class="pre">MainFrame.init_roessler()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.look_for_enter_key"><code class="docutils literal notranslate"><span class="pre">MainFrame.look_for_enter_key()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.print_onto_info_edit"><code class="docutils literal notranslate"><span class="pre">MainFrame.print_onto_info_edit()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.redraw_figure"><code class="docutils literal notranslate"><span class="pre">MainFrame.redraw_figure()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MainFrame.show_equation"><code class="docutils literal notranslate"><span class="pre">MainFrame.show_equation()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.main.MplCanvas3D2D"><code class="docutils literal notranslate"><span class="pre">MplCanvas3D2D</span></code></a><ul>
+<li><a class="reference internal" href="#src.main.MplCanvas3D2D.plot2D"><code class="docutils literal notranslate"><span class="pre">MplCanvas3D2D.plot2D()</span></code></a></li>
+<li><a class="reference internal" href="#src.main.MplCanvas3D2D.plot3D"><code class="docutils literal notranslate"><span class="pre">MplCanvas3D2D.plot3D()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.terminal_handler">src.terminal_handler module</a><ul>
+<li><a class="reference internal" href="#src.terminal_handler.TerminalHandler"><code class="docutils literal notranslate"><span class="pre">TerminalHandler</span></code></a><ul>
+<li><a class="reference internal" href="#src.terminal_handler.TerminalHandler.check_command_type"><code class="docutils literal notranslate"><span class="pre">TerminalHandler.check_command_type()</span></code></a></li>
+<li><a class="reference internal" href="#src.terminal_handler.TerminalHandler.get_command"><code class="docutils literal notranslate"><span class="pre">TerminalHandler.get_command()</span></code></a></li>
+<li><a class="reference internal" href="#src.terminal_handler.TerminalHandler.get_last_non_empty_line"><code class="docutils literal notranslate"><span class="pre">TerminalHandler.get_last_non_empty_line()</span></code></a></li>
+<li><a class="reference internal" href="#src.terminal_handler.TerminalHandler.load_command_base"><code class="docutils literal notranslate"><span class="pre">TerminalHandler.load_command_base()</span></code></a></li>
+<li><a class="reference internal" href="#src.terminal_handler.TerminalHandler.load_plot"><code class="docutils literal notranslate"><span class="pre">TerminalHandler.load_plot()</span></code></a></li>
+<li><a class="reference internal" href="#src.terminal_handler.TerminalHandler.save_plot"><code class="docutils literal notranslate"><span class="pre">TerminalHandler.save_plot()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
 
-          <div class="body" role="main">
-            
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Chaos</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">src package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="src-package">
-<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading">¶</a></h1>
+<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
 <section id="module-src.equation_handler">
-<span id="src-equation-handler-module"></span><h2>src.equation_handler module<a class="headerlink" href="#module-src.equation_handler" title="Link to this heading">¶</a></h2>
+<span id="src-equation-handler-module"></span><h2>src.equation_handler module<a class="headerlink" href="#module-src.equation_handler" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.equation_handler.</span></span><span class="sig-name descname"><span class="pre">EquationHandler</span></span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.equation_handler.</span></span><span class="sig-name descname"><span class="pre">EquationHandler</span></span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class designed for numeric operations based on  Lorenz and Roessler attractors theorem</p>
 <dl>
-<dt>Attributes</dt><dd><p>constantsl - lorenz constants array
-constantsr - roessler constants array</p>
+<dt>Attributes</dt><dd><p>lor_constants - lorenz constants array</p>
+<p>roe_constants - roessler constants array</p>
 </dd>
-<dt>Methods</dt><dd><p>set_lorenz_conditions(self, rho, beta, sigma) -  Sets Lorenz rho, beta &amp; sigma parameters of constantsl array to given values</p>
+<dt>Methods</dt><dd><p>set_lorenz_conditions(self, rho, beta, sigma) -  Sets Lorenz rho, beta &amp; sigma parameters of lor_constants array to given values</p>
 <p>lorenz(self, xyz) - Calculates difference quotients based on Lorenz attractor equations to be used in Runge-Kutta algorithm</p>
-<p>set_roessler_conditions(self, a, b, c) - Sets Roessler a, b &amp; c parameters of constantsr array to given values</p>
+<p>set_roessler_conditions(self, a, b, c) - Sets Roessler a, b &amp; c parameters of roe_constants array to given values</p>
 <p>roessler(self, xyz) - Calculates difference quotients based on Roessler attractor equations to be used in Runge-Kutta algorithm</p>
-<p>print_lorenz_eq(self, rho, beta, sigma) - Outputs Lorenz attractor equations in a legible form
-print_roessler_eq(self, a, b, c) - Outputs Roessler attractor equations in a legible form</p>
+<p>print_lorenz_eq(self, rho, beta, sigma) - Return Lorenz attractor equations in a legible form</p>
+<p>print_roessler_eq(self, a, b, c) - Returns Roessler attractor equations in a legible form</p>
 <p>runge_kutta_algorithm_4_lorenz(self, initial_conditions, t_start, t_end, num_steps) - uses 4th order Runge-Kutta algorithm to solve Lorenz attractor equations numerically, calculating the XYZ
 points for Roessler attractor of given parameters</p>
 <p>runge_kutta_algorithm_4_roessler(self, initial_conditions, t_start, t_end, num_steps) -  uses 4th order Runge-Kutta algorithm to solve Roessler attractor equations numerically, calculating the XYZ
@@ -60,7 +152,7 @@ points for Roessler attractor of given parameters</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler.lorenz">
-<span class="sig-name descname"><span class="pre">lorenz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.lorenz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.lorenz" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">lorenz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.lorenz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.lorenz" title="Link to this definition"></a></dt>
 <dd><p>Calculates difference quotients based on Lorenz attractor equations to be used in Runge-Kutta algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -74,7 +166,7 @@ points for Roessler attractor of given parameters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler.print_lorenz_eq">
-<span class="sig-name descname"><span class="pre">print_lorenz_eq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.print_lorenz_eq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.print_lorenz_eq" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">print_lorenz_eq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.print_lorenz_eq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.print_lorenz_eq" title="Link to this definition"></a></dt>
 <dd><p>Outputs Lorenz attractor equations in a legible form</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -92,7 +184,7 @@ points for Roessler attractor of given parameters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler.print_roessler_eq">
-<span class="sig-name descname"><span class="pre">print_roessler_eq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.print_roessler_eq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.print_roessler_eq" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">print_roessler_eq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.print_roessler_eq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.print_roessler_eq" title="Link to this definition"></a></dt>
 <dd><p>Outputs Roessler attractor equations in a legible form</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -110,7 +202,7 @@ points for Roessler attractor of given parameters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler.roessler">
-<span class="sig-name descname"><span class="pre">roessler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.roessler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.roessler" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">roessler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xyz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.roessler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.roessler" title="Link to this definition"></a></dt>
 <dd><p>Calculates difference quotients based on Roessler attractor equations to be used in Runge-Kutta algorithm</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -124,7 +216,7 @@ points for Roessler attractor of given parameters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler.runge_kutta_algorithm_4_lorenz">
-<span class="sig-name descname"><span class="pre">runge_kutta_algorithm_4_lorenz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.runge_kutta_algorithm_4_lorenz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.runge_kutta_algorithm_4_lorenz" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">runge_kutta_algorithm_4_lorenz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.runge_kutta_algorithm_4_lorenz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.runge_kutta_algorithm_4_lorenz" title="Link to this definition"></a></dt>
 <dd><p>Uses 4th order Runge-Kutta algorithm to solve Lorenz attractor equations numerically, calculating the XYZ
 points for lorenz attractor of given parameters</p>
 <dl class="field-list simple">
@@ -144,7 +236,7 @@ points for lorenz attractor of given parameters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler.runge_kutta_algorithm_4_roessler">
-<span class="sig-name descname"><span class="pre">runge_kutta_algorithm_4_roessler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.runge_kutta_algorithm_4_roessler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.runge_kutta_algorithm_4_roessler" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">runge_kutta_algorithm_4_roessler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_conditions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.runge_kutta_algorithm_4_roessler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.runge_kutta_algorithm_4_roessler" title="Link to this definition"></a></dt>
 <dd><p>Uses 4th order Runge-Kutta algorithm to solve Roessler attractor equations numerically, calculating the XYZ
 points for Roessler attractor of given parameters</p>
 <dl class="field-list simple">
@@ -164,8 +256,8 @@ points for Roessler attractor of given parameters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler.set_lorenz_conditions">
-<span class="sig-name descname"><span class="pre">set_lorenz_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.set_lorenz_conditions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.set_lorenz_conditions" title="Link to this definition">¶</a></dt>
-<dd><p>Sets Lorenz rho, beta &amp; sigma parameters of constantsl array to given values</p>
+<span class="sig-name descname"><span class="pre">set_lorenz_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.set_lorenz_conditions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.set_lorenz_conditions" title="Link to this definition"></a></dt>
+<dd><p>Sets Lorenz rho, beta &amp; sigma parameters of lor_constants array to given values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -182,8 +274,8 @@ points for Roessler attractor of given parameters</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.equation_handler.EquationHandler.set_roessler_conditions">
-<span class="sig-name descname"><span class="pre">set_roessler_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.set_roessler_conditions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.set_roessler_conditions" title="Link to this definition">¶</a></dt>
-<dd><p>Sets Roessler a, b &amp; c parameters of constantsr array to given values</p>
+<span class="sig-name descname"><span class="pre">set_roessler_conditions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/equation_handler.html#EquationHandler.set_roessler_conditions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.equation_handler.EquationHandler.set_roessler_conditions" title="Link to this definition"></a></dt>
+<dd><p>Sets Roessler a, b &amp; c parameters of roe_constants array to given values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -202,15 +294,15 @@ points for Roessler attractor of given parameters</p>
 
 </section>
 <section id="module-src.main">
-<span id="src-main-module"></span><h2>src.main module<a class="headerlink" href="#module-src.main" title="Link to this heading">¶</a></h2>
+<span id="src-main-module"></span><h2>src.main module<a class="headerlink" href="#module-src.main" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.main.MainFrame">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.main.</span></span><span class="sig-name descname"><span class="pre">MainFrame</span></span><a class="reference internal" href="_modules/src/main.html#MainFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.main.</span></span><span class="sig-name descname"><span class="pre">MainFrame</span></span><a class="reference internal" href="_modules/src/main.html#MainFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QMainWindow</span></code></p>
 <p>Class repsonsible for the User interface of the application</p>
 <dl>
 <dt>Attributes</dt><dd><p>term_handler - TerminalHandler class object used for command execution</p>
-<p>text_edit - text send from terminal to Term_handler</p>
+<p>text_edit - text send from terminal to term_handler</p>
 <p>sc - MplCanvas2D3D class object</p>
 <p>eq_handler - EquationHandler class object used for numerical calculations of
 Lorenz and Roessler attractors equation</p>
@@ -221,41 +313,41 @@ attractors display</p>
 <p>X,Y,Z -  XYZ coordinates used for attractor plotting</p>
 <p>lor_params_rho, lor_params_beta, lor_params_sigma - textfields representing Lorenz attractor parameters</p>
 <p>roe_params_a, roe_params_b, roe_params_c - textfields representing Roessler attractor parameters</p>
-<p>lor_init_condition_rho, lor_init_condition_beta, lor_init_condition_sigma - textfields representing Lorenz
+<p>lor_init_condition_X, lor_init_condition_Y, lor_init_condition_Z - textfields representing Lorenz
 attractor starting conditions</p>
-<p>self.roe_init_condition_a, self.roe_init_condition_b, self.roe_init_condition_c - textfields representing
-Lorenz attractor starting conditions</p>
+<p>self.roe_init_condition_X, self.roe_init_condition_Y, self.roe_init_condition_Z - textfields representing
+Roessler attractor starting conditions</p>
 <p>step_start - textfield representing starting step</p>
 <p>step_stop - textfield representing last step</p>
 <p>step_count - textfield representing number of steps</p>
 </dd>
 <dt>Methods</dt><dd><p>initUI(self) - function initializes user interface setting up layouts, buttons and other widgets</p>
-<p>look_for_enter_key(self) - listens to commands entered into terminal passing them to Term_handler class methods</p>
+<p>look_for_enter_key(self) - listens to commands entered into terminal passing them to TerminalHandler class methods</p>
 <p>init_lorenz(self) - initializes equation handler, displays information about equations and parameters, draws 3D plots of Lorenz equations</p>
-<p>init_roessler(self) - initializes equation handler, displays information about equations and parameters, draws 3D plots of Lorenz equations</p>
+<p>init_roessler(self) - initializes equation handler, displays information about equations and parameters, draws 3D plots of Roessler equations</p>
 <p>draw_noise_plots((self, t_num, X, Y, Z) -  plots X, Y &amp; Z noise in 2D as a function of time steps</p>
 <p>redraw_figure(self) -  redraws the attractor plot</p>
 <p>print_onto_text_edit(self, text) -  prints given text in the info_edit panel of the UI</p>
 <p>clear_terminal(self) - clears all text from the terminal</p>
 <p>clear_info(self) - clears all text from info_edit panel</p>
-<p>show_equation(self)</p>
+<p>show_equation(self) - prints Roessler or Lorenz equation onto info_edit panel</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.clear_info">
-<span class="sig-name descname"><span class="pre">clear_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.clear_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.clear_info" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">clear_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.clear_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.clear_info" title="Link to this definition"></a></dt>
 <dd><p>Clears all text from info_edit panel</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.clear_terminal">
-<span class="sig-name descname"><span class="pre">clear_terminal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.clear_terminal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.clear_terminal" title="Link to this definition">¶</a></dt>
-<dd><p>Clears all text from the terminal</p>
+<span class="sig-name descname"><span class="pre">clear_terminal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.clear_terminal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.clear_terminal" title="Link to this definition"></a></dt>
+<dd><p>Clears all text from the term_edit terminal</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.draw_noise_plots">
-<span class="sig-name descname"><span class="pre">draw_noise_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.draw_noise_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.draw_noise_plots" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">draw_noise_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.draw_noise_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.draw_noise_plots" title="Link to this definition"></a></dt>
 <dd><p>Plots X, Y &amp; Z noise in 2D as a function of time steps
 :param t_num: time steps array
 :param X: x coordinates array
@@ -265,34 +357,34 @@ Lorenz attractor starting conditions</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.initUI">
-<span class="sig-name descname"><span class="pre">initUI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.initUI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.initUI" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">initUI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.initUI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.initUI" title="Link to this definition"></a></dt>
 <dd><p>Function initializes user interface setting up layouts, buttons and other widgets.
 It also displays and draws a number of plots related to Lorenz and Roessler attractors.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.init_lorenz">
-<span class="sig-name descname"><span class="pre">init_lorenz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.init_lorenz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.init_lorenz" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_lorenz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.init_lorenz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.init_lorenz" title="Link to this definition"></a></dt>
 <dd><p>Initializes equation handler from textfield parameters, displays information about step, equations and parameters
 and draws 3D plots of Lorenz equations.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.init_roessler">
-<span class="sig-name descname"><span class="pre">init_roessler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.init_roessler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.init_roessler" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_roessler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.init_roessler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.init_roessler" title="Link to this definition"></a></dt>
 <dd><p>Initializes equation handler from textfield parameters, displays information about step, equations and parameters
 and draws 3D plots of Lorenz equations.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.look_for_enter_key">
-<span class="sig-name descname"><span class="pre">look_for_enter_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.look_for_enter_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.look_for_enter_key" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">look_for_enter_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.look_for_enter_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.look_for_enter_key" title="Link to this definition"></a></dt>
 <dd><p>Listens to commands entered into terminal passing them to Term_handler class methods</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.print_onto_info_edit">
-<span class="sig-name descname"><span class="pre">print_onto_info_edit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.print_onto_info_edit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.print_onto_info_edit" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">print_onto_info_edit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.print_onto_info_edit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.print_onto_info_edit" title="Link to this definition"></a></dt>
 <dd><p>Prints given text in the info_edit panel of the UI
 :param text: text to be displayed in UI
 :type text: str</p>
@@ -300,13 +392,13 @@ and draws 3D plots of Lorenz equations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.redraw_figure">
-<span class="sig-name descname"><span class="pre">redraw_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.redraw_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.redraw_figure" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">redraw_figure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.redraw_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.redraw_figure" title="Link to this definition"></a></dt>
 <dd><p>Redraws the attractor plot</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MainFrame.show_equation">
-<span class="sig-name descname"><span class="pre">show_equation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.show_equation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.show_equation" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">show_equation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MainFrame.show_equation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MainFrame.show_equation" title="Link to this definition"></a></dt>
 <dd><p>Prints Roessler or Lorenz equation onto info_edit panel</p>
 </dd></dl>
 
@@ -314,10 +406,10 @@ and draws 3D plots of Lorenz equations.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.main.MplCanvas3D2D">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.main.</span></span><span class="sig-name descname"><span class="pre">MplCanvas3D2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MplCanvas3D2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MplCanvas3D2D" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.main.</span></span><span class="sig-name descname"><span class="pre">MplCanvas3D2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MplCanvas3D2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MplCanvas3D2D" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">FigureCanvasQTAgg</span></code></p>
 <p>Class is a version of a basic PyQT FigureCanvas with modified plotting function meant for Lorenz and Roessler
-attractors plotting.</p>
+attractors plotting</p>
 <dl class="simple">
 <dt>Atributes</dt><dd><p>figure - graph of given size and format</p>
 </dd>
@@ -327,7 +419,7 @@ plot2D - Plots XY points on 2D graph based on supplied arrays of coordinates</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MplCanvas3D2D.plot2D">
-<span class="sig-name descname"><span class="pre">plot2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MplCanvas3D2D.plot2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MplCanvas3D2D.plot2D" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MplCanvas3D2D.plot2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MplCanvas3D2D.plot2D" title="Link to this definition"></a></dt>
 <dd><p>Plots XY points on 2D graph based on supplied arrays of coordinates
 :param xarray: x coordinates array
 :param yarray: y coordinates array
@@ -338,7 +430,7 @@ plot2D - Plots XY points on 2D graph based on supplied arrays of coordinates</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.main.MplCanvas3D2D.plot3D">
-<span class="sig-name descname"><span class="pre">plot3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MplCanvas3D2D.plot3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MplCanvas3D2D.plot3D" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#MplCanvas3D2D.plot3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.main.MplCanvas3D2D.plot3D" title="Link to this definition"></a></dt>
 <dd><p>Plots XYZ points on a 3D graph based on supplied arrays of coordinates
 :param xarray: x coordinates array
 :param yarray: y coordinates array
@@ -349,10 +441,10 @@ plot2D - Plots XY points on 2D graph based on supplied arrays of coordinates</p>
 
 </section>
 <section id="module-src.terminal_handler">
-<span id="src-terminal-handler-module"></span><h2>src.terminal_handler module<a class="headerlink" href="#module-src.terminal_handler" title="Link to this heading">¶</a></h2>
+<span id="src-terminal-handler-module"></span><h2>src.terminal_handler module<a class="headerlink" href="#module-src.terminal_handler" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.terminal_handler.TerminalHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.terminal_handler.</span></span><span class="sig-name descname"><span class="pre">TerminalHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.terminal_handler.</span></span><span class="sig-name descname"><span class="pre">TerminalHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class used for execution and management of commands from text passed by terminal.</p>
 <dl>
@@ -368,7 +460,7 @@ plot2D - Plots XY points on 2D graph based on supplied arrays of coordinates</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.terminal_handler.TerminalHandler.check_command_type">
-<span class="sig-name descname"><span class="pre">check_command_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commandNum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">textedit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.check_command_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.check_command_type" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_command_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commandNum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">textedit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.check_command_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.check_command_type" title="Link to this definition"></a></dt>
 <dd><p>Determines what command should be executed based on signal send by get_command()</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -382,13 +474,13 @@ plot2D - Plots XY points on 2D graph based on supplied arrays of coordinates</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.terminal_handler.TerminalHandler.get_command">
-<span class="sig-name descname"><span class="pre">get_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">textedit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.get_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.get_command" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">textedit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.get_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.get_command" title="Link to this definition"></a></dt>
 <dd><p>Determines if text matches any know command and assigns it its enum value based on loaded CommandList</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>textedit</strong> – does nothing</p></li>
-<li><p><strong>text</strong> (<em>string</em>) – string to evaluate</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – string to evaluate</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -399,7 +491,7 @@ plot2D - Plots XY points on 2D graph based on supplied arrays of coordinates</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.terminal_handler.TerminalHandler.get_last_non_empty_line">
-<span class="sig-name descname"><span class="pre">get_last_non_empty_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.get_last_non_empty_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.get_last_non_empty_line" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_last_non_empty_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.get_last_non_empty_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.get_last_non_empty_line" title="Link to this definition"></a></dt>
 <dd><p>Cuts empty lines from user input.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -416,14 +508,14 @@ plot2D - Plots XY points on 2D graph based on supplied arrays of coordinates</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.terminal_handler.TerminalHandler.load_command_base">
-<span class="sig-name descname"><span class="pre">load_command_base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.load_command_base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.load_command_base" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">load_command_base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.load_command_base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.load_command_base" title="Link to this definition"></a></dt>
 <dd><p>Loads available commands from command_list.txt and transforms into an enum following pattern:</p>
 <p>[enum string]-&gt;[enum iterator]</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.terminal_handler.TerminalHandler.load_plot">
-<span class="sig-name descname"><span class="pre">load_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.load_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.load_plot" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">load_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.load_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.load_plot" title="Link to this definition"></a></dt>
 <dd><p>Loads parameters from a previously saved saved_plots.txt file.</p>
 <p>The parameters are saved in “0,0,0 /n” format by .save_plot()
 and can be used to recall previous results of the program.</p>
@@ -431,7 +523,7 @@ and can be used to recall previous results of the program.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.terminal_handler.TerminalHandler.save_plot">
-<span class="sig-name descname"><span class="pre">save_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.save_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.save_plot" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">save_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/terminal_handler.html#TerminalHandler.save_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.terminal_handler.TerminalHandler.save_plot" title="Link to this definition"></a></dt>
 <dd><p>Saves given parameters from textfields to a saved_plots.txt file.</p>
 <p>The parameters come from lorenz and roessler parameters &amp; start
 conditions, as well as stop, start &amp; step conditions, they are as saved as:
@@ -448,71 +540,36 @@ ______________________________________________</p>
 </section>
 <hr class="docutils" />
 <section id="module-src">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Link to this heading">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Link to this heading"></a></h2>
 </section>
 </section>
 
 
+           </div>
           </div>
-          
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Jan Bialy &amp; Tymoteusz Januszek.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Chaos</a></h1>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &#169;2024, Jan Bialy & Tymoteusz Januszek.
-      
-      |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
-      
-      |
-      <a href="_sources/src.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>

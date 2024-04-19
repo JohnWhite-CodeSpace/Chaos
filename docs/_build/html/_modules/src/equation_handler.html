@@ -40,16 +40,16 @@
 <span class="sd">    Class designed for numeric operations based on  Lorenz and Roessler attractors theorem</span>
 
 <span class="sd">    Attributes</span>
-<span class="sd">        constantsl - lorenz constants array</span>
-<span class="sd">        constantsr - roessler constants array</span>
+<span class="sd">        lor_constants - lorenz constants array\n</span>
+<span class="sd">        roe_constants - roessler constants array\n</span>
 
 <span class="sd">    Methods</span>
-<span class="sd">        set_lorenz_conditions(self, rho, beta, sigma) -  Sets Lorenz rho, beta &amp; sigma parameters of constantsl array to given values\n</span>
+<span class="sd">        set_lorenz_conditions(self, rho, beta, sigma) -  Sets Lorenz rho, beta &amp; sigma parameters of lor_constants array to given values\n</span>
 <span class="sd">        lorenz(self, xyz) - Calculates difference quotients based on Lorenz attractor equations to be used in Runge-Kutta algorithm\n</span>
-<span class="sd">        set_roessler_conditions(self, a, b, c) - Sets Roessler a, b &amp; c parameters of constantsr array to given values\n</span>
+<span class="sd">        set_roessler_conditions(self, a, b, c) - Sets Roessler a, b &amp; c parameters of roe_constants array to given values\n</span>
 <span class="sd">        roessler(self, xyz) - Calculates difference quotients based on Roessler attractor equations to be used in Runge-Kutta algorithm\n</span>
-<span class="sd">        print_lorenz_eq(self, rho, beta, sigma) - Outputs Lorenz attractor equations in a legible form</span>
-<span class="sd">        print_roessler_eq(self, a, b, c) - Outputs Roessler attractor equations in a legible form\n</span>
+<span class="sd">        print_lorenz_eq(self, rho, beta, sigma) - Return Lorenz attractor equations in a legible form \n</span>
+<span class="sd">        print_roessler_eq(self, a, b, c) - Returns Roessler attractor equations in a legible form \n</span>
 <span class="sd">        runge_kutta_algorithm_4_lorenz(self, initial_conditions, t_start, t_end, num_steps) - uses 4th order Runge-Kutta algorithm to solve Lorenz attractor equations numerically, calculating the XYZ</span>
 <span class="sd">        points for Roessler attractor of given parameters\n</span>
 <span class="sd">        runge_kutta_algorithm_4_roessler(self, initial_conditions, t_start, t_end, num_steps) -  uses 4th order Runge-Kutta algorithm to solve Roessler attractor equations numerically, calculating the XYZ</span>
@@ -57,14 +57,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EquationHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">constantsl</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">constantsr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lor_constants</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">roe_constants</span> <span class="o">=</span> <span class="p">{}</span>
 
 <div class="viewcode-block" id="EquationHandler.set_lorenz_conditions">
 <a class="viewcode-back" href="../../src.html#src.equation_handler.EquationHandler.set_lorenz_conditions">[docs]</a>
     <span class="k">def</span> <span class="nf">set_lorenz_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets Lorenz rho, beta &amp; sigma parameters of constantsl array to given values</span>
+<span class="sd">        Sets Lorenz rho, beta &amp; sigma parameters of lor_constants array to given values</span>
 
 <span class="sd">        :param rho: rho parameter of Lorenz attractor equation</span>
 <span class="sd">        :param beta: beta parameter of Lorenz attractor equation</span>
@@ -72,10 +72,10 @@
 <span class="sd">        :return: array of Lorenz parameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">constantsl</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rho</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">constantsl</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">beta</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">constantsl</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigma</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constantsl</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lor_constants</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rho</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lor_constants</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">beta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lor_constants</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigma</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_constants</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="EquationHandler.lorenz">
@@ -88,9 +88,9 @@
 <span class="sd">        :return: array of difference quotients as an array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">xyz</span>
-        <span class="n">dxdt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constantsl</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
-        <span class="n">dydt</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constantsl</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>
-        <span class="n">dzdt</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">constantsl</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span>
+        <span class="n">dxdt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lor_constants</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">dydt</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lor_constants</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span>
+        <span class="n">dzdt</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lor_constants</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dxdt</span><span class="p">,</span> <span class="n">dydt</span><span class="p">,</span> <span class="n">dzdt</span><span class="p">])</span></div>
 
 
@@ -98,17 +98,16 @@
 <a class="viewcode-back" href="../../src.html#src.equation_handler.EquationHandler.set_roessler_conditions">[docs]</a>
     <span class="k">def</span> <span class="nf">set_roessler_conditions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets Roessler a, b &amp; c parameters of constantsr array to given values</span>
+<span class="sd">        Sets Roessler a, b &amp; c parameters of roe_constants array to given values</span>
 
 <span class="sd">        :param a: a parameter of Roessler attractor equation</span>
 <span class="sd">        :param b: b parameter of Roessler attractor equation</span>
 <span class="sd">        :param c: c parameter of Roessler attractor equation</span>
 <span class="sd">        :return: array of Roessler parameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">constantsr</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">constantsr</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">constantsr</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;kutas&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">roe_constants</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">roe_constants</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">roe_constants</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span></div>
 
 
 <div class="viewcode-block" id="EquationHandler.roessler">
@@ -122,8 +121,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">xyz</span>
         <span class="n">dxdt</span> <span class="o">=</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span> <span class="n">z</span>
-        <span class="n">dydt</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">constantsr</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span>
-        <span class="n">dzdt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constantsr</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">constantsr</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+        <span class="n">dydt</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">roe_constants</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">y</span>
+        <span class="n">dzdt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roe_constants</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">roe_constants</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dxdt</span><span class="p">,</span> <span class="n">dydt</span><span class="p">,</span> <span class="n">dzdt</span><span class="p">])</span></div>
 
 
@@ -138,10 +137,10 @@
 <span class="sd">        :param sigma: sigma parameter of Lorenz attractor equation</span>
 <span class="sd">        :return: string representation of Lorenz attractor equation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Lorenz system:</span><span class="se">\n</span><span class="s2">&quot;</span> \
-               <span class="sa">f</span><span class="s2">&quot;dxdt = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">(x-y)</span><span class="se">\n</span><span class="s2">&quot;</span> \
-               <span class="sa">f</span><span class="s2">&quot;dydt = x(</span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s2">-z)-y</span><span class="se">\n</span><span class="s2">&quot;</span> \
-               <span class="sa">f</span><span class="s2">&quot;dzdt = xy-</span><span class="si">{</span><span class="n">beta</span><span class="si">}</span><span class="s2">z</span><span class="se">\n</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Lorenz system: </span><span class="se">\n</span><span class="s2">&quot;</span> \
+               <span class="sa">f</span><span class="s2">&quot;dx = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">(x-y)dt </span><span class="se">\n</span><span class="s2">&quot;</span> \
+               <span class="sa">f</span><span class="s2">&quot;dy = (x(</span><span class="si">{</span><span class="n">rho</span><span class="si">}</span><span class="s2">-z)-y))dt </span><span class="se">\n</span><span class="s2">&quot;</span> \
+               <span class="sa">f</span><span class="s2">&quot;dz = (xy-</span><span class="si">{</span><span class="n">beta</span><span class="si">}</span><span class="s2">z)dt </span><span class="se">\n</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="EquationHandler.print_roessler_eq">
@@ -156,9 +155,9 @@
 <span class="sd">        :return: string representation of Roessler attractor equation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Rössler system:</span><span class="se">\n</span><span class="s2">&quot;</span> \
-               <span class="sa">f</span><span class="s2">&quot;-x - y</span><span class="se">\n</span><span class="s2">&quot;</span> \
-               <span class="sa">f</span><span class="s2">&quot;x + </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">y</span><span class="se">\n</span><span class="s2">&quot;</span> \
-               <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2"> + z(x -</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span></div>
+               <span class="sa">f</span><span class="s2">&quot;dx = (-x - y)dt </span><span class="se">\n</span><span class="s2">&quot;</span> \
+               <span class="sa">f</span><span class="s2">&quot;dy  = (x + </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">y)dt </span><span class="se">\n</span><span class="s2">&quot;</span> \
+               <span class="sa">f</span><span class="s2">&quot;dz = (</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2"> + z(x -</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">))dt </span><span class="se">\n</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="EquationHandler.runge_kutta_algorithm_4_lorenz">

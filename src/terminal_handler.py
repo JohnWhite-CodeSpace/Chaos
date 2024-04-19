@@ -1,5 +1,7 @@
 import sys
+
 CommandList = {}
+
 
 class TerminalHandler:
     """
@@ -16,9 +18,10 @@ class TerminalHandler:
         save_plot(self) - saves plot parameters to .txt file\n
         load_plot(self) - loads plot parameters from .txt file\n
     """
+
     def __init__(self, main_frame):
         """
-        Initializes Term_handler class object while passing an external main_frame argument for command execution in the MainFrame UI.
+        Initializes TerminalHandler class object while passing an external main_frame argument for command execution in the MainFrame UI.
 
         :param main_frame: UI class object used for outside function execution
         :type main_frame: MainFrame
@@ -31,7 +34,7 @@ class TerminalHandler:
 
         :param textedit: does nothing
         :param text: string to evaluate
-        :type text: string
+        :type text: str
         :return: void
         """
         commandcheck = 0
@@ -162,11 +165,11 @@ class TerminalHandler:
         file.write("\n")
 
         # lorenz start condition
-        file.write(self.main_frame.lor_init_condition_rho.text())
+        file.write(self.main_frame.lor_init_condition_X.text())
         file.write(",")
-        file.write(self.main_frame.lor_init_condition_beta.text())
+        file.write(self.main_frame.lor_init_condition_Y.text())
         file.write(",")
-        file.write(self.main_frame.lor_init_condition_sigma.text())
+        file.write(self.main_frame.lor_init_condition_Z.text())
         file.write("\n")
 
         # roessler parameters
@@ -178,11 +181,11 @@ class TerminalHandler:
         file.write("\n")
 
         # roessler start condition
-        file.write(self.main_frame.roe_init_condition_a.text())
+        file.write(self.main_frame.roe_init_condition_X.text())
         file.write(",")
-        file.write(self.main_frame.roe_init_condition_b.text())
+        file.write(self.main_frame.roe_init_condition_Y.text())
         file.write(",")
-        file.write(self.main_frame.roe_init_condition_c.text())
+        file.write(self.main_frame.roe_init_condition_Z.text())
         file.write("\n")
 
         # stop start step
@@ -222,9 +225,9 @@ class TerminalHandler:
             print("no lorenz starting conditions")
         else:
             tmp = txt[1].split(',')
-            self.main_frame.lor_init_condition_rho.setText(tmp[0])
-            self.main_frame.lor_init_condition_beta.setText(tmp[1])
-            self.main_frame.lor_init_condition_sigma.setText(tmp[2])
+            self.main_frame.lor_init_condition_X.setText(tmp[0])
+            self.main_frame.lor_init_condition_Y.setText(tmp[1])
+            self.main_frame.lor_init_condition_Z.setText(tmp[2])
 
         # load roessler parameters
         if txt[2] == "":
@@ -240,9 +243,9 @@ class TerminalHandler:
             print("no roessler starting conditions")
         else:
             tmp = txt[3].split(',')
-            self.main_frame.roe_init_condition_a.setText(tmp[0])
-            self.main_frame.roe_init_condition_b.setText(tmp[1])
-            self.main_frame.roe_init_condition_c.setText(tmp[2])
+            self.main_frame.roe_init_condition_X.setText(tmp[0])
+            self.main_frame.roe_init_condition_Y.setText(tmp[1])
+            self.main_frame.roe_init_condition_Z.setText(tmp[2])
 
         # load step conditions
         if txt[4] == "":
@@ -255,5 +258,3 @@ class TerminalHandler:
 
         file.close()
         self.main_frame.print_onto_info_edit("plot loaded successfully")
-
-

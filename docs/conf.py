@@ -6,15 +6,12 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
-scripts = r'C:\Users\tjanu\PycharmProjects\GITHUB'
-if scripts not in sys.path:
-    sys.path.append(scripts)
 
-numpy_site_packages = r'c:\users\tjanu\appdata\local\programs\python\python312\lib\site-packages'
+numpy_site_packages = r'\doc_packages'
 if numpy_site_packages not in sys.path:
     sys.path.append(numpy_site_packages)
 
-eqhandler_site_packages = r'C:\Users\tjanu\PycharmProjects\GITHUB\Chaos\src'
+eqhandler_site_packages = r'..\src'
 if eqhandler_site_packages not in sys.path:
     sys.path.append(eqhandler_site_packages)
 
@@ -40,5 +37,5 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
+html_theme = 'renku'
 html_static_path = ['_static']
