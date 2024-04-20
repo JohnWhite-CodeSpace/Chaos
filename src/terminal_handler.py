@@ -118,27 +118,26 @@ class TerminalHandler:
         Loads available commands from command_list.txt and transforms into an enum following pattern:\n
         [enum string]->[enum iterator]
         """
-        file = open("command_list.txt")
-        linenum = 0
-        while True:
-            line = file.readline()
-            if not line:
-                print("Command List loaded!")
-                print("List of commands:")
-                for command in CommandList:
-                    print(CommandList[command])
-                break
+        with open("command_list.txt") as file:
+            linenum = 0
+            while True:
+                line = file.readline()
+                if not line:
+                    print("Command List loaded!")
+                    print("List of commands:")
+                    for command in CommandList:
+                        print(CommandList[command])
+                    break
 
-            temparr = line.split("->")
-            if len(temparr) >= 2:
-                CommandList[linenum] = (
-                    CommandList.get(linenum, ("", 0))[0] + temparr[0],
-                    CommandList.get(linenum, ("", 0))[1] + int(temparr[1])
-                )
-                linenum += 1
-            else:
-                print(f"Ignoring invalid line: {line.strip()}")
-        file.close()
+                temparr = line.split("->")
+                if len(temparr) >= 2:
+                    CommandList[linenum] = (
+                        CommandList.get(linenum, ("", 0))[0] + temparr[0],
+                        CommandList.get(linenum, ("", 0))[1] + int(temparr[1])
+                    )
+                    linenum += 1
+                else:
+                    print(f"Ignoring invalid line: {line.strip()}")
 
     def save_plot(self):
         """

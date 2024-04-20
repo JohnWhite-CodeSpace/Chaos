@@ -11,9 +11,9 @@ class EquationHandler:
 
     Methods
         set_lorenz_conditions(self, rho, beta, sigma) -  Sets Lorenz rho, beta & sigma parameters of lor_constants array to given values\n
-        lorenz(self, xyz) - Calculates difference quotients based on Lorenz attractor equations to be used in Runge-Kutta algorithm\n
+        lorenz_system(self, xyz) - Calculates difference quotients based on Lorenz attractor equations to be used in Runge-Kutta algorithm\n
         set_roessler_conditions(self, a, b, c) - Sets Roessler a, b & c parameters of roe_constants array to given values\n
-        roessler(self, xyz) - Calculates difference quotients based on Roessler attractor equations to be used in Runge-Kutta algorithm\n
+        roessler_system(self, xyz) - Calculates difference quotients based on Roessler attractor equations to be used in Runge-Kutta algorithm\n
         print_lorenz_eq(self, rho, beta, sigma) - Return Lorenz attractor equations in a legible form \n
         print_roessler_eq(self, a, b, c) - Returns Roessler attractor equations in a legible form \n
         runge_kutta_algorithm_4_lorenz(self, initial_conditions, t_start, t_end, num_steps) - uses 4th order Runge-Kutta algorithm to solve Lorenz attractor equations numerically, calculating the XYZ
@@ -41,7 +41,7 @@ class EquationHandler:
         self.lor_constants['sigma'] = sigma
         print(self.lor_constants)
 
-    def lorenz(self, xyz):
+    def lorenz_system(self, xyz):
         """
         Calculates difference quotients based on Lorenz attractor equations to be used in Runge-Kutta algorithm
 
@@ -67,7 +67,7 @@ class EquationHandler:
         self.roe_constants['b'] = b
         self.roe_constants['c'] = c
 
-    def roessler(self, xyz):
+    def roessler_system(self, xyz):
         """
         Calculates difference quotients based on Roessler attractor equations to be used in Runge-Kutta algorithm
 
@@ -125,10 +125,10 @@ class EquationHandler:
         xyz[0] = init_conditions
 
         for i in range(1, num_steps):
-            k1 = self.lorenz(xyz[i - 1])
-            k2 = self.lorenz(xyz[i - 1] + 0.5 * dt * k1)
-            k3 = self.lorenz(xyz[i - 1] + 0.5 * dt * k2)
-            k4 = self.lorenz(xyz[i - 1] + dt * k3)
+            k1 = self.lorenz_system(xyz[i - 1])
+            k2 = self.lorenz_system(xyz[i - 1] + 0.5 * dt * k1)
+            k3 = self.lorenz_system(xyz[i - 1] + 0.5 * dt * k2)
+            k4 = self.lorenz_system(xyz[i - 1] + dt * k3)
             xyz[i] = xyz[i - 1] + (dt / 6) * (k1 + 2 * k2 + 2 * k3 + k4)
 
         return t_values, xyz
@@ -150,10 +150,10 @@ class EquationHandler:
         xyz[0] = init_conditions
 
         for i in range(1, num_steps):
-            k1 = self.roessler(xyz[i - 1])
-            k2 = self.roessler(xyz[i - 1] + 0.5 * dt * k1)
-            k3 = self.roessler(xyz[i - 1] + 0.5 * dt * k2)
-            k4 = self.roessler(xyz[i - 1] + dt * k3)
+            k1 = self.roessler_system(xyz[i - 1])
+            k2 = self.roessler_system(xyz[i - 1] + 0.5 * dt * k1)
+            k3 = self.roessler_system(xyz[i - 1] + 0.5 * dt * k2)
+            k4 = self.roessler_system(xyz[i - 1] + dt * k3)
             xyz[i] = xyz[i - 1] + (dt / 6) * (k1 + 2 * k2 + 2 * k3 + k4)
 
         return t_values, xyz

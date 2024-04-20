@@ -1,4 +1,7 @@
-
-/.idea
-.idea/Chaos.iml
-.idea/vcs.xml
+src/__pycache__/
+src/venv/
+src/.idea/
+src/build/
+src/dist/
+.gitattributes.txt
+.gitignore

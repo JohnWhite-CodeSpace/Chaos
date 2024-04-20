@@ -1,11 +1,12 @@
 import sys
-
+import webbrowser
 import matplotlib
 import numpy as np
+import os
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QFrame, QSplitter, QApplication, \
-    QStyleFactory, QTextEdit, QWidget, QPushButton
+    QStyleFactory, QTextEdit, QWidget, QPushButton, QAction
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 
@@ -20,7 +21,7 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
     Class is a version of a basic PyQT FigureCanvas with modified plotting function meant for Lorenz and Roessler
     attractors plotting
 
-    Atributes
+    Attributes
         figure - graph of given size and format
 
     Methods
@@ -57,7 +58,7 @@ class MplCanvas3D2D(FigureCanvasQTAgg):
         :param color: color of the plot
         """
         self.figure.clear()
-        ax = self.figure.add_subplot(111, position=[0.15, 0.2, 0.8, 0.8])
+        ax = self.figure.add_subplot(111, position=[0.1, 0.13, 0.8, 0.8])
         ax.plot(xarray, yarray, color=color)
         ax.set_xlabel(xlabel)
         ax.set_ylabel(ylabel)
@@ -341,9 +342,10 @@ class MainFrame(QMainWindow):
         noise_layout.addWidget(self.z_noise_canvas)
 
         right_plot_layout = QHBoxLayout()
+        right_plot_layout.addWidget(self.main_plot_canvas, 70)
         right_plot_layout.addLayout(noise_layout, 30)
         right_layout.addLayout(right_plot_layout)
-        right_plot_layout.addWidget(self.main_plot_canvas, 70)
+
         right.setLayout(right_layout)
 
         splitter = QSplitter()
@@ -385,7 +387,7 @@ class MainFrame(QMainWindow):
         self.draw_noise_plots(t_values, self.X, self.Y, self.Z)
         self.main_plot_canvas.plot3D(self.X, self.Y, self.Z)
 
-        # setting base values for textfields
+        # setting base values for text-fields
         self.lor_params_rho.setText('28')
         self.lor_params_beta.setText('2.6666666')
         self.lor_params_sigma.setText('10')
@@ -401,7 +403,19 @@ class MainFrame(QMainWindow):
         self.step_start.setText('0')
         self.step_stop.setText('50')
         self.step_count.setText('10000')
+        menu_bar = self.menuBar()
+        help_menu = menu_bar.addMenu('Help')
+        docs = QAction('Documentation', self)
+        docs.triggered.connect(self.open_docs)
+        help_menu.addAction(docs)
 
+    def open_docs(self):
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        file_dir = os.path.join(current_dir, '..', 'docs', '_build', 'html')
+        file_name = 'index.html'
+        file_path = os.path.join(file_dir, file_name)
+        url = 'file://' + file_path
+        webbrowser.open(url, new=2)  # open in new tab
     def look_for_enter_key(self):
         """
         Listens to commands entered into terminal passing them to Term_handler class methods
@@ -537,15 +551,15 @@ class MainFrame(QMainWindow):
 
     def draw_noise_plots(self, t_num, X, Y, Z):
         """
-        Plots X, Y & Z noise in 2D as a function of time steps
-        :param t_num: time steps array
+        Plots X, Y & Z noise in 2D as a function of steps
+        :param t_num: steps array
         :param X: x coordinates array
         :param Y: y coordinates array
         :param Z: z coordinates array
         """
-        self.x_noise_canvas.plot2D(t_num, X, 'Time steps', 'X', 'red')
-        self.y_noise_canvas.plot2D(t_num, Y, 'Time steps', 'Y', 'green')
-        self.z_noise_canvas.plot2D(t_num, Z, 'Time steps', 'Z', 'orange')
+        self.x_noise_canvas.plot2D(t_num, X, 'Steps', 'X', 'red')
+        self.y_noise_canvas.plot2D(t_num, Y, 'Steps', 'Y', 'green')
+        self.z_noise_canvas.plot2D(t_num, Z, 'Steps', 'Z', 'orange')
 
     def redraw_figure(self):
         """
