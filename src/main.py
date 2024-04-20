@@ -410,12 +410,11 @@ class MainFrame(QMainWindow):
         help_menu.addAction(docs)
 
     def open_docs(self):
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        file_dir = os.path.join(current_dir, '..', 'docs', '_build', 'html')
         file_name = 'index.html'
+        file_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'docs', '_build', 'html'))
         file_path = os.path.join(file_dir, file_name)
         url = 'file://' + file_path
-        webbrowser.open(url, new=2)  # open in new tab
+        webbrowser.open(url, new=2)
     def look_for_enter_key(self):
         """
         Listens to commands entered into terminal passing them to Term_handler class methods
